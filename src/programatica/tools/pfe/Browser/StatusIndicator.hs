@@ -1,5 +1,5 @@
 module StatusIndicator where
-import Fudgets
+import Fudget
 
 data Status = Unknown | InProgress | InError | Good deriving (Eq,Ord)
 

@@ -1,10 +1,11 @@
 module URLencode where
-import Utils2(mix,chr,ord)
+import Utils2Janus(mix,chr,ord)
 
 encodeQuery values = mix (map urlEnc values) "&"
   where
     urlEnc (name,value) = encode name ++ "=" ++ encode value
 
+encode :: Maybe Char -> [Char]
 encode = concatMap enc
   where
     special c = c<' ' || c>'~' || c `elem` "\"<>&=%/?#+:()[]{}~" -- more?

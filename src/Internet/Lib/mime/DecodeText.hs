@@ -3,7 +3,7 @@ import Dqp
 import Base64
 import Dew
 import MimeMessage
-import ListMap(lookupWithDefault)
+import Data.ListMap(lookupWithDefault)
 import Utils2(strToLower)
 
 decodeTextMsg msg@(MimeMsg hdrs body) =

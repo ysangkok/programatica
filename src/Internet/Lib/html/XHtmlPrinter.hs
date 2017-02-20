@@ -1,7 +1,7 @@
 module XHtmlPrinter(printHtml,printTag) where
 import Html
 import HtmlEntities(encode)
-import Char(isAlpha,isDigit)
+import Data.Char(isAlpha,isDigit)
 import Utils2(strToLower)
 import HO(apFst)
 

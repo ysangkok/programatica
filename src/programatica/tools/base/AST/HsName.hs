@@ -1,7 +1,7 @@
 module HsName where
 
-import Char(isAlpha,isUpper)
-import List(intersperse,isPrefixOf,isSuffixOf)
+import Data.Char(isAlpha,isUpper)
+import Data.List(intersperse,isPrefixOf,isSuffixOf)
 import PrettyPrint
 
 

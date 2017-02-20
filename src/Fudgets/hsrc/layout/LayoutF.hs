@@ -10,7 +10,7 @@ import Geometry() -- instances
 import LayoutDir(Orientation(..))
 import LayoutRequest
 import Placers
-import ListF
+import Data.ListF
 import NullF
 import FudgetIO
 import SerCompF(serCompF)

@@ -4,7 +4,7 @@ module CommandLine where
 
 import System
 import GetOpt
-import IOExts
+import System.IOExts
 import PrettyPrint
 
 

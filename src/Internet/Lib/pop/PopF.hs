@@ -1,6 +1,6 @@
 module PopF(PopRequest(..),PopResponse(..),popTalkF) where
 import Fudgets
-import IOUtil(getEnvi)
+import System.IOUtil(getEnvi)
 import Pop
 import Base64(encodeBase64)
 

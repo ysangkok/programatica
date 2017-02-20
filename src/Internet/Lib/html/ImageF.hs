@@ -3,8 +3,8 @@ import Fudgets
 import ParseURL(parseURL)
 import URL(URL,joinURL,url2str)
 import PixmapDisplayF(pixmapDisplayF',PixmapId)
-import ListMap(lookupWithDefault)
-import Maybe(listToMaybe)
+import Data.ListMap(lookupWithDefault)
+import Data.Maybe(listToMaybe)
 import Monad(ap)
 
 type ImageOutput = (URL,Maybe Size)

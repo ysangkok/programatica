@@ -7,7 +7,7 @@ import Dew(decodeEncodedWords)
 import DecodeText(decodeText)
 import Http
 import HtmlEntities(encode)
-import Char(isSpace)
+import Data.Char(isSpace)
 
 newsFetchF :: F URL (Either String (URL,Either String HttpResponse))
 newsFetchF = loopThroughRightF (absF ctrlSP0) nntpF

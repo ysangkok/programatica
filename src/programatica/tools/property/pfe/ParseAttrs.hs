@@ -1,5 +1,5 @@
 module ParseAttrs(module ParseAttrs,module Attrs) where
-import Char(isSpace)
+import Data.Char(isSpace)
 import FileUtils(readFileNow)
 import MUtils
 

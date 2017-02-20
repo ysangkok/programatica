@@ -21,7 +21,7 @@ import GCAttrs() -- instances
 import FDefaults
 --import Alignment
 import InputMsg(InputMsg,mapInp)
-import ListRequest(ListRequest(..),replaceAll,replaceItems,applyListRequest)
+import Data.ListRequest(ListRequest(..),replaceAll,replaceItems,applyListRequest)
 
 txtF' pmod = marginF 5 $
              --alignSepF 5 aLeft aTop $

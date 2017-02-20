@@ -7,7 +7,7 @@ import Geometry(growrect,(=.>),Rect(rectsize))
 --import NullF(putsK,putK)
 import Utils(number)
 --import EitherUtils(mapfilter)
-import Maybe(mapMaybe)
+import Data.Maybe(mapMaybe)
 import CompiledGraphics
 --import Rects
 --import Maptrace(ctrace) -- debug

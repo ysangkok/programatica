@@ -9,7 +9,7 @@ module LexUtil (isIdent,isLower_,  -- Char -> Bool
 where
 
 import HsName(isSymbol)
-import Char(isDigit, isOctDigit, isHexDigit, digitToInt, isAlpha, isLower)
+import Data.Char(isDigit, isOctDigit, isHexDigit, digitToInt, isAlpha, isLower)
 import Ratio
 
 isIdent  c = isAlpha c || isDigit c || c == '\'' || c == '_'

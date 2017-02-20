@@ -48,8 +48,8 @@ import PrettyPrint
 
 import OutputM
 import EnvM
-import List(partition,nub)
-import Maybe(fromJust)
+import Data.List(partition,nub)
+import Data.Maybe(fromJust)
 import MUtils(mapSnd)
 import OpTypes(ordBy)
 import FiniteMap

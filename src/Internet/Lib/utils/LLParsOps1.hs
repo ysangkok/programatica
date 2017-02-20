@@ -1,8 +1,8 @@
 module LLParsOps1
   (DParser,parseDP,emptyDP,symbolDP,anySymbolDP,altDP,seqDP,nonEmptyDP)
    where
-import List(union,intersect)
-import Maybe(isJust)
+import Data.List(union,intersect)
+import Data.Maybe(isJust)
 
 -- Deterministic parsing combinators, using ideas described by Swierstra,
 -- http://www.cs.ruu.nl/people/doaitse/

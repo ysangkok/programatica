@@ -1,7 +1,7 @@
 module HtmlPrinter(printHtml,printTag) where
 import Html
 import HtmlEntities(encode)
-import Char(isAlpha,isDigit)
+import Data.Char(isAlpha,isDigit)
 
 printHtml :: Html -> String
 printHtml = concatMap printItem

@@ -12,7 +12,7 @@ import Marshall
 import MyForeign
 import qualified Foreign as F
 
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 import Ap
 
 --import GlaExts hiding(Word) --(primIOToIO,CCallable,CReturnable,Addr)

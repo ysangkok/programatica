@@ -1,8 +1,8 @@
 module HbcLibrary where
-import ListMap
-import ListOps
-import ListSet
-import ListUtil
+import Data.ListMap
+import Data.ListOps
+import Data.ListSet
+import Data.ListUtil
 import Scans
 import Sort
 import Subsequences

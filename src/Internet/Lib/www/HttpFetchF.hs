@@ -7,12 +7,12 @@ import HttpResponse
 import MimeMessage(getheader,updateHdr)
 import SocketK
 import DialogueIO hiding (IOError)
-import IOUtil(getEnvi) -- !! not standard Haskell
-import Char(toLower)
+import System.IOUtil(getEnvi) -- !! not standard Haskell
+import Data.Char(toLower)
 import HO(apSnd)
-import ListUtil(chopList,breakAt)
+import Data.ListUtil(chopList,breakAt)
 import Utils2(strToLower)
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 import qualified PackedString as PS
 
 #ifdef __HBC__

@@ -1,7 +1,7 @@
 module FilePickF(oldFilePickF,smallPickListF) where
-import List2(sort)
+import Data.List2(sort)
 import MoreF(pickListF)--,PickListRequest(..)
-import ListRequest(replaceAll)
+import Data.ListRequest(replaceAll)
 import CompOps
 --import Defaults(menuFont)
 import FilePaths

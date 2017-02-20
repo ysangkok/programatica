@@ -5,6 +5,6 @@ import Message
 import Path
 import Popupmsg
 import InputMsg
-import ListRequest
+import Data.ListRequest
 import Fudget
 import Rects

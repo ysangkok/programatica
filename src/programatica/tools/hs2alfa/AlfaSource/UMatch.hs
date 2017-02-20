@@ -3,7 +3,7 @@ import UAbstract(Con,Var(..),Exp(..),Branch(..),Typing(..),absExp,ePreMetaVar)
 import USubstitute(substitute,freeIn)
 --import UFree
 import Utils2(mapFst)
-import List(sortBy)
+import Data.List(sortBy)
 --import Debug2(badtrace)
 
 

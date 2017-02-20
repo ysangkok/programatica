@@ -1,5 +1,5 @@
 module ListOps where
-import List((\\))
+import Data.List((\\))
 
 limit :: Eq a => [a] -> a
 limit = limitBy (==)

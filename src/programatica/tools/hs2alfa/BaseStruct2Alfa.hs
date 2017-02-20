@@ -30,9 +30,9 @@ import TiHsName
 import USCC(decls)
 import PFE0(moduleInfoPath) -- grr
 
---import Char(isUpper)
-import Maybe(fromMaybe,listToMaybe,fromJust)
-import List(nub,partition,(\\),sort)
+--import Data.Char(isUpper)
+import Data.Maybe(fromMaybe,listToMaybe,fromJust)
+import Data.List(nub,partition,(\\),sort)
 import Monad(join,mplus{-,unless-})
 --import Fudgets(ctrace)
 

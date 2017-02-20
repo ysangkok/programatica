@@ -5,7 +5,7 @@ import TiContextReduction
 import TiSolve(expandSynonyms)
 import TiFunDeps(closure)
 import SrcLoc
-import Lists(partition,(\\\),nubBy)
+import Data.Lists(partition,(\\\),nubBy)
 import OpTypes(eqBy)
 import MUtils
 import PrettyPrint

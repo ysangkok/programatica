@@ -1,7 +1,7 @@
 module PfeBrowserGUI(module PfeBrowserGUI,posLabel) where
-import List(groupBy,sortBy)
-import Maybe(isNothing)
---import Char(isSpace)
+import Data.List(groupBy,sortBy)
+import Data.Maybe(isNothing)
+--import Data.Char(isSpace)
 
 import AllFudgets
 import FudExtras(popupMenuF',staticHyperGraphicsF')
@@ -9,7 +9,7 @@ import ContribFudgets(menuIcon,item,itemValue)--menuBarF,delayedSubMenuItem,idT,
 import HyperGraphicsF2
 import TreeBrowser as B(treeBrowserF',Tree(..))
 import HistoryButtonsF
-import ListUtil(chopList,breakAt,mapFst)
+import Data.ListUtil(chopList,breakAt,mapFst)
 
 import PfePlumbing
 import PfeBrowserColors as C

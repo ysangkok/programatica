@@ -1,7 +1,7 @@
 module CertServerF(certServerF,backspace) where
 import Fudgets
 --import AllFudgets(expandTabs)
-import Char(isDigit)
+import Data.Char(isDigit)
 import FudExtras(longTextChoicePopupF)
 
 certServerF =

@@ -1,5 +1,5 @@
 module StringUtils where
---import Char(isAlpha,isAlphanum,isDigit)
+--import Data.Char(isAlpha,isAlphanum,isDigit)
 
 expandTabs n = exp (n::Int)
   where

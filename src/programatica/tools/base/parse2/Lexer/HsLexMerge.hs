@@ -2,7 +2,7 @@ module HsLexMerge where
 import HsLexerPos(Pos(..),startPos,nextPos,nextPos1)
 import HsTokens
 --import OpTypes(eqBy)
-import List(groupBy)
+import Data.List(groupBy)
 import Unlit(CommentClass(..))
 
 {-+ #mergeLex#: Merge literate comments with a token stream

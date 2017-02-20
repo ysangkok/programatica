@@ -4,7 +4,7 @@ Compiling regular expressions, the new way.
 module CompileRegExp where
 import RegExpOps
 import FiniteMap
-import Maybe(isJust,fromJust)
+import Data.Maybe(isJust,fromJust)
 --import Trace
 
 compile r = number (build emptyFM [r])

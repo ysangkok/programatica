@@ -2,7 +2,7 @@ module InputF where
 import Fudget
 import InputMsg
 import CompOps
-import ListF(listF)
+import Data.ListF(listF)
 import Placer(placerF)
 import LayoutF(orientP)
 import EitherUtils(stripEither)

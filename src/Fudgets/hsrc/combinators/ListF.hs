@@ -5,7 +5,7 @@ import CompSP(preMapSP)
 import CompOps((>^=<),(>=^^<))
 import Direction
 import Fudget
-import ListMap(lookupWithDefault)
+import Data.ListMap(lookupWithDefault)
 import Message(Message(..))
 import NullF
 --import Path(Path(..))

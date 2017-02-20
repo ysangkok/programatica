@@ -1,9 +1,9 @@
 module FilePaths(AFilePath,rootPath,aFilePath,filePath,
                  compactPath,isAbsolute,joinPaths,pathRelativeTo,
 		 extendPath,pathTail,pathHead,pathLength) where
-import List(intersperse)
+import Data.List(intersperse)
 --import IO(openDirectory, statFile)
-import ListUtil(chopList,breakAt)
+import Data.ListUtil(chopList,breakAt)
 
 newtype AFilePath = P [String] deriving (Eq,Ord)
 -- data AFilePath = Root | Cwd | AFilePath :/ String

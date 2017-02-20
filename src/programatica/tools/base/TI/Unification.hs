@@ -2,8 +2,8 @@
 Generic unification and matching
 -}
 module Unification where
-import Maybe(fromMaybe)
-import List(nub)
+import Data.Maybe(fromMaybe)
+import Data.List(nub)
 import MUtils(mapFst,mapSnd,mapBoth,apBoth)
 
 {-+

@@ -5,7 +5,7 @@ import MUtils(collectByFst,collectBySnd,mapFst,mapSnd,usort)
 import qualified IntMap as M
 import qualified IntSet as S
 import qualified OrdMap as OM
-import List(sort,partition)
+import Data.List(sort,partition)
 
 rmeqstate (n,NFA m) = (n',NFA (M.fromList m'))
   where (n',m') = repeat' rmeqstate1 (n,M.toList m)

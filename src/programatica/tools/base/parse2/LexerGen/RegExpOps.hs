@@ -1,6 +1,6 @@
 module RegExpOps where
 import RegExp
-import List
+import Data.List
 
 {-+
 "" =~ r <==> nullable r

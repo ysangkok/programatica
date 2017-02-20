@@ -44,7 +44,7 @@ import FDefaults hiding (setInitSize,getInitSize,getInitSizeMaybe)
 --import FDefaults hiding (HasInitSize)
 import FDefaults(cust,getpar,getparMaybe,HasBorderWidth(..),HasSizing(..),HasBgColorSpec(..),HasFgColorSpec(..),HasFontSpec(..),Customiser(..),PF(..))
 #endif
-import Char
+import Data.Char
 import GCAttrs --(ColorSpec,colorSpec,convColorK) -- + instances
 
 default(Int)

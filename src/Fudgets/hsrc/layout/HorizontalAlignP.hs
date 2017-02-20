@@ -1,5 +1,5 @@
 module HorizontalAlignP where
-import List(mapAccumL)
+import Data.List(mapAccumL)
 import LayoutRequest
 import Geometry
 import Spacers(Distance(..),layoutModifierS,idS)

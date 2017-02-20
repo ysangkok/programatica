@@ -1,6 +1,6 @@
 module EitherUtils where
-import Maybe
-import List(find)
+import Data.Maybe
+import Data.List(find)
 
 type Cont c a = (a -> c) -> c
 

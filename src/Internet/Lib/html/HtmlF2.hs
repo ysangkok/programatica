@@ -14,7 +14,7 @@ import ParseURL(parseURL)
 import Html(Html)
 import Monads
 --import qualified HtmlF as Old
-import Maybe(fromMaybe,listToMaybe)
+import Data.Maybe(fromMaybe,listToMaybe)
 
 --infixr !
 

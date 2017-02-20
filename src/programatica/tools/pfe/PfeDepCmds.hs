@@ -1,6 +1,6 @@
 module PfeDepCmds where
 import Prelude hiding (print)
-import List(nub,intersect)
+import Data.List(nub,intersect)
 import Monad(unless)
 
 import HsName(HsName(..))

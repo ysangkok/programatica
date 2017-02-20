@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -cpp #-}
 module HaskellChars where
-import Char
+import Data.Char
 
 {-+
 This module collects the definitions from the Lexical Syntax in appendix B.3

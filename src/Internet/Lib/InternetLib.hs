@@ -32,7 +32,7 @@ import HtmlOps
 import HtmlPrinter
 import HtmlParser2
 
-import Maybe(fromJust)
+import Data.Maybe(fromJust)
 import Fudgets((>==<),mapFilterSP,absF,mapF)
 
 getHtml :: String -> HttpReq

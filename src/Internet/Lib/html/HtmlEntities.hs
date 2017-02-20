@@ -1,5 +1,5 @@
 module HtmlEntities(decode,encode) where
-import Char(isDigit,isHexDigit,isSpace,chr,ord)
+import Data.Char(isDigit,isHexDigit,isSpace,chr,ord)
 import Numeric(readHex)
 
 decode [] = []

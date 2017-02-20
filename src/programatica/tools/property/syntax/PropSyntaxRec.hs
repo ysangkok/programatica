@@ -6,7 +6,7 @@ module PropSyntaxRec(
   module Syntax
  ) where
 
-import List
+import Data.List
 import PropSyntaxStruct
 import HasBaseStruct
 import HasPropStruct

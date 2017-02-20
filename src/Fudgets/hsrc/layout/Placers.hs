@@ -3,7 +3,7 @@ import Geometry
 import LayoutDir
 import LayoutRequest
 import Spacers(Distance(..))
-import List(mapAccumL)
+import Data.List(mapAccumL)
 import Utils(part)
 import Defaults(defaultSep)
 import Maptrace(ctrace) -- debugging

@@ -1,7 +1,7 @@
 module IOUtil(getEnvi, progName, progArgs) where
 -- Some utilities that are a little dirty, but not very.
 
-import IO(try)
+import System.IO(try)
 import System(getEnv,getProgName,getArgs)
 import UnsafePerformIO(unsafePerformIO)
 

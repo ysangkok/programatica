@@ -15,7 +15,7 @@ import MapDeclM
 import HsIdent
 import TiNames(ValueId,localVal)
 
-import Maybe(isNothing)
+import Data.Maybe(isNothing)
 import Monad(liftM)
 import StateM
 import PrettyPrint(pp,(<>))

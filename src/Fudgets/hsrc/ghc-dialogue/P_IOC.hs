@@ -1,3 +1,4 @@
+{-# LANGUAGE ForeignFunctionInterface, CPP #-}
 module P_IOC where
 -- Continuation-based I/O:
 #ifdef IMPORTS

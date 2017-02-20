@@ -1,7 +1,7 @@
 module PfeBrowserColors(Color,TokenTag(..),loadColorsF,defaultColor) where
 import Array
 import Fudgets
-import Char(toLower)
+import Data.Char(toLower)
 import TokenTags
 
 type Color = TokenTag

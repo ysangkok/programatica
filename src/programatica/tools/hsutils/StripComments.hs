@@ -1,6 +1,6 @@
 module StripComments(stripcomments) where
 import HsLexerPass1(lexerPass1,startPos,nextPos)
-import List(mapAccumL)
+import Data.List(mapAccumL)
 
 stripcomments :: String -> String
 stripcomments = redo_layout . map snd . lexerPass1

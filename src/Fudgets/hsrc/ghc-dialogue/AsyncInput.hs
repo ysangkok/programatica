@@ -17,8 +17,8 @@ import Marshall
 import MyForeign
 
 import Ap
-import ListMap(lookupWithDefault)
-import Maybe(mapMaybe)
+import Data.ListMap(lookupWithDefault)
+import Data.Maybe(mapMaybe)
 import Monad(when)
 
 import PQueue

@@ -1,5 +1,5 @@
 module GIFcompress(compressGIF,compressGIFLZW) where
-import ListUtil(chopList)
+import Data.ListUtil(chopList)
 import GIF
 import GIFops(compressRasterData)
 import BitStream(bput,bytestream,end)

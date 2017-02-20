@@ -1,5 +1,5 @@
 module ListSet where
-import List((\\), delete)
+import Data.List((\\), delete)
 
 -- @@ Lists as sets.
 

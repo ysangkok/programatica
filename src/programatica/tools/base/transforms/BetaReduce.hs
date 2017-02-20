@@ -4,7 +4,7 @@ import Substitute(subst,mapExp)
 import HsExpStruct
 import HsExpUtil(exposeE)
 import HsPatUtil(isPVar)
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 
 {-+
 Find outermost beta redexes and reduce them.

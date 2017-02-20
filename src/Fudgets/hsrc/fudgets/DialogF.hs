@@ -22,7 +22,7 @@ import StringF
 import InputF(InF(..))
 import InputMsg(InputMsg(..),inputLeaveKey)
 --import EitherUtils(isM)
-import Maybe(isJust)
+import Data.Maybe(isJust)
 --import TextF(textF')
 --import ListRequest(replaceAll)
 --import NullF(startupF)

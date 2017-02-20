@@ -1,7 +1,7 @@
 module DirUtils where
 import Prelude hiding (catch,ioError)
 import MUtils
-import List(isSuffixOf,nub)
+import Data.List(isSuffixOf,nub)
 import AbstractIO
 
 optCreateDirectory d = unlessM (doesDirectoryExist d) (createDirectory d)

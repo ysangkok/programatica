@@ -3,7 +3,7 @@ import Spacer(noStretchF)
 --import Alignment(Alignment(..))
 --import ButtonGroupF
 import CompOps((>==<), (>=^<))
-import ListMap(lookupWithDefault)
+import Data.ListMap(lookupWithDefault)
 --import Fudget
 --import Geometry(Point, Rect, Size(..))
 import LayoutF(listLF)

@@ -4,7 +4,7 @@ module Defaults(look3d, new3d, edgeWidth, defaultSep,
 		defaultPosition, defaultSize, defaultFont, menuFont,
                 buttonFont,labelFont) where
 import Geometry(pP)
-import ListUtil(chopList,breakAt)
+import Data.ListUtil(chopList,breakAt)
 import ResourceIds(FontName(..),ColorName(..))
 import CmdLineEnv
 

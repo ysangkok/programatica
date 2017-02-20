@@ -16,7 +16,7 @@ import CompOps((>=^^<))
 import InputMsg(InputMsg,mapInp)
 import InputF(inputDoneSP)--InF(..),
 import EitherUtils(mapEither)
-import Char(isDigit)
+import Data.Char(isDigit)
 
 stringInputF = stringInputF' standard
 intInputF = intInputF' standard

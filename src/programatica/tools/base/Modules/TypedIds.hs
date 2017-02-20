@@ -1,5 +1,5 @@
 module TypedIds where
-import Maybe(isJust)
+import Data.Maybe(isJust)
 
 {-+
 Haskell declaration introduce names in two name spaces. Type classes and

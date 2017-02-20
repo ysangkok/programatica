@@ -1,6 +1,6 @@
 module PixmapDisplayF(pixmapDisplayF,pixmapDisplayF',PixmapId) where
 import AllFudgets
-import Maybe(maybeToList,isJust)
+import Data.Maybe(maybeToList,isJust)
 --import Maybe(fromMaybe)
 
 #ifdef __HASKELL98__

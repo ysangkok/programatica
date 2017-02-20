@@ -5,8 +5,8 @@ module CertServers(
 
 import Prelude hiding (readFile)
 import AbstractIO
-import Maybe(catMaybes,mapMaybe,listToMaybe)
-import List(partition)
+import Data.Maybe(catMaybes,mapMaybe,listToMaybe)
+import Data.List(partition)
 import MUtils
 
 import Attrs

@@ -1,10 +1,10 @@
 module CmdLineEnv(options, progName, resourceName, args, argKey, argReadKey, argFlag, argKeyList) where
-import IOUtil(progArgs,progName,getEnvi)
+import System.IOUtil(progArgs,progName,getEnvi)
 import FilePaths(aFilePath,pathTail)
-import ListUtil(chopList,breakAt)
+import Data.ListUtil(chopList,breakAt)
 import HO(apFst, apSnd)
-import Char
-import Maybe(fromMaybe)
+import Data.Char
+import Data.Maybe(fromMaybe)
 --import NonStdTrace(trace)
 
 argReadKey key def = case lookupOptions key of

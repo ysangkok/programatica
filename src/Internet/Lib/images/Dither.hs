@@ -3,7 +3,7 @@ module Dither where
 
 import AllFudgets
 import PNM
-import Maybe(fromJust)
+import Data.Maybe(fromJust)
 import Array
 --import Word
 --import Bits

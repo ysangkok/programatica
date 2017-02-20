@@ -2,7 +2,7 @@ module Minimalize where
 import DFA
 import MUtils(usort,mapSnd,collectBySnd)
 import qualified OrdMap as OM
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 
 minimalize (s,DFA states) = iter [] (s,OM.toList states)
   where

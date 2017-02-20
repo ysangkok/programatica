@@ -1,7 +1,7 @@
 module Assoc1 where
 
 import Products (fork)
-import Maybe (listToMaybe, fromJust)
+import Data.Maybe (listToMaybe, fromJust)
 
 -- import FiniteMap
 

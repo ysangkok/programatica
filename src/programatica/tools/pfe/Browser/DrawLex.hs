@@ -1,7 +1,7 @@
 module DrawLex where
 import Monad(join)
-import List(groupBy)
-import Maybe(mapMaybe,fromMaybe)
+import Data.List(groupBy)
+import Data.Maybe(mapMaybe,fromMaybe)
 import Fudgets
 import FudDraw(ulineD')
 import GIFAltFile

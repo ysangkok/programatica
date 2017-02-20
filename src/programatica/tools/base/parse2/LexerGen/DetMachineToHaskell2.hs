@@ -2,7 +2,7 @@ module DetMachineToHaskell2(dfaToHaskell,CaseOf(..),OutputFun(..)) where
 import PPrint
 import HaskellChars
 import HsTokens
-import List(partition,sort,sortBy,nub)
+import Data.List(partition,sort,sortBy,nub)
 import DFA(DFA(..))
 import qualified OrdMap as OM
 import OpTypes(cmpBy)

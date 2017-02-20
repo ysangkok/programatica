@@ -10,14 +10,14 @@ import Spops
 import FRequest
 --import Xtypes
 import EitherUtils(plookup)
-import Maybe(fromJust)
+import Data.Maybe(fromJust)
 import Fudget
 import Path
 import Geometry
 import Placers
 import Spacers
 import Message
-import ListF
+import Data.ListF
 import Loopthrough
 import Cont
 --import LayoutDir

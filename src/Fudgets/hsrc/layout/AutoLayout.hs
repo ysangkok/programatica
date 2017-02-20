@@ -22,7 +22,7 @@ import Direction
 import IoF(ioF)
 import CmdLineEnv(argFlag)
 --import EitherUtils()
-import Maybe(isJust)
+import Data.Maybe(isJust)
 import HO(apFst,apSnd)
 import Spacers(idS,compS,spacerP)
 import AutoPlacer(autoP)

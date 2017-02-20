@@ -1,6 +1,6 @@
 module FocusMgr(focusMgr) where
-import List((\\))
-import Maybe(listToMaybe)
+import Data.List((\\))
+import Data.Maybe(listToMaybe)
 import Command
 import Direction
 import Dlayout(invisibleGroupF)
@@ -11,7 +11,7 @@ import FRequest
 --import Geometry(origin) --Line(..), Point(..), Rect(..), Size(..), origin)
 --import LayoutRequest(LayoutRequest)
 import LoopLow
-import ListSet(union)
+import Data.ListSet(union)
 --import Message(Message(..))
 import Path
 import PathTree hiding (pos)
@@ -23,7 +23,7 @@ import CmdLineEnv(argKey,argReadKey)
 import WindowF(kernelTag,autumnize)
 import Xtypes
 --import List2(sort)
-import List(sortBy)
+import Data.List(sortBy)
 
 import Maptrace
 

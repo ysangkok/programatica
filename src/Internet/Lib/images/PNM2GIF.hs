@@ -2,7 +2,7 @@ module PNM2GIF(pnm2gif,pbm2gif,pgm2gif,ppm2gif) where
 import GIF
 import PNM
 import qualified Fudgets as F
-import List(nub)
+import Data.List(nub)
 import qualified OrdMap as OM
 
 pnm2gif (PNM (F.Point w h) pnmdata) =

@@ -9,8 +9,8 @@ import Geometry(Point(..), Rect(..), pP, rR, rectsize, xcoord)
 import Xtypes(FontId)
 import Utils(aboth)
 --import EitherUtils(mapMaybe)
-import ListUtil(mapFst)
-import List(mapAccumL)
+import Data.ListUtil(mapFst)
+import Data.List(mapAccumL)
 import Maptrace(ctrace) -- debugging
 --import qualified Array as LA
 import qualified LA -- GHC bug workaround, can't use LA.!

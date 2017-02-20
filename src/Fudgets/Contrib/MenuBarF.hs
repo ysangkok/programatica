@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module MenuBarF(
 #ifndef __NHC__
 	menuF,menuBarF,MenuBar(..),Menu(..),MenuItem'(..),

@@ -1,5 +1,5 @@
 module Utils2 where
---import Char
+--import Data.Char
 
 mix :: [[a]] -> [a] -> [a]
 mix [] d = []

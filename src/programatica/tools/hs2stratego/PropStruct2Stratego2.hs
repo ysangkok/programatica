@@ -9,7 +9,7 @@ import PropSyntaxStruct as P
 import HsPropMaps
 import HsPropPretty()
 import PrettyPrint(pp)
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 
 transPD trId trPA trPP pd =
   case mapPD trId trPA trPP pd of

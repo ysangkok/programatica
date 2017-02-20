@@ -5,7 +5,7 @@ import LayoutRequest
 import Spacers(Distance(..))
 import Geometry
 import Defaults(defaultSep)
-import List(mapAccumL)
+import Data.List(mapAccumL)
 import IntMemo
 
 overlayP :: Placer

@@ -7,7 +7,7 @@ import CompileRegExp(compile)
 import DetMachineToHaskell2(dfaToHaskell,OutputFun(..))
 import PPrint(pprint)
 import qualified OrdMap as OM(fromList)
-import List(sort)
+import Data.List(sort)
 import HaskellChars(HaskellChar)
 
 {-+

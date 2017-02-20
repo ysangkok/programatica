@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module FileShellF(
 #ifndef __NHC__
   fileShellF,fileShellF',

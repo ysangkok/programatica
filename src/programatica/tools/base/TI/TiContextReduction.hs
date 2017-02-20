@@ -13,7 +13,7 @@ import TiSolve(expandSynonyms)
 import TiUtil(freshen',freshvars)
 import SrcLoc
 import PrettyPrint hiding (var)
-import List(partition,(\\))
+import Data.List(partition,(\\))
 import Monad(msum,mplus)
 import MUtils
 import Debug.Trace(trace) -- debug

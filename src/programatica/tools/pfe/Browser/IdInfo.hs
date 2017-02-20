@@ -12,7 +12,7 @@ import HasBaseName(getBaseName)
 --import FudgetIOMonad1(SrcToken)
 --import ParsedSyntax(Id)
 
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 import MUtils(( # ),mapFst)
 
 --idInfo :: Refs -> ModuleFixities Id -> SrcToken -> [String]

@@ -1,6 +1,6 @@
 module UFree where
 import UAbstract
-import List(union,(\\),nub)
+import Data.List(union,(\\),nub)
 
 type Set a = [a]
 

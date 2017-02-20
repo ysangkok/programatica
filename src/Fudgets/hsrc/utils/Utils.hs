@@ -1,5 +1,5 @@
 module Utils where
-import ListSet(union)
+import Data.List(union)
 --import HbcWord
 
 infixr 1 `thenC`

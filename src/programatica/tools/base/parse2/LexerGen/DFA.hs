@@ -1,7 +1,7 @@
 module DFA where
 import qualified OrdMap as OM
 import MUtils(apFst,mapFst,mapSnd,collectByFst,collectBySnd,usort)
-import Maybe(fromJust)
+import Data.Maybe(fromJust)
 
 type DMap s i o = OM.OrdMap s ([(i,s)],[(o,s)])
 newtype DFA s i o = DFA (DMap s i o)

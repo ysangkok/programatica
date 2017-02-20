@@ -14,7 +14,7 @@ import CompSP(prepostMapSP)
 import SerCompF(mapstateF)
 import NullF
 import Xtypes
-import List(union)
+import Data.List(union)
 
 data PopupMenu
   = PopupMenu Point XEvent -- Time to pop up the menu.

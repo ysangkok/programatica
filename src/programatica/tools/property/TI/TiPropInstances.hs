@@ -3,8 +3,8 @@ The various auxiliary operations required by the extensible type checker
 are defined here.
 -}
 module TiPropInstances where
-import List(partition)
-import Maybe(isJust)
+import Data.List(partition)
+import Data.Maybe(isJust)
 --import Maybe(mapMaybe)
 
 import HasBaseStruct

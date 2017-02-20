@@ -19,7 +19,7 @@ import Path
 import CompFfun(prepostMapLow)
 import Spops
 --import EitherUtils
-import Maybe(fromMaybe,isJust)
+import Data.Maybe(fromMaybe,isJust)
 import Xtypes
 import CmdLineEnv(argFlag)
 --import DialogueIO hiding (IOError)

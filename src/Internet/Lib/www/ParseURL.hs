@@ -1,7 +1,7 @@
 module ParseURL where
 import ParsOps
 import URL
-import Char(isAlpha,isDigit)
+import Data.Char(isAlpha,isDigit)
 
 parseURL s =
     case parse url s of

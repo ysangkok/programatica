@@ -9,7 +9,7 @@ module NewSCC (sccEq,scc) where
 import OpTypes
 import Products((><))
 import StateM
-import Maybe (fromJust,listToMaybe)
+import Data.Maybe (fromJust,listToMaybe)
 
 
 sccEq               :: EqOp a -> Graph a -> [Graph a]

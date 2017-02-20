@@ -1,5 +1,5 @@
 module Attrs where
-import List(isPrefixOf)
+import Data.List(isPrefixOf)
 
 {-+
 Types for attributes. Both certificate servers and certificates have attributes.

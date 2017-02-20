@@ -2,7 +2,7 @@ module AnchorParser where
 import ParsOps
 import HtmlEntities(decode)
 import Utils2(strToUpper)
-import Char(isSpace,isAlphaNum)
+import Data.Char(isSpace,isAlphaNum)
 
 parseTag s =
     case parse tag s of

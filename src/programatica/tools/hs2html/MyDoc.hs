@@ -4,7 +4,7 @@ import Text.PrettyPrint
 import EnvM
 import MUtils 
 import Monad
-import Char(isSpace)
+import Data.Char(isSpace)
 
 
 type Heading    = (Int,String)

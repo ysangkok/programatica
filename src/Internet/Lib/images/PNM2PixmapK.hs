@@ -2,7 +2,7 @@ module PNM2PixmapK(pnm2PixmapK) where
 
 import AllFudgets
 import PNM
-import ListMap(lookupWithDefault)
+import Data.ListMap(lookupWithDefault)
 import Dither
 import Array
 import Utils2(mynub)

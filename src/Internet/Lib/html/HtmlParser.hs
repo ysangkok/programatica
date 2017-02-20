@@ -7,9 +7,9 @@ import HtmlLex
 import ParsOps
 import HtmlEntities(collapseSpace)
 import HtmlPrinter(printTag,printHtml)
-import ListSet(intersect)
-import ListUtil(mapFst)
-import Char(isSpace)
+import Data.ListSet(intersect)
+import Data.ListUtil(mapFst)
+import Data.Char(isSpace)
 
 parseHtml :: String -> Either (Error Char) Html
 parseHtml s =

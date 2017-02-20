@@ -9,7 +9,7 @@ import UniqueNames
 import QualNames
 import SpecialNames
 
-import Char(isUpper)
+import Data.Char(isUpper)
 
 data SN i = SN i SrcLoc
 

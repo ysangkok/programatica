@@ -20,8 +20,8 @@ import qualified AbstractOps as U
 import qualified UMatch as U
 import MUtils
 import EnvM
-import Maybe(fromMaybe)
-import Char(isAlpha)
+import Data.Maybe(fromMaybe)
+import Data.Char(isAlpha)
 
 transModule = trans :: HsModuleI m i (TiDecls NName) -> EnvM Env U.Module
 

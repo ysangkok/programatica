@@ -7,8 +7,8 @@ import Font(FontStruct,FontStructList,fsl2fs)
 --import Fudget
 --import Geometry(Line, Point, Rect, Size(..))
 --import EitherUtils(stripMaybe,mapMaybe)
-import Maybe(fromJust)
-import ListUtil(mapSnd)
+import Data.Maybe(fromJust)
+import Data.ListUtil(mapSnd)
 import Cont(tryM)
 import Xrequest
 import Xtypes

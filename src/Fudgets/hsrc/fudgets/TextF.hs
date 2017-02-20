@@ -15,7 +15,7 @@ import DoubleClickF
 import BgF
 --import Color
 --import EitherUtils(mapfilter)
-import Maybe(mapMaybe)
+import Data.Maybe(mapMaybe)
 import Message(Message(..),message)
 import Font
 --import LoadFont
@@ -27,7 +27,7 @@ import Defaults(defaultFont,bgColor,fgColor)
 import Sizing
 import FDefaults
 import GCAttrs --(ColorSpec,convColorK,colorSpec)
-import ListRequest(ListRequest(..),listEnd)
+import Data.ListRequest(ListRequest(..),listEnd)
 #include "../defaults/defaults.h"
 
 default(Int) -- mostly for Hugs

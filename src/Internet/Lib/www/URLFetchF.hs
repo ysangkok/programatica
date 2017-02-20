@@ -5,8 +5,8 @@ import Http
 import HttpFetchF
 import NewsFetchF
 import URL(URL(..),url2str)
-import List(sort)
-import Maybe(fromMaybe)
+import Data.List(sort)
+import Data.Maybe(fromMaybe)
 import DialogueIO hiding (IOError)
 
 urlFetchF :: F HttpReq HttpResp

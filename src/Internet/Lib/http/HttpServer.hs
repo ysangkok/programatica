@@ -4,7 +4,7 @@ import AllFudgets
 import Http
 import DialogueIO hiding (IOError)
 import ContinuationIO(stdout)
-import ListUtil(breakAt)
+import Data.ListUtil(breakAt)
 import Time(calendarTimeToString)
 import Utils2(strToLower)
 import Message(splitmsg)

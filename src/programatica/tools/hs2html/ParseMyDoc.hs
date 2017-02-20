@@ -3,9 +3,9 @@ module ParseMyDoc where
 import MyDoc
 
 import Monad
-import List
-import Maybe
-import Char
+import Data.List
+import Data.Maybe
+import Data.Char
 
 import StateM 
 --import MUtils

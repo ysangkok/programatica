@@ -10,7 +10,7 @@ import Event
 import Fudget
 import FRequest
 --import Geometry(Line, Point, Rect, Size(..))
-import IOUtil(getEnvi)
+import System.IOUtil(getEnvi)
 --import LayoutRequest(LayoutRequest)
 import Loopthrough
 import Message(Message(..),stripLow)
@@ -24,7 +24,7 @@ import Tables
 import Xtypes
 --import Maptrace
 --import EitherUtils
-import Maybe(isNothing)
+import Data.Maybe(isNothing)
 import ShowFailure
 import DialogueIO
 import Prelude hiding (IOError)

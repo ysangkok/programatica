@@ -4,7 +4,7 @@ import AllFudgets -- because of autoLayoutF
 import ParseURL(parseURL)
 import URL(URL,joinURL)
 import Html(Html)
-import ListMap(lookupWithDefault)
+import Data.ListMap(lookupWithDefault)
 
 type FuppletInput = (FuppletOutput,F () ())
 type FuppletOutput = URL

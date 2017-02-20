@@ -4,7 +4,7 @@ module CmdLineParser3(
   ) where
 import PrettyPrint hiding (kw)
 import Monad(msum,join,liftM,MonadPlus(..),ap)
-import Maybe(isJust)
+import Data.Maybe(isJust)
 import System(getArgs)
 
 infixl 3 <@,`chk`,#@

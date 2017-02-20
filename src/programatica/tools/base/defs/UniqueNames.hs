@@ -7,7 +7,7 @@ import PrettyUtil(ppqIfDebug)
 import HasBaseName
 --import NoEq
 import qualified SrcLoc as L
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 
 -- Types to decorate identifiers to make them unique
 

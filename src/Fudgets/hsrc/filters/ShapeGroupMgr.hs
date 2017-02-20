@@ -13,7 +13,7 @@ import NullF
 --import Alignment
 import Spops
 --import EitherUtils
-import Maybe(fromMaybe,mapMaybe)
+import Data.Maybe(fromMaybe,mapMaybe)
 import Utils
 import Xtypes
 import WindowF(kernelTag,getBWidth,adjustBorderWidth,border_width)

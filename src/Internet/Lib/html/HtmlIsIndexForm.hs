@@ -2,7 +2,7 @@ module HtmlIsIndexForm where
 import Html
 import HtmlTags
 import HtmlConOps(form,hr,p,cmd,txt)
-import ListMap(lookupWithDefault)
+import Data.ListMap(lookupWithDefault)
 
 isIndexHtml attrs =
     form [ hr, p [txt prompt], p [input], hr ]

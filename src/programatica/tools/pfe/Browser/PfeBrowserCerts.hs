@@ -2,12 +2,12 @@ module PfeBrowserCerts where
 import Prelude hiding (putStr,putStrLn,print,readFile,ioError,catch,readIO)
 import AllFudgets as Fud hiding (getModificationTime)
 import FudDraw
-import Maybe(isJust,listToMaybe,mapMaybe)
+import Data.Maybe(isJust,listToMaybe,mapMaybe)
 import MUtils
 import AbstractIO
 import FileUtils(readFileNow)
 import DirUtils(latestModTime)
-import List((\\))
+import Data.List((\\))
 
 import PfePlumbing
 import PfeBrowserMonad

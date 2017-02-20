@@ -1,9 +1,9 @@
 {-+ PFE command line parsing utilities
 -}
 module PfeParse(module PfeParse,arg,(<@),( #@ ),many) where
-import Char(isUpper)
+import Data.Char(isUpper)
 import Monad(when)
-import Maybe(isJust)
+import Data.Maybe(isJust)
 
 import HsName(ModuleName(..),sameModuleName,parseModuleName,isMainModule)
 import TypedIds(NameSpace(..))

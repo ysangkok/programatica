@@ -3,7 +3,7 @@ module HtmlFormHandler(formHandlerSP) where
 import Fudgets
 import HtmlFormF2(FormMsg(..))
 import qualified OrdMap as T
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 
 #ifdef __GLASGOW_HASKELL__
 formHandlerSP :: (Ord a, Ord b) => SP (Maybe (a, (b, FormMsg))) (Either (b, FormMsg) (a, [(String, String)]))

@@ -1,6 +1,6 @@
 --Type checking base language declarations (the D structure)
 module TiD where
-import Maybe(isJust)
+import Data.Maybe(isJust)
 import Monad(unless)
 
 import HsDeclStruct

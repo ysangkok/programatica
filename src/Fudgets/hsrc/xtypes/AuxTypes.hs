@@ -1,3 +1,4 @@
+{-# LANGUAGE ForeignFunctionInterface, CPP #-}
 module AuxTypes where
 
 #ifdef __GLASGOW_HASKELL__

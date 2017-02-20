@@ -1,5 +1,5 @@
 module PfeBrowserMonad where
-import Maybe(isJust)
+import Data.Maybe(isJust)
 import Monad(when)
 import MT(lift)
 import AbstractIO

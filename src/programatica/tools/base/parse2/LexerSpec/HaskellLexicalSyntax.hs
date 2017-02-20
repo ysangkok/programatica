@@ -8,7 +8,7 @@ The grammar below contains extra annotations (not found in the report) to
 allow the recognized strings to be paired with token classifications, which
 are used in the token specifications in the Happy parser.
 -}
-import List((\\))
+import Data.List((\\))
 import HaskellChars
 import HsTokens
 import RegExp

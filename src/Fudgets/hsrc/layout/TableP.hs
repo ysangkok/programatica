@@ -3,8 +3,8 @@ import Geometry(Point(..), Rect(..), rR, xcoord, ycoord)
 import LayoutDir(LayoutDir(..), vswap)
 import LayoutRequest
 import Spacers(Distance(..))
-import ListUtil(chopList)
-import List(transpose,mapAccumL)
+import Data.ListUtil(chopList)
+import Data.List(transpose,mapAccumL)
 import Utils(lhead)
 import Defaults(defaultSep)
 import IntMemo

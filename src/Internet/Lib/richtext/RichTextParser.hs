@@ -2,8 +2,8 @@ module RichTextParser(parseRichText,Error(..)) where
 import RichText
 import RichTextLex
 import ParsOps
-import ListUtil(assoc)
-import Char(toLower)
+import Data.ListUtil(assoc)
+import Data.Char(toLower)
 
 {- BNF for richtext:
 

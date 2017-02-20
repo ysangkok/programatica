@@ -5,7 +5,7 @@ import CompOps
 import Xtypes
 import Alignment(Alignment(..))
 --import Geometry(pmax)
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 import Sizing(Sizing)
 import GCAttrs --(ColorSpec,colorSpec)
 #include "defaults.h"

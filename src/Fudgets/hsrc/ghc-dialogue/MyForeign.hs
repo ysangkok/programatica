@@ -2,7 +2,7 @@ module MyForeign where
 import qualified Foreign as F
 import CString(castCCharToChar,castCharToCChar)
 --import CCall
-import IO(bracket)
+import System.IO(bracket)
 import Ap
 -- Emulate GHC 4.08 libraries on top of GHC 5.00 libraries...
 

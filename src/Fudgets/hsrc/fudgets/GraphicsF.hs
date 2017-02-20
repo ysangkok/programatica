@@ -52,9 +52,9 @@ import DrawCompiledGraphics
 import Rects(intersectRects,overlaps)
 import EitherUtils(stripEither)--,mapEither
 import Sizing(newSize,Sizing(..))
-import ListUtil(mapFst,mapSnd)
+import Data.ListUtil(mapFst,mapSnd)
 import HO(apSnd)
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 import Xrequest(xrequestK)
 import StdIoUtil(appendChanK)
 import ContinuationIO(stderr)

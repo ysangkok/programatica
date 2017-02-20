@@ -1,5 +1,5 @@
 module ImageFetchFlags where
-import Fudgets
+import CmdLineEnv
 
 parallel = argReadKey "parallel" 5 :: Int
 imglog = argFlag "imglog" False

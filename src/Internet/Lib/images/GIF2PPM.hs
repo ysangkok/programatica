@@ -3,8 +3,8 @@ import GIF
 import PNM
 import Array
 import qualified Fudgets as F
-import List(sortBy)
-import ListUtil(chopList)
+import Data.List(sortBy)
+import Data.ListUtil(chopList)
 
 #ifdef __HASKELL98__
 #define map fmap

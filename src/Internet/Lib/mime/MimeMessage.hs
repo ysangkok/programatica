@@ -1,10 +1,10 @@
 module MimeMessage where -- message and message header manipulation functions
-import List(intersperse)
-import Char(isSpace)
+import Data.List(intersperse)
+import Data.Char(isSpace)
 import Utils2(strToLower,addcr)
 import HO(apFst,apSnd)
-import ListUtil(breakAt)
-import ListMap(lookupWithDefault)
+import Data.ListUtil(breakAt)
+import Data.ListMap(lookupWithDefault)
 
 data MimeMessage body = MimeMsg { mimeHdrs :: Headers, mimeBody :: body }
                       deriving Show

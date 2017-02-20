@@ -4,8 +4,8 @@ import FreeNames
 import DefinedNames(DefinedNames)
 
 import BaseSyntax
-import Lists((\\\))
-import List(nub)
+import Data.Lists((\\\))
+import Data.List(nub)
 import TypedIds
 --import AccList(accList)
 

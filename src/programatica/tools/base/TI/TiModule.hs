@@ -5,8 +5,8 @@ of mutually recursive modules.
 -}
 module TiModule(tcModule,tcModuleGroup,representative,joinModules,
                 monomorphismRestriction) where
-import Maybe(mapMaybe,fromJust)
-import List(sort)
+import Data.Maybe(mapMaybe,fromJust)
+import Data.List(sort)
 
 import TiDefault(resolveToplevelAmbiguities)
 import TI

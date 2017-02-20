@@ -23,7 +23,7 @@ import Alignment
 import Loops(loopCompThroughRightF,loopLeftF)
 import Message(Message(..))
 import EitherUtils(stripEither)
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 import CmdLineEnv(argReadKey)
 import Xtypes
 --import Maptrace(ctrace)

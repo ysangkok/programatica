@@ -2,7 +2,7 @@ module PfeSocket(listenOnPFE,connectToPFE,acceptPFE,removePFE,
                  pfeClient,clientOps,serverOps,sResult,errorString) where
 import Prelude hiding (putStr,readIO)
 import Network(listenOn,accept,connectTo,PortID(..))
-import IO(hPutStrLn,hPrint,hGetLine,hGetContents,hClose,hSetBuffering,BufferMode(..))
+import System.IO(hPutStrLn,hPrint,hGetLine,hGetContents,hClose,hSetBuffering,BufferMode(..))
 import AbstractIO
 import MUtils(ifM,done)
 import SIO

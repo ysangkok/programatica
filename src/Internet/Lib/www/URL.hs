@@ -4,7 +4,7 @@ module URL(
   docURL,urlHost,urlPath,fragment,
   sameDoc) where
 --import Fudgets (ctrace,Host(..),Port(..))
-import Utils2(unmix,mix,(+++))
+import Utils2Janus(unmix,mix,(+++))
 
 {-
 #ifdef __HASKELL98__

@@ -1,7 +1,7 @@
 module FtpControlF(ftpControlF,FtpRequest(..),FtpResponse(..)) where
 import AllFudgets hiding (transceiverF)
 import TransceiverF
-import Char(isDigit)
+import Data.Char(isDigit)
 
 data FtpRequest = FtpConnect Host Port
                 | FtpCommand String

@@ -3,7 +3,7 @@ import AllFudgets
 import RichText
 import RichTextMetrics(MeasuredRichText(..),MeasuredPara(..),MeasuredWord(..),Word(..))
 import Scans(mapAccumL)
-import Char(isSpace)
+import Data.Char(isSpace)
 
 type TxtCmds a b = (Int,   [((Int,Int),[(DrawTxt b,Maybe (Rect,Anchor,[a]))])])
 --                height    y1  y2

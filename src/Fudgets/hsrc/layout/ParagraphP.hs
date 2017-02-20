@@ -1,7 +1,7 @@
 module ParagraphP where
 import LayoutRequest
 import Geometry
-import ListUtil(chopList)
+import Data.ListUtil(chopList)
 import HO(apFst)
 import Defaults(defaultSep)
 import Placers(verticalP')

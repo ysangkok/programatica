@@ -7,7 +7,7 @@ import DFA(showDFA,renumberStates)
 import DetMachine
 import DetMachineToHaskell2
 import PPrint(pprint)
-import List(sort)
+import Data.List(sort)
 import HaskellChars(HaskellChar)
 
 {-+

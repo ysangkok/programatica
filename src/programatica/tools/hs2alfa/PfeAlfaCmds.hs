@@ -1,8 +1,8 @@
 module PfeAlfaCmds(pfeAlfaCmds) where
 import Prelude hiding (putStrLn,writeFile,catch)
 import Monad(filterM)
-import Maybe(mapMaybe)
-import List(intersect)
+import Data.Maybe(mapMaybe)
+import Data.List(intersect)
 
 import HsModule
 

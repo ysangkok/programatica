@@ -25,7 +25,7 @@ import PopupMenuF
 import SelectionF
 --import Utils(mapList)--loop,
 import Xtypes
-import Char(isAlpha,toLower,isPrint)
+import Data.Char(isAlpha,toLower,isPrint)
 import Graphic
 import InputMsg(InputMsg(..))
 

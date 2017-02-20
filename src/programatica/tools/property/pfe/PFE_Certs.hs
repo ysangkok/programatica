@@ -1,6 +1,6 @@
 module PFE_Certs(module PFE_Certs,CertServers,CertServer(..)) where
 import Prelude hiding (putStrLn,ioError,catch,writeFile)
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 
 import HsModule
 import HasPropStruct

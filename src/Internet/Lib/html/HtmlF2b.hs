@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module HtmlF2b(htmlF) where
 #ifdef __GLASGOW_HASKELL__
 import Fudgets hiding (StreamProcIO(..))
@@ -21,7 +22,7 @@ import Html(Html)
 import Monads
 import ConnectF
 --import qualified HtmlF as Old
-import Maybe(fromMaybe,listToMaybe)
+import Data.Maybe(fromMaybe,listToMaybe)
 
 #ifdef __HASKELL98__
 #define map fmap

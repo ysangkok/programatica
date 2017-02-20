@@ -13,7 +13,7 @@ import LayoutRequest(refpLayout,plainLayout)
 import Gc
 import StdIoUtil(appendChanK)
 import Pixmap(readBitmapFile)
-import Maybe(maybeToList)
+import Data.Maybe(maybeToList)
 import ContinuationIO(stderr)
 
 data BitmapFile = BitmapFile String

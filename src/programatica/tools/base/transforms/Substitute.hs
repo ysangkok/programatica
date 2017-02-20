@@ -1,5 +1,5 @@
 module Substitute where
-import Recursive
+import Recursive(mapRec,Rec)
 
 {-+
 The intention with class #Subst# is that #subst s e# applies the
@@ -26,12 +26,14 @@ class MapExp e s | s->e where
 
 instance MapExp e s => MapExp e [s] where mapExp = map . mapExp
 
+esubst :: (Subst i0 e1) => (MapExp e1 s0) => (i0 -> e1) -> s0 -> s0
 esubst = mapExp . subst
 
 esubst1 var e x = esubst s
   where
     s y = if y==x then e else var y
 
+mapExpRec :: Rec s s => MapExp e s => (e -> e) -> s -> s
 mapExpRec = mapRec . mapExp
 
 {-

@@ -25,8 +25,8 @@ import Syntax     as Hs
 
 
 -- utils
-import List(nub)
-import Maybe(isJust,fromJust)
+import Data.List(nub)
+import Data.Maybe(isJust,fromJust)
 import MUtils (( # ))
 import StateM
 

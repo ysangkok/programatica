@@ -3,8 +3,8 @@ import URLencode(encode,encodeQuery)
 import ParseURL(parseURL)
 import URL(joinURL,relativeURL)
 import Http(HttpMethod(..))
-import Maybe(fromMaybe)
-import ListUtil(assoc)
+import Data.Maybe(fromMaybe)
+import Data.ListUtil(assoc)
 
 submitForm (attrs,values) =
     case lookup "METHOD" attrs of

@@ -8,12 +8,12 @@ import HtmlTags
 import HtmlOps(htmlchars,txt,href,br,mapHtmlChars,extractBase)
 import Fud(paragraphP'',horizontalAlignP,horizontalAlignP',overlayAlignP,moveRefsS,refEdgesS,noRefsS)
 import FontSpec
-import ListUtil(assoc,chopList,breakAt)
-import ListMap(lookupWithDefault)
-import List(groupBy)
+import Data.ListUtil(assoc,chopList,breakAt)
+import Data.ListMap(lookupWithDefault)
+import Data.List(groupBy)
 import HO(apSnd)
-import Char(isHexDigit)
-import Maybe(isJust,maybeToList,fromMaybe)
+import Data.Char(isHexDigit)
+import Data.Maybe(isJust,maybeToList,fromMaybe)
 import Utils2(strToUpper,(+++),isSpace')
 import ActiveGraphicsF
 import HtmlFormF2

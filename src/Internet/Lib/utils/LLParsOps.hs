@@ -1,7 +1,7 @@
 module LLParsOps
   (DParser,parseDP,emptyDP,symbolDP,anySymbolDP,altDP,seqDP,nonEmptyDP)
    where
-import List(union,intersect)
+import Data.List(union,intersect)
 import HO(apFst)
 import qualified OrdMap as T -- selected table implementation
 --import qualified SymbolMap as T -- selected table implementation

@@ -14,7 +14,7 @@ import NullF
 import ParK
 import Pixmap
 import EitherUtils(stripEither)
-import Maybe(fromJust)
+import Data.Maybe(fromJust)
 import Geometry(pP,Rect(..),origin,Size)
 import Xtypes
 

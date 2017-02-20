@@ -1,7 +1,7 @@
 module RichTextFormatter where
 import RichText
 import Utils2(words')
-import List((\\))
+import Data.List((\\))
 
 type FormattedRichText a = RichTextPage	a -- [RichTextPage a]
 type RichTextPage a = [RichTextPara a]

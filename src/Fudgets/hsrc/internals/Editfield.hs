@@ -1,7 +1,7 @@
 module Editfield(EditField, moveField, replaceField, setFieldDir, getField,
                  deselectField, getSelection, getLastLineNo, getAft, getBef, getLnoEdge,
                  createField, dirint, splitnl, nlines) where
-import ListUtil(breakAt)
+import Data.ListUtil(breakAt)
 import Edtypes
 
 --export EditField,newline,nlines,splitnl,

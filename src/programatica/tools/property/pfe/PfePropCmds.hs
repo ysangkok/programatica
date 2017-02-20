@@ -1,8 +1,8 @@
 module PfePropCmds where
 import Prelude hiding (writeFile,print,readFile,readIO)
 import Monad(when)
-import List(sort,isPrefixOf)
-import Maybe(fromJust,mapMaybe)
+import Data.List(sort,isPrefixOf)
+import Data.Maybe(fromJust,mapMaybe)
 import Sets
 
 import PFE0(pput,allModules,preparseModule,findFile,moduleInfoPath,getSubGraph)

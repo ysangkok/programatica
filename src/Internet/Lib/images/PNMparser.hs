@@ -3,7 +3,7 @@ import Prelude
 import Fudgets(Size(..),Point(..),RGB(..),oo)
 import Utils2(ord)
 import PNM
-import Char(isSpace)
+import Data.Char(isSpace)
 
 --import NonStdTrace
 

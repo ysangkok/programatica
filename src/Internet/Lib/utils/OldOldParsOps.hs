@@ -1,4 +1,4 @@
-module OldParsOps(Parser,Error(..),parse,tstParser,unit,fail,bind,ap,chk,orelse,some,many,seq,lit,scan,tok,cap,maybe,optional,Either..) where
+module OldParsOps(Parser,Error(..),parse,tstParser,unit,fail,bind,ap,chk,orelse,some,many,seq,lit,scan,tok,cap,maybe,optional) where
 
 infixl 3 `ap`,`chk`,`bind`, `cap`
 infixl 2 `orelse`

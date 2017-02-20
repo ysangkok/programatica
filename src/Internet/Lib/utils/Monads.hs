@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# COMPILERFLAGS -fno-overload-restr #-}
 module Monads(ReactionM,react,put,set,get,update,nop) where
 

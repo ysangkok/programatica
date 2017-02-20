@@ -5,7 +5,7 @@ import Prelude hiding (not)
 import qualified QuickCheck as QC
 import ShowFunctions
 --import System(getEnv)
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 
 import Generators(generators)
 

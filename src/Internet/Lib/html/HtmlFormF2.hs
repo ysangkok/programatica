@@ -7,7 +7,7 @@ import Html(Html(..),HtmlItem)
 import HtmlFormSubmit
 import SelectF(selectF)
 import Utils2(space,strToLower)
-import ListUtil(assoc)
+import Data.ListUtil(assoc)
 import HO(apSnd)
 --import DialogueIO
 --imaport ContinuationIO(stdout)

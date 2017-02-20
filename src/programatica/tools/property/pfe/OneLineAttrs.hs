@@ -1,7 +1,7 @@
 module OneLineAttrs(parseOneLineAttrs) where
 import Monad
-import Maybe
-import Char
+import Data.Maybe
+import Data.Char
 --import Attrs
 
 {-+

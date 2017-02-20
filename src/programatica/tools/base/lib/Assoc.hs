@@ -1,8 +1,8 @@
 module Assoc where
 
 import OpTypes
-import List(partition)
-import Maybe (listToMaybe)
+import Data.List(partition)
+import Data.Maybe (listToMaybe)
 import Products
 import EnvM
 

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module UAbstract(module UAbstract,MetaVar(..),was,asTextBy) where
 import UMetaVar
 import UAnnots
@@ -164,6 +165,7 @@ defNames (Type (n,_)) = [n]
 defNames (Axiom (n,_)) = [n]
 defNames (CommentDef _) = []
     
+namesDecls :: Maybe Decl -> [Var]
 namesDecls = concatMap namesDecl
 
 namesCtx (Ctx _ bs) = map fst bs

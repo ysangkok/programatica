@@ -9,7 +9,7 @@ import Defaults(defaultSep)
 #define fromInt fromIntegral
 #endif
 
-import List(mapAccumL)
+import Data.List(mapAccumL)
 
 matrixP n = matrixP' n Horizontal defaultSep
 

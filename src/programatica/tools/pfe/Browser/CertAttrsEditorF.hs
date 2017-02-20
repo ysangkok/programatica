@@ -1,5 +1,5 @@
 module CertAttrsEditorF where
-import Maybe(fromMaybe)
+import Data.Maybe(fromMaybe)
 import Fudgets
 import Attrs
 import CertAttrs

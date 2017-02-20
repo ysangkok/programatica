@@ -11,7 +11,7 @@ import Drawing
 import DrawingOps
 import GraphicsF
 import FDefaults
-import ListUtil(assoc)
+import Data.ListUtil(assoc)
 import Sizing(Sizing(..))
 --import GCAttrs() -- instances
 import Event(Pressed(..))
