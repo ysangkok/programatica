@@ -2,7 +2,11 @@ module P_IO_data {-(module XStuff, module P_IO_data)-} where
 import XStuff
 import ShowFun
 import Prelude hiding (IOError)
-import Time(ClockTime,CalendarTime)
+import Data.Time.Calendar (Day)
+import Data.Time (TimeOfDay)
+
+data CalendarTime = Day deriving (Show)
+data ClockTime = TimeOfDay deriving (Show)
 
 data Request =	-- file system requests:
 			  ReadFile      String         

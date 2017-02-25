@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module Event(module Event,FontStructList,FontStruct) where
 import Font(FontStruct,FontStructList,CharStruct)
 import Visual(Visual)

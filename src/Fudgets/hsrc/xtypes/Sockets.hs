@@ -1,7 +1,7 @@
  module Sockets(DLValue,module Sockets) where
 import Event(XEvent)
 import Xtypes(WindowId,Display)
-import PackedString(PackedString)
+import PackedString(ByteString)
 import DLValue
 
 -- NOTE: Matching definitions for the C world appear in xlib/sockets.h --------
@@ -22,7 +22,7 @@ data SocketRequest = OpenLSocket Port                -- -> SR LSocket
                    | DLSym DLHandle String           -- -> SR DLValue
 		   | OpenFileAsSocket String String  -- -> SR Socket
 		                   -- name,  mode  (as in fopen(name,mode))
-		   | WriteSocketPS Socket PackedString -- -> SR Wrote
+		   | WriteSocketPS Socket ByteString -- -> SR Wrote
                    | GetStdoutSocket                 -- -> SR Socket
                      deriving (Eq, Ord, Show)
 

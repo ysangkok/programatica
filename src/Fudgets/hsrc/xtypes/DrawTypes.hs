@@ -1,6 +1,7 @@
+{-# LANGUAGE CPP #-}
 module DrawTypes where
 import Geometry(Point,Rect,Line)
-import PackedString(PackedString)
+import PackedString(ByteString)
 import Xtypes(Pixel,PixmapId,ImageFormat,DbeBackBufferId)
 
 #ifdef __GLASGOW_HASKELL__
@@ -26,8 +27,8 @@ data DrawCommand
   | DrawPoint Point
   | CreatePutImage Rect ImageFormat [Pixel]
   --
-  | DrawImageStringPS Point PackedString
-  | DrawStringPS Point PackedString
+  | DrawImageStringPS Point ByteString
+  | DrawStringPS Point ByteString
   --
   | DrawLines CoordMode [Point]
   | DrawImageString16 Point String

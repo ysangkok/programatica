@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module Ap where
 
 infixl 9 `ap`

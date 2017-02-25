@@ -11,7 +11,7 @@ module TiPrelude where
 import HsConstants(tuple)
 import HasBaseStruct
 -- import TiTypes
-import TiNames
+import TiNames(pv,pc,TypeCon,SrcName,prelType)
 import HsIdent(HsIdentI)
 import HsTypeStruct
 
@@ -24,8 +24,8 @@ pt n = hsTyCon . prelType $ n
 --tBool :: (HasBaseStruct rec (TI i t), TypeCon i)  => rec
 --tBool = pt "Bool"
 
-prelOtherwise = pv "otherwise"
-prelFlip   = pv "flip"
+--prelOtherwise = pv "otherwise"
+--prelFlip   = pv "flip"
 {-
 prelOtherwise, prelNegate, prelFlip, prelEnumFrom, prelEnumFromTo,
  prelEnumFromThen, prelEnumFromThenTo, prelThen, prelBind, prelFail,
@@ -58,11 +58,11 @@ prelOr    = pv "||"
 prelFalse = pc "False"
 prelNil   = pc "[]"
 -}
-prelTrue  = pc "True"
+--prelTrue  = pc "True"
 
 --tupleType ts = foldl1 hsTyApp (tuplecon (length ts):ts) :: Type
 tupleType ts = hsTyTuple ts -- :: Type
 --listType t = hsTyApp (pt "[]") t -- :: Type
 
 tuplecon n = pt (tuple (n-1)) -- :: Type
-funcon = pt "->"
+--funcon = pt "->"
