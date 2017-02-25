@@ -2,7 +2,7 @@ module IdMT where
 
 import MT
 import Control_Monad_Fix
-import Monad(liftM)
+import Control.Monad(liftM)
 
 
 newtype With_ m a    = I { removeId :: m a }

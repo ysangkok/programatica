@@ -1,11 +1,14 @@
+{-# LANGUAGE GADTs #-}
 module CmdLineParser3(
   P((:--),Token),cmd,(!),(<@),( #@ ),chk,nil,many,arg,kw,opt,flag,named,
   run,usage,parseAll
   ) where
 import PrettyPrint hiding (kw)
-import Monad(msum,join,liftM,MonadPlus(..),ap)
+import Control.Monad(msum,join,liftM,MonadPlus(..),ap)
 import Data.Maybe(isJust)
-import System(getArgs)
+import System.Environment(getArgs)
+import Control.Applicative (Applicative, Alternative)
+import qualified Control.Applicative (empty, (<|>))
 
 infixl 3 <@,`chk`,#@
 infix 2 :--
@@ -81,12 +84,22 @@ parseAll p args =
 newtype PM res = PM {unPM ::[String] -> Either ([String],[String]) (res,[String])}
 
 instance Functor PM where fmap = liftM
+
+instance Applicative PM where
+  pure  = return
+  (<*>) = ap
+
 instance Monad PM where
   fail s = PM $ \ args->Left (args,[s])
   return x = PM $ \args->Right (x,args)
   PM p1>>=xp2 = PM $ \ args->case p1 args of
 			       Left err -> Left err
 			       Right (x,args') -> unPM (xp2 x) args'
+
+instance Alternative PM where
+    (<|>) = mplus
+    empty = mzero
+
 instance MonadPlus PM where
   mzero = fail "no parse"
   mplus (PM p1) (PM p2) =

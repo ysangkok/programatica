@@ -1,5 +1,5 @@
 module OneLineAttrs(parseOneLineAttrs) where
-import Monad
+import Control.Monad
 import Data.Maybe
 import Data.Char
 --import Attrs

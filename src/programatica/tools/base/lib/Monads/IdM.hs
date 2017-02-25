@@ -2,9 +2,14 @@ module IdM where
 
 import MT
 import Control_Monad_Fix
+import Control.Monad (ap)
 
 
 newtype IdM a   = I { removeId :: a }
+
+instance Applicative IdM where
+  pure  = return
+  (<*>) = ap
 
 instance Monad IdM where
   return        = I

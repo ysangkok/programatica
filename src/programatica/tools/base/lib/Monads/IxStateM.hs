@@ -2,7 +2,8 @@ module IxStateM (HasState(..), StateM, withSt, withStS, mapState) where
 
 import MT
 import Control_Monad_Fix
-
+import Control.Applicative
+import Control.Monad (ap)
 
 newtype StateM s a   = S { ($$) :: s -> (a,s) }
 
@@ -18,6 +19,10 @@ mapState inF outF m = S (\s -> let (a,s1) = m $$ inF s in (a, outF s1))
 
 instance Functor (StateM s) where
     fmap f m        = m >>= return . f
+
+instance Applicative (StateM s) where
+  pure  = return
+  (<*>) = ap
 
 instance Monad (StateM s) where
     return x  = S (\s -> (x,s) )

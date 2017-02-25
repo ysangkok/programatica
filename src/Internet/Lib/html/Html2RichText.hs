@@ -3,7 +3,7 @@ import Html
 import HtmlTags
 import HtmlOps
 import RichText
-import Data.ListUtil(assoc)
+import ListUtil(assoc)
 import Fudgets(argFlag,argKey)
 import Utils2(expandtabs,pair)
 import NameMonad

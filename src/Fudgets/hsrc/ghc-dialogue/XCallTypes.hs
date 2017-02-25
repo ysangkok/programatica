@@ -4,8 +4,8 @@ module XCallTypes
  --(module XCallTypes,newCharArray,MutableByteArray(..))
  where
 
-import Bits
-import Word(Word32)
+import Data.Bits
+import Data.Word(Word32)
 
 import Utils(number)
 import Xtypes

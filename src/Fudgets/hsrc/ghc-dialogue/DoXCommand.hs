@@ -9,7 +9,7 @@ import Xtypes
 --import Font
 import ResourceIds
 import DrawTypes
-import Data.ListUtil(chopList)
+import ListUtil(chopList)
 
 import DoXRequest(getGCValues)
 import XCallTypes
@@ -24,7 +24,7 @@ import System.IO(hPutStr,stderr) -- for error reporting
 
 import PackedString(lengthPS,unpackPS)
 --import Word(Word32)
-import Bits
+import Data.Bits
 
 --import IO(hFlush,stdout) -- debugging
 

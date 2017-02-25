@@ -9,7 +9,7 @@ import LoopLow
 import Cont
 import IsRequest
 --import DialogueIO hiding (IOError)
-import qualified OrdMap as OM
+import qualified Data.Map.Strict as OM
 
 --import Maptrace(ctrace) -- debug
 --import NonStdTrace(trace)

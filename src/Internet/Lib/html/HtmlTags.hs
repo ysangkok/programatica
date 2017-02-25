@@ -1,5 +1,5 @@
 module HtmlTags where
-import Ix
+import Data.Ix
 
 data TagName
   -- Head tags

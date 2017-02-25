@@ -5,7 +5,7 @@ module HyperGraphicsF2(
 import AllFudgets
 import Maybe(fromJust,mapMaybe)
 import ListUtil(mapFst)
-import qualified OrdMap as Map
+import qualified Data.Map.Strict as Map
 --import Fudget
 --import Defaults(paperColor)
 --import InputMsg(inputDone)

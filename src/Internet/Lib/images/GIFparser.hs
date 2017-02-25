@@ -1,13 +1,12 @@
+{-# LANGUAGE CPP #-}
 module GIFparser(parseGIF,sizeOfGIF) where
 import GIF
 import ParsOps2
-import Utils2(bit,bits)
+import Utils2Janus(bit,bits)
 
 default(Int)
 
-#ifdef __HASKELL98__
 #define map fmap
-#endif
 
 --import Trace
 --tr s = trace s $ return ()

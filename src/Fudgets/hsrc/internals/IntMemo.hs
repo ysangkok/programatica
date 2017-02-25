@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module IntMemo(memoInt) where
 import Prelude hiding (lookup)
 import CmdLineEnv(argFlag)

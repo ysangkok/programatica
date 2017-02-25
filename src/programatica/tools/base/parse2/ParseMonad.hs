@@ -11,10 +11,11 @@ import MUtils
 import SrcLoc
 import SrcLocPretty
 import PrettyPrint(pp)
-import Monad(liftM,MonadPlus(..))
+import Control.Monad(liftM,MonadPlus(..),ap)
 --import ExceptM()
 import Control.Monad.Error()
  --import IOExts(trace) -- for debugging only
+import Control.Applicative
 
 default(Int)
 
@@ -41,12 +42,20 @@ get = PM $ \ st -> Right (st,st)
 set st = PM $ \ _ -> Right ((),st)
 setreturn x st = PM $ \ _ -> Right (x,st)
 
+instance Applicative PM where
+  pure  = return
+  (<*>) = ap
+
 instance Monad PM where
   return=returnPM
   (>>=) = thenPM
   fail = parseError
 
 instance Functor PM where fmap = liftM
+
+instance Alternative PM where
+    (<|>) = mplus
+    empty = mzero
 
 instance MonadPlus PM where
   mzero = fail "parser failed"

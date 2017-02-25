@@ -4,10 +4,10 @@ import HaskellChars
 import HsTokens
 import Data.List(partition,sort,sortBy,nub)
 import DFA(DFA(..))
-import qualified OrdMap as OM
+import qualified Data.Map.Strict as OM
 import OpTypes(cmpBy)
 import MUtils(collectBySnd)
-import Trace(trace)
+import Debug.Trace(trace)
 
 dfaToHaskell charclasses modname imports funname ((init,final),DFA dfa) =
     "module" & modname & "("!funname!")" & "where" & nl &

@@ -22,7 +22,7 @@ module PFE0(
   ) where
 import Prelude hiding (readFile,writeFile,putStr,putStrLn,catch,ioError)
 import Data.List(sort,nub,(\\))
-import Monad(when,unless)
+import Control.Monad(when,unless)
 import Data.Maybe(fromMaybe,fromJust,isJust)
 
 import HsModule

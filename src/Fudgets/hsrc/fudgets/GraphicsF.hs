@@ -52,7 +52,7 @@ import DrawCompiledGraphics
 import Rects(intersectRects,overlaps)
 import EitherUtils(stripEither)--,mapEither
 import Sizing(newSize,Sizing(..))
-import Data.ListUtil(mapFst,mapSnd)
+import ListUtil(mapFst,mapSnd)
 import HO(apSnd)
 import Data.Maybe(fromMaybe)
 import Xrequest(xrequestK)

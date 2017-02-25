@@ -2,7 +2,7 @@ module Dew(decodeEncodedWords) where -- decode encoded-words
 import Base64
 import Dqp
 import Utils2(words')
-import Data.ListUtil(chopList,breakAt)
+import ListUtil(chopList,breakAt)
 
 decodeEncodedWords = concatMap decodeWord . words'
 

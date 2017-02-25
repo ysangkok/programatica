@@ -7,7 +7,7 @@ import AlignP(idP)
 --import LayoutDir
 import CmdLineEnv(argFlag)
 import Defaults(defaultSep)
-import Ratio
+import Data.Ratio
 import NonStdTrace(trace)
 
 -- should get hints somehow

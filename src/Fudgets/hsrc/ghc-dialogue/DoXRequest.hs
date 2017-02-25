@@ -11,7 +11,7 @@ import Font
 import ResourceIds
 import Visual
 import HbcWord(intToWord) -- for Visual
-import System.IOUtil(getEnvi)
+import IOUtil(getEnvi)
 import CmdLineEnv(argFlag)
 
 import XCallTypes

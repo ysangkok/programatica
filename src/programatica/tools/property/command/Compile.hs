@@ -2,7 +2,7 @@
 
 module Compile where
 
-import Monad(liftM)
+import Control.Monad(liftM)
 
 data Compile a = Good a | CompileError String
 

@@ -3,7 +3,7 @@ import Data.List(sortBy)
 import OpTypes(cmpBy)
 import Data.Char(toUpper)
 import PrettyPrint
-import Array
+import Data.Array
 
 ppStatistics descv descu [] = empty
 ppStatistics descv descu xs =

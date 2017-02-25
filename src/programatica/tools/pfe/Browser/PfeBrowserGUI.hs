@@ -9,7 +9,7 @@ import ContribFudgets(menuIcon,item,itemValue)--menuBarF,delayedSubMenuItem,idT,
 import HyperGraphicsF2
 import TreeBrowser as B(treeBrowserF',Tree(..))
 import HistoryButtonsF
-import Data.ListUtil(chopList,breakAt,mapFst)
+import ListUtil(chopList,breakAt,mapFst)
 
 import PfePlumbing
 import PfeBrowserColors as C

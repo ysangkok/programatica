@@ -1,9 +1,9 @@
 module GIFcompress(compressGIF,compressGIFLZW) where
-import Data.ListUtil(chopList)
+import ListUtil(chopList)
 import GIF
 import GIFops(compressRasterData)
 import BitStream(bput,bytestream,end)
-import qualified OrdMap as Map
+import qualified Data.Map.Strict as Map
 
 --import Trace(trace)
 --trace x y = y

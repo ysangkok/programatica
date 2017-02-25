@@ -1,7 +1,7 @@
 module ParseCertAttrs(parseCertAttr,CertAttrs) where
 import CertAttrs
 import OneLineAttrs
-import Monad(mplus)
+import Control.Monad(mplus)
 import MUtils
 
 parseCertAttr :: String -> Maybe (Name,CertAttr)

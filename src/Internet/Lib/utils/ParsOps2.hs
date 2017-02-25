@@ -133,5 +133,9 @@ instance Monad (Parser t) where
   (>>=) = bind
   return = unit
 
+instance Applicative (Parser t) where
+  pure  = return
+  (<*>) = ap
+
 instance Functor (Parser t) where
   fmap = mapP

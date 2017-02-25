@@ -19,7 +19,7 @@ import LayoutRequest(plainLayout,LayoutResponse(..))
 import Message(Message(..),message)
 import NullF
 import StateMonads
-import Monad(when)
+import Control.Monad(when)
 import HO(apSnd)
 import Xtypes
 import UndoStack

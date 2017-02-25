@@ -10,7 +10,7 @@ module OrigTiMonad(
    (>:),freshInt
   ) where
 import Prelude hiding (lookup) -- for Hugs
-import Monad(MonadPlus(..))
+import Control.Monad(MonadPlus(..))
 import HsIdent(HsIdentI)
 import HsName(ModuleName,Id,noModule)
 import TiTypes

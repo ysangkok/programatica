@@ -10,6 +10,7 @@ import MUtils
 type RewriteName = String
 data Rewrite m ds = Rewrite {rwName::RewriteName, rwFun::m (ds->ds)}
 
+idRw :: Monad m0 => Rewrite m0 ds
 idRw = Rewrite "" (return id)
 compRw (Rewrite n1 m1) (Rewrite n2 m2) = Rewrite (n1++n2) ((.) # m1 <# m2)
 -- Note: composing with idRw doesn't change the name of the rewrite

@@ -1,9 +1,9 @@
 module DFA where
-import qualified OrdMap as OM
+import qualified Data.Map.Strict as OM
 import MUtils(apFst,mapFst,mapSnd,collectByFst,collectBySnd,usort)
 import Data.Maybe(fromJust)
 
-type DMap s i o = OM.OrdMap s ([(i,s)],[(o,s)])
+type DMap s i o = OM.Map s ([(i,s)],[(o,s)])
 newtype DFA s i o = DFA (DMap s i o)
 
 ---
@@ -35,7 +35,7 @@ renumberStates ((start,final),DFA detm) =
     ((subst start,map subst final),
      DFA . OM.fromList . map subststate . OM.toList $ detm)
   where
-    oldstate = OM.indices detm
+    oldstate = OM.keys detm
     newstate = OM.fromList (zip oldstate [(1::Int)..])
     
     subststate (st,(iedges,oedges)) =

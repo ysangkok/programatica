@@ -3,7 +3,7 @@ module ExceptM (module ExceptM, HasExcept(..)) where
 import MT
 import Control_Monad_Fix
 
-import Monad (liftM)
+import Control.Monad (liftM)
 
 
 type ExceptM          = Either

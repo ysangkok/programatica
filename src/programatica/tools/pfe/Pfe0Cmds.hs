@@ -2,7 +2,7 @@
 module Pfe0Cmds where
 import Prelude hiding (print,putStr,putStrLn,catch,readFile)
 import Data.List((\\))
-import Monad(unless,when)
+import Control.Monad(unless,when)
 import Data.Maybe(fromJust)
 
 import PFE0

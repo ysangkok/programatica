@@ -4,7 +4,7 @@ module Dither where
 import AllFudgets
 import PNM
 import Data.Maybe(fromJust)
-import Array
+import Data.Array
 --import Word
 --import Bits
 import HbcWord

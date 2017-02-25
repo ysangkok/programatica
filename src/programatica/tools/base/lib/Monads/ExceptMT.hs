@@ -3,8 +3,9 @@ module ExceptMT (HasExcept(..), MT(..), WithExcept, removeExcept, mapExcept)
 
 import MT
 import Control_Monad_Fix 
+import Control.Applicative
 
-import Monad(liftM,MonadPlus(..))
+import Control.Monad(liftM,MonadPlus(..),ap)
 
 newtype WithExcept x m a   = E { removeExcept :: m (Either x a) } 
 iso f = E . f . removeExcept
@@ -18,6 +19,10 @@ mapExcept f = iso (liftM (either (Left . f) Right))
 instance Monad m => Functor (WithExcept x m) where
   fmap = liftM
 
+instance Monad m => Applicative (WithExcept x m) where
+  pure  = return
+  (<*>) = ap
+
 instance Monad m => Monad (WithExcept x m) where
   return    = lift . return
   E m >>= f = E $ do x <- m
@@ -27,6 +32,10 @@ instance Monad m => Monad (WithExcept x m) where
             
 instance MT (WithExcept x) where
   lift m    = E (m >>= return . Right)
+
+instance MonadPlus m => Alternative (WithExcept x m) where
+    (<|>) = mplus
+    empty = mzero
 
 instance MonadPlus m => MonadPlus (WithExcept x m) where
   mzero             = lift mzero   

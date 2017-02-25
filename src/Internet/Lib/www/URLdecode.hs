@@ -1,15 +1,9 @@
 module URLdecode where
---import Data.ListUtil(breakAt)
-import Data.List.Split(chop)
+import ListUtil(chopList,breakAt)
 import Utils2Janus(aboth,chr,ord)
 import Data.Char(toUpper)
 
 type Query = [(String,String)]
-
-
--- Janus added this function from https://hackage.haskell.org/package/hmatrix-0.16.1.3/src/src/Data/Packed/Matrix.hs
-breakAt c l = (a++[c],tail b) where
-    (a,b) = break (==c) l
 
 decodeQuery :: String -> Query
 decodeQuery = map (aboth decode . breakAt '=') . chopList (breakAt '&')

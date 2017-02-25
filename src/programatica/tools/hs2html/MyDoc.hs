@@ -3,7 +3,7 @@ module MyDoc where
 import Text.PrettyPrint
 import EnvM
 import MUtils 
-import Monad
+import Control.Monad
 import Data.Char(isSpace)
 
 

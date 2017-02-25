@@ -10,7 +10,7 @@ import Event
 import Fudget
 import FRequest
 --import Geometry(Line, Point, Rect, Size(..))
-import System.IOUtil(getEnvi)
+import IOUtil(getEnvi)
 --import LayoutRequest(LayoutRequest)
 import Loopthrough
 import Message(Message(..),stripLow)

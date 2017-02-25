@@ -5,7 +5,7 @@ import ContribFudgets(socketServerF,SocketMsg(..),ClientMsg(..))
 import Http
 --import DialogueIO hiding (IOError)
 --import ContinuationIO(stdout)
-import Data.ListUtil(breakAt)
+import ListUtil(breakAt)
 import Time(CalendarTime,calendarTimeToString)
 import Utils2(strToLower)
 import MimeMessage(splitmsg)

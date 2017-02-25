@@ -4,7 +4,7 @@ import ParseURL(parseURL)
 import URL(joinURL,relativeURL)
 import Http(HttpMethod(..))
 import Data.Maybe(fromMaybe)
-import Data.ListUtil(assoc)
+import ListUtil(assoc)
 
 submitForm (attrs,values) =
     case lookup "METHOD" attrs of

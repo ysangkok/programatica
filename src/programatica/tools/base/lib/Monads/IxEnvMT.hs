@@ -3,7 +3,7 @@ module IxEnvMT (HasEnv(..), MT(..), at, Z, S, Top, Under, WithEnv, withEnv, mapE
 import MT
 import Control_Monad_Fix
 
-import Monad(liftM,MonadPlus(..))
+import Control.Monad(liftM,MonadPlus(..))
 
 
 newtype WithEnv e m a = E { unE :: e -> m a }

@@ -6,7 +6,7 @@ import RichTextFormatter
 --import SpecialMsg
 import NonStdTrace(trace)
 import Utils2(ord)
-import Ix
+import Data.Ix
 
 {-
 measureRtK :: FormattedRichText special ->

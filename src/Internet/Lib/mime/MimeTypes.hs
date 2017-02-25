@@ -1,5 +1,5 @@
 module MimeTypes where
-import Data.ListUtil(chopList,breakAt)
+import ListUtil(chopList,breakAt)
 import MimeMessage(Headers)
 
 typeHdrs path = encHdr (extensions path)

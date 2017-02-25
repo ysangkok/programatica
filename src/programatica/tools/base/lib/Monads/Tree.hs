@@ -1,6 +1,7 @@
 module Tree where 
 
-import Monad
+import Control.Applicative
+import Control.Monad
 import Prelude hiding (sequence)    -- doesn't work in Hugs.
 import Control_Monad_Fix
 
@@ -28,6 +29,9 @@ assertNode t          = Node (theLeft t) (theRight t)
 instance Functor Tree where
   fmap                = liftM
 
+instance Applicative Tree where
+  pure  = return
+  (<*>) = ap
 
 instance Monad Tree where
   return              = Single
@@ -35,6 +39,9 @@ instance Monad Tree where
   Single a >>= f      = f a
   Node x y >>= f      = Node (x >>= f) (y >>= f) 
 
+instance Alternative Tree where
+    (<|>) = mplus
+    empty = mzero
     
 instance MonadPlus Tree where        
   mzero               = Empty

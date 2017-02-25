@@ -3,8 +3,9 @@ module IxStateMT (HasState(..), MT, at, Z, S, Top, Under,
 
 import MT
 import Control_Monad_Fix
+import Control.Applicative
 
-import Monad(liftM,MonadPlus(..))
+import Control.Monad(liftM,MonadPlus(..),ap)
 
 
 newtype WithState s m a = S { ($$) :: s -> m (a,s) }
@@ -26,6 +27,10 @@ mapState inF outF (S m) = S (liftM outF' . m . inF)
 instance Monad m => Functor (WithState s m) where
   fmap        = liftM 
 
+instance Monad m => Applicative (WithState s m) where
+  pure  = return
+  (<*>) = ap
+
 instance Monad m => Monad (WithState s m) where
   return x    = S (\s -> return (x,s))
   S m >>= f   = S (\s -> m s >>= \(a,s') -> f a $$ s')
@@ -33,6 +38,10 @@ instance Monad m => Monad (WithState s m) where
 
 instance MT (WithState s) where
   lift m      = S (\s -> do a <- m; return (a,s))
+
+instance MonadPlus m => Alternative (WithState s m) where
+    (<|>) = mplus
+    empty = mzero
 
 instance MonadPlus m => MonadPlus (WithState s m) where
   mzero             = lift mzero

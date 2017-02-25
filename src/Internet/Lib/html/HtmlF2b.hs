@@ -19,7 +19,7 @@ import FuppletF(FuppletInput(..),FuppletOutput(..)) -- because of -fno-syn-expan
 import URL(URL,url2str,joinURL,sameDoc,fragment,relativeURL)
 import ParseURL(parseURL)
 import Html(Html)
-import Monads
+import Control.Monads
 import ConnectF
 --import qualified HtmlF as Old
 import Data.Maybe(fromMaybe,listToMaybe)

@@ -22,6 +22,10 @@ mapOutput f (O x tree)      = O x (fmap f tree)
 instance Functor (OutputM o) where
     fmap f (O x o)          = O (f x) o
 
+instance Applicative (OutputM o) where
+  pure  = return
+  (<*>) = ap
+
 instance Monad (OutputM o) where
     return x                = O x Tree.Empty
     O x o >>= f             = let O y p = f x in O y (o `Tree.merge` p)

@@ -4,7 +4,7 @@ import PackedString(PackedString)
 import Xtypes(Pixel,PixmapId,ImageFormat,DbeBackBufferId)
 
 #ifdef __GLASGOW_HASKELL__
-import Ix
+import Data.Ix
 -- fromEnum bug workaround
 #define IX , Ix
 #else

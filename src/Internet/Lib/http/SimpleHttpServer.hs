@@ -18,7 +18,7 @@ import ParseURL
 import URLdecode
 import MimeTypes
 import HttpResponses
-import Data.ListUtil(chopList,breakAt)
+import ListUtil(chopList,breakAt)
 import HO(apSnd)
 import DialogueIO hiding (IOError)
 

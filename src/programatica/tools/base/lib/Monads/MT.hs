@@ -1,3 +1,4 @@
+{-# LANGUAGE EmptyDataDecls #-}
 module MT where
 
 import Tree

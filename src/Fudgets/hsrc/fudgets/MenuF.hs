@@ -28,7 +28,7 @@ import Xtypes
 import Defaults(menuFont)
 import CmdLineEnv(argFlag)
 import Graphic
-import Array
+import Data.Array
 --import DialogueIO hiding (IOError)
 import ShowCommandF(showCommandF)
 import NonStdTrace(trace)

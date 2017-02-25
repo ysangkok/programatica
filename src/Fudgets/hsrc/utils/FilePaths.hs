@@ -3,7 +3,7 @@ module FilePaths(AFilePath,rootPath,aFilePath,filePath,
 		 extendPath,pathTail,pathHead,pathLength) where
 import Data.List(intersperse)
 --import IO(openDirectory, statFile)
-import Data.ListUtil(chopList,breakAt)
+import ListUtil(chopList,breakAt)
 
 newtype AFilePath = P [String] deriving (Eq,Ord)
 -- data AFilePath = Root | Cwd | AFilePath :/ String

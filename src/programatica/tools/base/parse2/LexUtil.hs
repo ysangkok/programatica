@@ -10,7 +10,7 @@ where
 
 import HsName(isSymbol)
 import Data.Char(isDigit, isOctDigit, isHexDigit, digitToInt, isAlpha, isLower)
-import Ratio
+import Data.Ratio
 
 isIdent  c = isAlpha c || isDigit c || c == '\'' || c == '_'
 isLower_ c = isLower c || c == '_'

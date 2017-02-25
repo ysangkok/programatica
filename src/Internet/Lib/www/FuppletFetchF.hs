@@ -8,7 +8,7 @@ import CacheF
 import Utils2(mix)
 import DialogueIO
 import Prelude hiding (IOError)
-import System.IOUtil(getEnvi)
+import IOUtil(getEnvi)
 import Data.Maybe(fromMaybe)
 
 default(Int)

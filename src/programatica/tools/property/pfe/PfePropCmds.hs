@@ -1,6 +1,6 @@
 module PfePropCmds where
 import Prelude hiding (writeFile,print,readFile,readIO)
-import Monad(when)
+import Control.Monad(when)
 import Data.List(sort,isPrefixOf)
 import Data.Maybe(fromJust,mapMaybe)
 import Sets

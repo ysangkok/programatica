@@ -1,7 +1,7 @@
 module HistoryButtonsF where
 import AllFudgets hiding (StreamProcIO(..))
 import ReactiveF
-import Monad(when)
+import Control.Monad(when)
 
 -- Mostly taken from WWWBrowser...
 

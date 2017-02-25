@@ -5,7 +5,7 @@ import URL(URL,joinURL,url2str)
 import PixmapDisplayF(pixmapDisplayF',PixmapId)
 import Data.ListMap(lookupWithDefault)
 import Data.Maybe(listToMaybe)
-import Monad(ap)
+import Control.Monad(ap)
 
 type ImageOutput = (URL,Maybe Size)
 type ImageInput = ((URL,Maybe Size),(Size,PixmapId))

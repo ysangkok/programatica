@@ -1,8 +1,15 @@
 module PrettyEnv where
 
+import Control.Applicative -- Otherwise you can't do the Applicative instance.
+import Control.Monad (liftM, ap)
+
 newtype DocM a = DocM (PPHsMode -> a)
 
 instance Functor DocM where fmap f (DocM d) = DocM (f.d)
+
+instance Applicative DocM where
+  pure  = return
+  (<*>) = ap
 
 instance Monad DocM where
   return = DocM . const

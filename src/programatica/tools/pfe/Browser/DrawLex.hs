@@ -1,5 +1,5 @@
 module DrawLex where
-import Monad(join)
+import Control.Monad(join)
 import Data.List(groupBy)
 import Data.Maybe(mapMaybe,fromMaybe)
 import Fudgets

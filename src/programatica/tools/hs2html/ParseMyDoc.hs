@@ -2,7 +2,7 @@ module ParseMyDoc where
 
 import MyDoc
 
-import Monad
+import Control.Monad
 import Data.List
 import Data.Maybe
 import Data.Char

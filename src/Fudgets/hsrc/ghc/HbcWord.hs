@@ -1,6 +1,6 @@
 module HbcWord(module HbcWord,Word) where
-import Word
-import Bits
+import Data.Word
+import Data.Bits
 
 --type Word=Word.Word32
 --type Short=Word16

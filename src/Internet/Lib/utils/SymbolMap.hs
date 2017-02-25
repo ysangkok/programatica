@@ -1,6 +1,6 @@
 module SymbolMap(SymbolMap,indices,lookup,empty,union,toList,fromList) where
 import LexSymbol
-import Array hiding (indices)
+import Data.Array hiding (indices)
 import Prelude hiding (lookup)
 import HO(apSnd)
 --import Trace(trace)

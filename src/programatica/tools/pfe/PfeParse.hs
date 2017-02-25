@@ -2,7 +2,7 @@
 -}
 module PfeParse(module PfeParse,arg,(<@),( #@ ),many) where
 import Data.Char(isUpper)
-import Monad(when)
+import Control.Monad(when)
 import Data.Maybe(isJust)
 
 import HsName(ModuleName(..),sameModuleName,parseModuleName,isMainModule)

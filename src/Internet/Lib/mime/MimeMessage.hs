@@ -3,7 +3,7 @@ import Data.List(intersperse)
 import Data.Char(isSpace)
 import Utils2(strToLower,addcr)
 import HO(apFst,apSnd)
-import Data.ListUtil(breakAt)
+import ListUtil(breakAt)
 import Data.ListMap(lookupWithDefault)
 
 data MimeMessage body = MimeMsg { mimeHdrs :: Headers, mimeBody :: body }

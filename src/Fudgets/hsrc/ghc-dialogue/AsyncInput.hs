@@ -19,7 +19,7 @@ import MyForeign
 import Ap
 import Data.ListMap(lookupWithDefault)
 import Data.Maybe(mapMaybe)
-import Monad(when)
+import Control.Monad(when)
 
 import PQueue
 

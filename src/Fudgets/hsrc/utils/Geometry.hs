@@ -1,7 +1,8 @@
+{-# LANGUAGE CPP #-}
 module Geometry where
 -- This module should be moved to ../types/
 
-import Ix
+import Data.Ix
 
 data Point = Point { xcoord, ycoord :: Int }
    deriving (Eq, Ord, Show, Read, Ix)

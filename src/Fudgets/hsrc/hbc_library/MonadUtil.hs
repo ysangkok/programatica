@@ -2,7 +2,7 @@
 -- See LICENSE for the full license.
 --
 module MonadUtil where
-import Monad
+import Control.Monad
 
 (@@)             :: (Monad m) => (a -> m b) -> (c -> m a) -> (c -> m b)
 f @@ g           = \ x -> g x >>= f

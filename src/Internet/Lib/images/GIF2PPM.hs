@@ -1,10 +1,10 @@
 module GIF2PPM(gif2ppm) where
 import GIF
 import PNM
-import Array
+import Data.Array
 import qualified Fudgets as F
 import Data.List(sortBy)
-import Data.ListUtil(chopList)
+import ListUtil(chopList)
 
 #ifdef __HASKELL98__
 #define map fmap

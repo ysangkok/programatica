@@ -3,7 +3,7 @@
 module OldPrettyPrint(module PrettyM,module OldPrettyPrint) where
 
 import PrettyM
-import Ratio
+import Data.Ratio
 
 -- class Printable is defined in PrettyM
 

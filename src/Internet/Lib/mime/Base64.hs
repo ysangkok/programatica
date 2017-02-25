@@ -1,6 +1,6 @@
 module Base64(encodeBase64,decodeBase64) where
-import Data.ListUtil(chopList)
-import Array
+import ListUtil(chopList)
+import Data.Array
 import Utils2(chr,ord)
 -- Contents-Transfer-Encoding Base64
 

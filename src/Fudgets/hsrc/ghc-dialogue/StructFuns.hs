@@ -7,7 +7,7 @@ import CSizes
 import Xtypes(Atom,Time,WindowId,Window)
 import Visual(VisualID)
 import HbcWord(Word)
-import Word(Word32)
+import Data.Word(Word32)
 
 --import GlaExts hiding (Word,(<#),Addr)
 

@@ -1,7 +1,7 @@
 module PfeDepCmds where
 import Prelude hiding (print)
 import Data.List(nub,intersect)
-import Monad(unless)
+import Control.Monad(unless)
 
 import HsName(HsName(..))
 import HsIdent(getHSName)

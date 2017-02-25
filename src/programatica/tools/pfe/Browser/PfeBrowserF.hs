@@ -1,6 +1,6 @@
 module PfeBrowserF(mainF) where
 import Prelude hiding (putStr,putStrLn,print,readFile,writeFile,ioError,catch,readIO)
-import Monad(unless,mplus,when,filterM)
+import Control.Monad(unless,mplus,when,filterM)
 import Data.Maybe(fromMaybe,mapMaybe,isJust)
 import Data.List(find,(\\),nub)
 import AllFudgets as Fud hiding (getModificationTime)

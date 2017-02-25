@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module UnsafeGetDLValue where
 import DLValue
 

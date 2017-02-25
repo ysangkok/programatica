@@ -4,7 +4,7 @@ import EventMask
 import AuxTypes
 import ResourceIds
 import Image
-import Ix
+import Data.Ix
 import HbcWord
 
 -- #ifdef __NHC__

@@ -1,6 +1,6 @@
 module CacheF where
 import Fudgets
-import Data.ListUtil(assoc)
+import ListUtil(assoc)
 
 cacheF serverF = loopThroughRightF (absF (cacheSP [] [])) serverF
 

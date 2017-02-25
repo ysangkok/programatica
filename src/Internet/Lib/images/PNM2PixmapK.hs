@@ -4,7 +4,7 @@ import AllFudgets
 import PNM
 import Data.ListMap(lookupWithDefault)
 import Dither
-import Array
+import Data.Array
 import Utils2(mynub)
 
 useDither = (argKey "dither" "yes") == "yes"

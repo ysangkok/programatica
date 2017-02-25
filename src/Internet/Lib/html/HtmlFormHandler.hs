@@ -2,7 +2,7 @@
 module HtmlFormHandler(formHandlerSP) where
 import Fudgets
 import HtmlFormF2(FormMsg(..))
-import qualified OrdMap as T
+import qualified Data.Map.Strict as T
 import Data.Maybe(fromMaybe)
 
 #ifdef __GLASGOW_HASKELL__

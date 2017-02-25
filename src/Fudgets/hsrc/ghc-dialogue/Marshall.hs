@@ -1,6 +1,6 @@
 module Marshall where
 import MyForeign
-import Monad(zipWithM_)
+import Control.Monad(zipWithM_)
 import Ap
 
 class HasAddr a where

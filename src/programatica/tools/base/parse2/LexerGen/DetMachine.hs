@@ -2,7 +2,7 @@ module DetMachine where
 import NondetMachine
 import FSM
 import DFA(DFA(..))
-import qualified OrdMap as OM
+import qualified Data.Map.Strict as OM
 
 -- Representation of Deterministic Finite State Machines:
 

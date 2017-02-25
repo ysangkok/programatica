@@ -3,7 +3,7 @@ module LLParsOps
    where
 import Data.List(union,intersect)
 import HO(apFst)
-import qualified OrdMap as T -- selected table implementation
+import qualified Data.Map.Strict as T -- selected table implementation
 --import qualified SymbolMap as T -- selected table implementation
 import Trace(trace)
 

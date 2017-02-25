@@ -12,7 +12,7 @@ import ImageF(ImageInput(..),ImageOutput(..)) -- because of -fno-syn-expand
 import URL(URL,url2str,joinURL,sameDoc,fragment,relativeURL)
 import ParseURL(parseURL)
 import Html(Html)
-import Monads
+import Control.Monads
 --import qualified HtmlF as Old
 import Data.Maybe(fromMaybe,listToMaybe)
 

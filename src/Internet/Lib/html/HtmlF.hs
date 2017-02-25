@@ -10,7 +10,7 @@ import ImagesF
 import FuppletsF
 import RichText
 import URL(URL)
-import Data.ListUtil(assoc)
+import ListUtil(assoc)
 
 htmlF :: Maybe Size -> F (URL,Html) (InputMsg (String,HttpMethod))
 htmlF optsize =

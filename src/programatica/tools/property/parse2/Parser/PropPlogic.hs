@@ -4,7 +4,7 @@ import PropPosSyntax(HsName,HsIdent,HsIdentI(..),HsExp,HsPat,HsQualType,hsPVar,
                      Assertion,Predicate,PredArg,PropOp,Quantifier)
 import HasPropStruct
 import MUtils
-import Monad(mplus)
+import Control.Monad(mplus)
 
 data Plogic
   = Quant Quantifier HsName (Maybe HsQualType) Plogic

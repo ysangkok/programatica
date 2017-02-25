@@ -44,5 +44,5 @@ lexerGen moduleName functionName program args =
 	     pprint haskellCode
       where
 	haskellCode =
-          dfaToHaskell optccs moduleName ["Char","HsLexUtils"] functionName dfa
+          dfaToHaskell optccs moduleName ["Data.Char hiding (isSymbol)","HsLexUtils"] functionName dfa
         dfa = renumberStates (deterministicMachine nfa)

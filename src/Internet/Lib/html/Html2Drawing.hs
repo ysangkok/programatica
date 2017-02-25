@@ -8,7 +8,7 @@ import HtmlTags
 import HtmlOps(htmlchars,txt,href,br,mapHtmlChars,extractBase)
 import Fud(paragraphP'',horizontalAlignP,horizontalAlignP',overlayAlignP,moveRefsS,refEdgesS,noRefsS)
 import FontSpec
-import Data.ListUtil(assoc,chopList,breakAt)
+import ListUtil(assoc,chopList,breakAt)
 import Data.ListMap(lookupWithDefault)
 import Data.List(groupBy)
 import HO(apSnd)

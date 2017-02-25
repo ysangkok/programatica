@@ -15,7 +15,7 @@ import TiSolve(expandSynonyms)
 
 import PrettyPrint
 import MUtils(( # ),( #. ),(@@),collectByFst,done,usort,concatMapM,mapBoth)
-import Monad(unless)
+import Control.Monad(unless)
 import Data.Maybe(mapMaybe)
 import Data.List((\\),nub)
 

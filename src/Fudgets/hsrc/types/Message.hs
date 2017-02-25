@@ -1,10 +1,6 @@
 {-# LANGUAGE ForeignFunctionInterface, CPP #-}
 module Message where
 
-#if __HASKELL98__
-#define map fmap
-#endif
-
 data Message a b = Low a | High b  deriving (Eq, Ord, Show)
 
 isHigh (High _) = True
@@ -31,8 +27,8 @@ aLow f (High h) = High h
 aHigh f (High h) = High (f h)
 aHigh f (Low l) = Low l
 
-pushMsg (High xs) = map High xs
-pushMsg (Low xs) = map Low xs
+pushMsg (High xs) = fmap High xs
+pushMsg (Low xs) = fmap Low xs
 
 instance Functor (Message a) where
-  map = aHigh
+  fmap = aHigh

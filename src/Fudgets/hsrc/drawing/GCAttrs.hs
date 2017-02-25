@@ -10,7 +10,7 @@ import LoadFont(listFontsWithInfo,loadFont,tryLoadFont,queryFont,loadQueryFont)
 import FontProperty(fontProperty)
 import CmdLineEnv(argKey)
 import Utils(aboth)
-import Data.ListUtil(chopList,breakAt)
+import ListUtil(chopList,breakAt)
 
 #include "exists.h"
 

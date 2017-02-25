@@ -2,7 +2,7 @@ module IxEnvM (HasEnv(..), EnvM, withEnv) where
 
 import MT
 import Control_Monad_Fix
-
+import Control.Monad (ap)
 
 newtype EnvM e a  = E { ($$) :: e -> a }
 
@@ -14,6 +14,10 @@ mapEnv f (E g)    = E (g . f)
 
 instance Functor (EnvM e) where
   fmap f (E g)    = E (f . g)
+
+instance Applicative (EnvM e) where
+  pure  = return
+  (<*>) = ap
 
 instance Monad (EnvM e) where
   return x        = E (\e -> x)

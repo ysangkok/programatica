@@ -10,9 +10,9 @@ import CString16(CString16)
 
 import DrawTypes
 
-import Monad(zipWithM_)
+import Control.Monad(zipWithM_)
 import Ap
-import Word(Word32)
+import Data.Word(Word32)
 --import CCall
 default(Int)
 

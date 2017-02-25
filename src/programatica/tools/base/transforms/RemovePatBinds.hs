@@ -16,7 +16,7 @@ import HsIdent
 import TiNames(ValueId,localVal)
 
 import Data.Maybe(isNothing)
-import Monad(liftM)
+import Control.Monad(liftM)
 import StateM
 import PrettyPrint(pp,(<>))
 

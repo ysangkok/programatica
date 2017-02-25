@@ -7,10 +7,10 @@ import HttpResponse
 import MimeMessage(getheader,updateHdr)
 import SocketK
 import DialogueIO hiding (IOError)
-import System.IOUtil(getEnvi) -- !! not standard Haskell
+import IOUtil(getEnvi) -- !! not standard Haskell
 import Data.Char(toLower)
 import HO(apSnd)
-import Data.ListUtil(chopList,breakAt)
+import ListUtil(chopList,breakAt)
 import Utils2(strToLower)
 import Data.Maybe(fromMaybe)
 import qualified PackedString as PS

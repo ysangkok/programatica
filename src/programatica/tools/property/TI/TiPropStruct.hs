@@ -10,7 +10,7 @@ import TiPrelude(pt)
 import SrcLoc
 import TypedIds(HasIdTy)
 import MUtils
-import Monad(unless)
+import Control.Monad(unless)
 import PrettySymbols(el)
 import PrettyPrint hiding (var)
 import SimpleGraphs(reachable')

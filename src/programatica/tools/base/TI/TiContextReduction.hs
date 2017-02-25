@@ -14,7 +14,7 @@ import TiUtil(freshen',freshvars)
 import SrcLoc
 import PrettyPrint hiding (var)
 import Data.List(partition,(\\))
-import Monad(msum,mplus)
+import Control.Monad(msum,mplus)
 import MUtils
 import Debug.Trace(trace) -- debug
 import TiPretty() -- debug

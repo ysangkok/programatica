@@ -1,6 +1,6 @@
 module MeterF where
 import AllFudgets
-import Ratio
+import Data.Ratio
 
 meterF :: RealFrac v => InF v (Ratio Int) -- because of the monomorphism restr
 meterF = meterF' standard
