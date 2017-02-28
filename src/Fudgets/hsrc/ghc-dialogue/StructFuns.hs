@@ -1,11 +1,12 @@
-{-# OPTIONS -fvia-C #-}
+{-# LANGUAGE CPP, ForeignFunctionInterface #-}
+{- Obsolete OPTIONS -fvia-C -}
 module StructFuns(module StructFuns,module CSizes) where
 import MyForeign
 import Marshall
 import Xlib
 import CSizes
-import Xtypes(Atom,Time,WindowId,Window)
-import Visual(VisualID)
+import Xtypes(Atom(..),Time,WindowId(..),Window)
+import Visual(VisualID(..))
 import HbcWord(Word)
 import Data.Word(Word32)
 

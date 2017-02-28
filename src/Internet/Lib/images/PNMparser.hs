@@ -1,7 +1,7 @@
 module PNMparser(parsePNM) where
 import Prelude
 import Fudgets(Size(..),Point(..),RGB(..),oo)
-import Utils2(ord)
+import Utils2Janus(ord)
 import PNM
 import Data.Char(isSpace)
 

@@ -5,6 +5,7 @@ import Control.Monad(when)
 
 -- Mostly taken from WWWBrowser...
 
+historyButtonsF :: (Graphic d0, Eq d0) => F (Either d0 d0) d0
 historyButtonsF = loopThroughRightF ctrlF buttonsF
   where
     ctrlF = getFirst $ reactiveF ctrl . state0
@@ -13,6 +14,8 @@ historyButtonsF = loopThroughRightF ctrlF buttonsF
     getFirst cont = getF $ either (\ _ -> getFirst cont) $
 			   either cont (\ _ -> getFirst cont)
 
+    ctrl :: Eq d0 => Either (Either Integer Integer) (Either d0 d0)
+                  -> ReactionM ([d0], d0, [d0]) (Either (Either [d0] [d0]) d0) ()
     ctrl = either fromButtons fromOutside
     fromButtons = either fromBack fromForward
 
@@ -45,6 +48,7 @@ historyButtonsF = loopThroughRightF ctrlF buttonsF
         do (bs,cur,fs) <- get
 	   set' (bs,new,fs)
 
+    buttonsF :: (Eq d0, Graphic d0) => F (Either [d0] [d0]) (Either Integer Integer)
     buttonsF = mbuttonF kl lArrowD >+< mbuttonF kr rArrowD
       where
          kl = k "Left"; kr = k "Right";

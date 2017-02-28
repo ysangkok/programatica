@@ -2,11 +2,7 @@ module LinearSplitP where
 import AllFudgets
 import ListUtil(chopList)
 import HO(apFst)
-import Maybe(isJust,listToMaybe)
-
-#ifdef __HASKELL98__
-#define map fmap
-#endif
+import Data.Maybe(isJust,listToMaybe)
 
 horizontalSplitP = horizontalSplitP' defaultSep
 verticalSplitP = verticalSplitP' defaultSep
@@ -21,10 +17,10 @@ linearSplitP dir sep = P linearSplitP'
     linearSplitP' reqs0 = (req,placer2)
       where
         reqss = chopReqs reqs0
-        (reqs1,placers2) = unzip (map linearP' reqss)
+        (reqs1,placers2) = unzip (fmap linearP' reqss)
 	--reqs2 = zipWith adjSize (sizes reqss) reqs1
 	(req,placer2a) = linearP' reqs1
-	positions = map ( \ r->listToMaybe r >>= wantedPos) reqss
+	positions = fmap ( \ r->listToMaybe r >>= wantedPos) reqss
 	placer2 r@(Rect _ s) =
  	  concat . zipWith id placers2 . adjPlaces s positions . placer2a $ r
 

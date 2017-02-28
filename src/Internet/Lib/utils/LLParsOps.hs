@@ -5,7 +5,7 @@ import Data.List(union,intersect)
 import HO(apFst)
 import qualified Data.Map.Strict as T -- selected table implementation
 --import qualified SymbolMap as T -- selected table implementation
-import Trace(trace)
+import Debug.Trace(trace)
 
 -- The OrdMap solutions seems slightly faster than SymbolMap
 

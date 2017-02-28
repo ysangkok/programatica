@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 {-+
 This module defines various auxiliary functions that are used by the type
 checker when it needs to refer to things defined in the Prelude, e.g., when
@@ -24,8 +25,8 @@ pt n = hsTyCon . prelType $ n
 --tBool :: (HasBaseStruct rec (TI i t), TypeCon i)  => rec
 --tBool = pt "Bool"
 
---prelOtherwise = pv "otherwise"
---prelFlip   = pv "flip"
+prelOtherwise = pv "otherwise"
+prelFlip   = pv "flip"
 {-
 prelOtherwise, prelNegate, prelFlip, prelEnumFrom, prelEnumFromTo,
  prelEnumFromThen, prelEnumFromThenTo, prelThen, prelBind, prelFail,
@@ -65,4 +66,4 @@ tupleType ts = hsTyTuple ts -- :: Type
 --listType t = hsTyApp (pt "[]") t -- :: Type
 
 tuplecon n = pt (tuple (n-1)) -- :: Type
---funcon = pt "->"
+funcon = pt "->"

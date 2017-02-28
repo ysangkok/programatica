@@ -2,7 +2,7 @@ module WriteFile where
 import HaskellIO(haskellIOF)
 --import CompOps((>^=<))
 import Cont(contMap)
-import NullF
+--import NullF
 import DialogueIO hiding (IOError)
 
 writeFileF = contMap wr

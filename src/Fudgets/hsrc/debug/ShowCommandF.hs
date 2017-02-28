@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module ShowCommandF(showCommandF) where
 import CompOps((>.=<), (>=.<))
 import Fudget
@@ -9,7 +10,7 @@ import NonStdTrace(trace)
 import Xtypes
 import Command
 import Event
-import ResourceIds
+--import ResourceIds
 import Sockets
 import CmdLineEnv(argFlag)
 --import DialogueIO hiding (IOError)

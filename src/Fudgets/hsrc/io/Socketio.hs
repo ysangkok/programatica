@@ -3,7 +3,7 @@ import Fudget
 import FudgetIO
 import FRequest
 import Srequest
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import Sockets
 import Utils(loop)

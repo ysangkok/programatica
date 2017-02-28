@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 module Substitute where
 import Recursive(mapRec,Rec)
 
@@ -33,7 +34,7 @@ esubst1 var e x = esubst s
   where
     s y = if y==x then e else var y
 
-mapExpRec :: Rec s s => MapExp e s => (e -> e) -> s -> s
+--mapExpRec :: Rec s s => MapExp e s => (e -> e) -> s -> s
 mapExpRec = mapRec . mapExp
 
 {-

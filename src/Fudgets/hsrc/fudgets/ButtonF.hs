@@ -6,10 +6,10 @@ import FDefaults
 import Sizing(Sizing(..))
 import Drawing() -- instance, for hbc
 import Graphic()
-import GCAttrs
+--import GCAttrs
 --import GCtx(wCreateGCtx,rootGCtx)
 import DrawingUtils
-import FDefaults
+--import FDefaults
 import PushButtonF
 --import Placer(spacerF)
 import Spacers(marginS,compS)

@@ -1,4 +1,4 @@
-module Editfield(EditField, moveField, replaceField, setFieldDir, getField,
+module Editfield(EditField, moveField, replaceField, setFieldDir, getField,getField',
                  deselectField, getSelection, getLastLineNo, getAft, getBef, getLnoEdge,
                  createField, dirint, splitnl, nlines) where
 import ListUtil(breakAt)
@@ -35,6 +35,7 @@ deselectField (F dir bef sel aft elno lno) =
     in  F dir bef' [] aft' elno lno
 
 getField f = reverse (getBef f) ++ getSelection f ++ getAft f
+getField' f = (reverse (getBef f),getSelection f,getAft f)
 
 setFieldDir ndir field@(F dir bef sel aft elno lno) =
     if ndir == dir then

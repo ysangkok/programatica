@@ -27,6 +27,7 @@ nilDeclsType = ([],[]) -- ::DeclsType i
 
 --(+++) :: DeclsType i->DeclsType i->DeclsType i
 (xs1,ys1)+++(xs2,ys2) = (xs1++xs2,ys1++ys2)
+concDeclsType :: (Foldable t0) => t0 ([a1], [a]) -> ([a1], [a])
 concDeclsType = foldr (+++) nilDeclsType
 
 class AddDeclsType i d | d->i where

@@ -1,8 +1,8 @@
 module FocusMgr(focusMgr) where
-import Data.List((\\))
+import Data.List((\\),sortBy)
 import Data.Maybe(listToMaybe)
 import Command
-import Direction
+--import Direction
 import Dlayout(invisibleGroupF)
 import Event
 --import Font(FontStruct)
@@ -11,7 +11,7 @@ import FRequest
 --import Geometry(origin) --Line(..), Point(..), Rect(..), Size(..), origin)
 --import LayoutRequest(LayoutRequest)
 import LoopLow
-import Data.ListSet(union)
+import ListSet(union)
 --import Message(Message(..))
 import Path
 import PathTree hiding (pos)
@@ -23,7 +23,6 @@ import CmdLineEnv(argKey,argReadKey)
 import WindowF(kernelTag,autumnize)
 import Xtypes
 --import List2(sort)
-import Data.List(sortBy)
 
 import Maptrace
 
@@ -122,7 +121,7 @@ focusMgr sizing ctt f = loopThroughLowF focusK0 igF
 	    UnmapWindow -> changeMapping tag False
 	    _ -> passame
 	  XReq (CreateMyWindow _) -> changeMapping tag False
-	  XReq (CreateRootWindow _ _) {- | not ktag -} ->
+	  XReq (CreateRootWindow _ _) {-  | not ktag -} ->
 	     pass $ focusm (autumnize tag: shellTags) etags
 	  XReq (CreateSimpleWindow rchild _) -> 
 	      changeMapping (absPath (autumnize tag) rchild) False

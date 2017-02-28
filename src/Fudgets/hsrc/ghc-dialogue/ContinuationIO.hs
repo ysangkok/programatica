@@ -1,7 +1,7 @@
 module ContinuationIO(module ContinuationIO, module DialogueIO) where
 import DialogueIO
 --import XStuff
-import P_IO_data hiding (Bin)
+--import P_IO_data hiding (Bin)
 import Prelude hiding (IOError,appendFile,interact,print,readFile,writeFile)
 
 type SuccCont    =                Dialogue

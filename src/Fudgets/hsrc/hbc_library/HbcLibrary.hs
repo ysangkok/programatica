@@ -1,7 +1,7 @@
 module HbcLibrary where
-import Data.ListMap
-import Data.ListOps
-import Data.ListSet
+import ListMap
+import ListOps
+import ListSet
 import ListUtil
 import Scans
 import Sort
@@ -10,5 +10,5 @@ import OrdMap
 import OrdSet
 import IntSet
 import IntMap
-import Control.MonadUtil
+import MonadUtil
 import Trace

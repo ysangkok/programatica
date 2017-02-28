@@ -1,10 +1,10 @@
 module BranchF(branchF,branchFSP) where
 import Direction
 import Fudget
-import Path(Path(..))
+--import Path(Path(..))
 import Route
 import SP
-import Message(Message(..))
+--import Message(Message(..))
 
 branchF :: (F (Path, a) b) -> (F (Path, a) b) -> F (Path, a) b
 branchF (F f1) (F f2) = F{-ff-} (branchFSP f1 f2)

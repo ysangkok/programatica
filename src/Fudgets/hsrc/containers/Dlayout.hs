@@ -15,7 +15,7 @@ import Geometry(Point(..), Rect(..), origin, pmax)
 import GreyBgF(changeBg)
 import LayoutRequest
 import LoopLow
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import Spops
 --import SpEither(mapFilterSP)
@@ -80,12 +80,17 @@ shell nomap f =
                 (mapstateSP prep ((Point 10 10),[], Nothing)) {- 10 10 from windowKF... -}
                 (myAppendStartF startcmds f)
 
--- causes a space leak with nhc13.
+mapstateSP' f s0 =
+    getSP (\x ->
+           case f s0 x of
+             (s, y) -> putsSP y (mapstateSP' f s))
+{-
+-- causes a space leak with nhc13 and ghc-7.6
 mapstateSP' f s0 =
     getSP (\x ->
            let (s, y) = f s0 x
            in putsSP y (mapstateSP' f s))
-
+-}
 -- myAppendStart will let f speak all its initial msgs, not just the first one.
 myAppendStartF cmds (F f) = {-F-}ff $ parSP f (putsSP cmds nullSP)
 

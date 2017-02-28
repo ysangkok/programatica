@@ -14,7 +14,7 @@ import GreyBgF(changeBg)
 import MenuF(menuAltsF,toEqSnd,fstEqSnd,sndEqSnd)--EqSnd,
 import MenuPopupF(PopupMenu(..))
 import DynListF(dynF)
-import Message(Message(..))
+--import Message(Message(..))
 import Path(here)
 import SerCompF(serCompLeftToRightF)--idRightF,
 import Spops

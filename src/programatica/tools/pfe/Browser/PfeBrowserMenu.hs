@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module PfeBrowserMenu where
 import ContribFudgets
 import Fudgets

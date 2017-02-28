@@ -2,10 +2,10 @@ module PNM2PixmapK(pnm2PixmapK) where
 
 import AllFudgets
 import PNM
-import Data.ListMap(lookupWithDefault)
+import ListMap(lookupWithDefault)
 import Dither
 import Data.Array
-import Utils2(mynub)
+import Utils2Janus(mynub)
 
 useDither = (argKey "dither" "yes") == "yes"
 

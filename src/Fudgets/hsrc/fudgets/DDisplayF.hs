@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module DDisplayF(--HasInitDisp(..),
 		 setSpacer,
 		 DisplayF,
@@ -34,7 +35,7 @@ import Sizing(Sizing(..))
 import CondLayout(alignFixedS')
 --import Maybe(fromMaybe)
 
-#include "defaults.h"
+#include "../defaults/defaults.h"
 
 newtype DisplayF a = Pars [Pars a]
 

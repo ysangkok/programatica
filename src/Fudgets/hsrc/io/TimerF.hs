@@ -3,7 +3,7 @@ import Fudget
 import FudgetIO
 import FRequest
 import Srequest(sIO,sIOsucc,select)
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import Sockets
 --import Xtypes

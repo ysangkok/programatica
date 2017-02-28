@@ -2,12 +2,12 @@ module Loops(loopF, loopThroughRightF, loopCompThroughRightF, loopCompThroughLef
 import Maptrace(ctrace) -- debugging -- syntax error if you put this is last in the import list. TH 960428
 --import Command(Command(..))
 import CompFfun(prepostMapHigh)
-import CompSP(prepostMapSP)
+--import CompSP(prepostMapSP)
 import CompOps
 --import Event(Event(..))
 import Fudget
 import Loop
-import Message(Message(..))
+--import Message(Message(..))
 --import Path(Path(..))
 --import SP
 import SpEither(toBothSP,mapFilterSP)

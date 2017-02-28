@@ -15,7 +15,7 @@ import Xcommand
 import GreyBgF(changeBg)
 --import LayoutRequest(LayoutRequest)
 import Loops(loopLeftF)
-import Message(Message(..),message)
+import Message(message) --Message(..),
 import NullF
 --import SpEither(mapFilterSP)
 import Xtypes

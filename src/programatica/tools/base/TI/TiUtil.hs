@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 {-+
 This module defines some basic type checking functions, and some utility
 functions, notably functions for type checking applications (#tapp#) and
@@ -18,6 +19,7 @@ import BaseSyntax(srcLoc,TI(..))
 import TypedIds(NameSpace(..))
 import PrettyPrint hiding (var)
 import MUtils
+import OrigTiMonad (stdName)
 
 --import IOExts(trace) -- debug
 

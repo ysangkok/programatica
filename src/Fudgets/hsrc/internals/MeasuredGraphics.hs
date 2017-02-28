@@ -11,7 +11,7 @@ import Rects(boundingRect)
 import CompiledGraphics
 import GCtx(GCtx(..))
 import GCAttrs(FontData(..))
-import PackedString(unpackPS)
+import Data.ByteString.UTF8(toString)
 import Utils(lunconcat)
 --import CmdLineEnv(argFlag)
 import NonStdTrace(trace)
@@ -113,7 +113,7 @@ measureString =
   else measureString' id DrawString
 -}
 
-measurePackedString = measureString'' unpackPS DrawStringPS
+measurePackedString = measureString'' toString DrawStringPS
 
 
 -- map2' is a lazier version of map2 (aka zipWith)

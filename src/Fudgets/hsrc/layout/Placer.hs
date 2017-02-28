@@ -13,7 +13,7 @@ import TableP(tableP)
 import AlignP(revP)
 import AutoPlacer(autoP)
 
-import AlignP
+--import AlignP
 --import Alignment
 
 placerF :: Placer -> F a b -> F a b

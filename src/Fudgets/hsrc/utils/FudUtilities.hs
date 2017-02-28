@@ -1,4 +1,5 @@
-module FudUtilities (module Defaults, module CmdLineEnv, module FilePaths,  module Geometry, module MapstateMsg, module EitherUtils, module StringUtils, module Utils, module FudVersion) where
+module FudUtilities (-- * Utilities
+  module Defaults, module CmdLineEnv, module FilePaths,  module Geometry, module MapstateMsg, module EitherUtils, module StringUtils, module Utils, module FudVersion) where
 import Defaults
 import CmdLineEnv
 import Geometry

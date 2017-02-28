@@ -3,7 +3,7 @@ import FreeNames
 import DefinedNames(DefinedNames)
 import PropSyntaxStruct
 import HsIdent
-import Data.Lists((\\\))
+import Lists((\\\))
 
 -- !!! Predicates are treated as constructors, which is probably not useful...
 

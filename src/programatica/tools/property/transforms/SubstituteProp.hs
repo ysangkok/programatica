@@ -1,6 +1,6 @@
 module SubstituteProp where
-import Recursive
-import Substitute
+import Recursive (mapRec, struct)
+import Substitute (mapExp, Subst, MapExp, subst, mapExpRec)
 import SubstitutePropStruct
 import SubstituteBaseStruct
 import PropSyntaxRec(HsExpI,HsDeclI,PredicateI,AssertionI)

@@ -1,4 +1,4 @@
-module Lists (module Lists, module List) where
+module Lists (module Lists, module Data.List) where
 
 import OpTypes
 import Data.List

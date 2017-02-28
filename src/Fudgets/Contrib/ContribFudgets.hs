@@ -1,4 +1,6 @@
+-- | Contributed add-ons to the Fudget Library
 module ContribFudgets(
+  -- * Contributed add-ons to the Fudget Library
 --  module SuperMenuF,
   module BitmapF,
   module ShapedButtonsF,

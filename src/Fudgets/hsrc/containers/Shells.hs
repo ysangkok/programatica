@@ -6,7 +6,7 @@ import FRequest
 import Xcommand
 import DShellF
 import EitherUtils
-import NullF
+--import NullF
 import CompOps
 import Command
 import FudgetIO
@@ -14,7 +14,7 @@ import Event
 import Spops(concatMapSP)
 import MapstateK
 
-unmappedShellF = unmappedShellF' standard
+unmappedShellF cmds = unmappedShellF' standard cmds
 
 unmappedShellF' pm cmds k =
     shellKF' (pm. setVisible False. setMargin 0)

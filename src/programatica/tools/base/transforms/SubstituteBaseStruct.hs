@@ -1,9 +1,11 @@
 module SubstituteBaseStruct where
-import Substitute
-import Recursive
-import HasBaseStruct
-import BaseSyntax
+import Substitute (MapExp, Subst, mapExp, esubst, subst)
+import Recursive(rec, Rec)
+import HasBaseStruct (hsApp, HasBaseStruct)
+import HsDecl (HsMatchI, DI)
+import BaseSyntax (mapDecls, mapEI, HsModuleI, EI, HsIdentI( HsVar ), EI(HsId, HsRightSection, HsInfixApp, HsLeftSection), mapDI, mapMatchI)
 
+substE :: (Rec e0 (EI i1 e0 p20 d20 t20 c20), HasBaseStruct.HasBaseStruct e0 (EI i0 e0 p0 ds0 t0 c0), Subst i1 e0, MapExp e0 d20) => (i1 -> e0) -> EI i1 e0 p20 d20 t20 c20 -> e0
 substE = substE' rec
 
 substE' rec s e0 =

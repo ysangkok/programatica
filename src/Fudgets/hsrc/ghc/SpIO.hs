@@ -1,15 +1,15 @@
 module SpIO(spIO) where
-import Command
+--import Command
 --import Event
 import Loopthrough
 import Path(Path(..))
 import Cont(getRightSP)
 import ShowFailure
-import Sockets
+--import Sockets
 import Spops
 import SP(SP)
 import Tables2
-import Xtypes
+--import Xtypes
 import DialogueSpIO
 import DialogueIO hiding (IOError)
 --import Table(Table) -- nhc bug workaround

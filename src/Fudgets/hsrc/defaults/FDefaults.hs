@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module FDefaults(module FDefaults,module Alignment,fromMaybe) where
 
 import Fudget

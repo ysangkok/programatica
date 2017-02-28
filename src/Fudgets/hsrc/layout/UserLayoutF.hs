@@ -8,7 +8,7 @@ import Geometry(Rect)
 import Spops(concatMapSP)
 import CompSP(preMapSP,serCompSP)
 import LayoutRequest
-import Message(Message(..))
+--import Message(Message(..))
 
 userLayoutF :: F a b -> F (Either (Path,Rect) a) (Either (Path,LayoutMessage) b)
 userLayoutF (F fud) = F{-ff-} (concatMapSP post `serCompSP` fud `preMapSP` pre)

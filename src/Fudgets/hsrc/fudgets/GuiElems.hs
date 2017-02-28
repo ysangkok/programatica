@@ -1,4 +1,6 @@
-module GuiElems (module Border3dF,module ButtonBorderF,module ButtonF,module ButtonGroupF,module DialogF,module Edit,module Editor,module Edtypes,module InputEditorF,module FilePickF,module GraphicsF,module HyperGraphicsF,module LabelF,module MenuButtonF,module MenuF,module MenuPopupF,module TextF,module MoreF,module MoreFileF,module PopupMenuF,module PushButtonF,module QuitButtonF,module QuitF,module RadioF,module StringF,module TerminalF,module ToggleButtonF,module ToggleGroupF,module OnOffDispF,module DButtonF,module DToggleButtonF,module DRadioF,module DDisplayF,module DStringF,module GcWarningF,module BellF
+{-# LANGUAGE CPP #-}
+module GuiElems (-- * GUI elements
+  module Border3dF,module ButtonBorderF,module ButtonF,module ButtonGroupF,module DialogF,module Edit,module Editor,module Edtypes,module InputEditorF,module FilePickF,module GraphicsF,module HyperGraphicsF,module LabelF,module MenuButtonF,module MenuF,module MenuPopupF,module TextF,module MoreF,module MoreFileF,module PopupMenuF,module PushButtonF,module QuitButtonF,module QuitF,module RadioF,module StringF,module TerminalF,module ToggleButtonF,module ToggleGroupF,module OnOffDispF,module DButtonF,module DToggleButtonF,module DRadioF,module DDisplayF,module DStringF,module GcWarningF,module BellF
  ) where
 import Border3dF
 import ButtonBorderF

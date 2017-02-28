@@ -1,4 +1,5 @@
-module Containers (module BubbleF,module Dlayout,module DragF,module PopupF,module PopupGroupF,module PosPopupShellF,module ScrollF,module SelectionF,module DShellF,module Shells,module RootWindowF) where
+module Containers ( -- * Containers
+  module BubbleF,module Dlayout,module DragF,module PopupF,module PopupGroupF,module PosPopupShellF,module ScrollF,module SelectionF,module DShellF,module Shells,module RootWindowF) where
 import BubbleF
 import Dlayout
 import DragF

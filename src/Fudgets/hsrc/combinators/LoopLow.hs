@@ -4,9 +4,9 @@ import CompSP
 --import Event(Event(..))
 import Fudget
 import Loop
-import Message(Message(..))
+--import Message(Message(..))
 --import Path(Path(..))
-import SP
+--import SP
 import Loopthrough(loopThroughRightSP)
 
 loopLow :: (SP TCommand (FCommand a)) -> (SP (FEvent a) TEvent) -> (F b c) -> F b c

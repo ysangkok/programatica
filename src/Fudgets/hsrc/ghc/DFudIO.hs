@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module DFudIO(Fudlogue,fudlogue,fudlogue'{-,fudIO,fudIO'-},HasCache(..)) where
 
 import FDefaults
@@ -9,7 +10,7 @@ import Fudget
 import NewCache(allcacheF)
 import CmdLineEnv(argFlag)
 
-#include "defaults.h"
+#include "../defaults/defaults.h"
 
 data Fudlogue = Pars [Pars]
 data Pars = Cache Bool

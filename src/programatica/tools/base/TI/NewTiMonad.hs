@@ -26,6 +26,8 @@ import ExceptM
 
 import qualified Tree
 
+import HsName(noModule)
+
 type TEnv i = TiEnv.Env (HsIdentI i) (Scheme i) -- type of value identifiers
 type KEnv i = TiEnv.Env (HsIdentI i) (Kind,TypeInfo i)   -- kind of type identifiers
 
@@ -36,7 +38,7 @@ data TiEnv i  = Env { inMod::FilePath->ModuleName,
 		      tenv::TEnv i,
 		      idb::IDB i }
 
-emptyEnv = Env (const (Module "nomodule")) True [] TiEnv.empty TiEnv.empty emptyIdb
+emptyEnv = Env (const noModule) True [] TiEnv.empty TiEnv.empty emptyIdb
 
 -- IM should really be an abstract type!
 type IM i c = WithOutput c 
@@ -62,7 +64,7 @@ run env = removeExcept . withSt [1..] . withEnv env . fmap fst . removeOutput
 instance Monad m => Lift (IM i c) m where
   lift = either fail return . run emptyEnv
 
-getConstraints :: IM i c a -> IM i d (a, Tree.T c)
+getConstraints :: IM i c a -> IM i d (a, Tree.Tree c)
 getConstraints m = MT.lift (removeOutput m)
 
 typeError :: Error -> IM i c a

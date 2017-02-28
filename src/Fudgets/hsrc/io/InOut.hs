@@ -1,4 +1,5 @@
-module InOut (module HaskellIO,module StdIoUtil,module IoF,module Socketio,module OpenSocket,module Transceivers,module AsyncTransmitter,module TimerF,module ReadFileF,module WriteFile,module Process,module UnsafeGetDLValue,module GetTime,module GetModificationTime) where
+module InOut (-- * IO
+  module HaskellIO,module StdIoUtil,module IoF,module Socketio,module OpenSocket,module Transceivers,module AsyncTransmitter,module TimerF,module ReadFileF,module WriteFile,module Process,module UnsafeGetDLValue,module GetTime,module GetModificationTime) where
 import HaskellIO
 import StdIoUtil
 import IoF

@@ -4,7 +4,7 @@ import Fudget
 --import Command
 import FRequest
 --import Event
-import Message
+--import Message
 import Spops
 --import SP(SP)
 import Path(here)

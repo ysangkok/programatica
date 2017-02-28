@@ -1,5 +1,8 @@
+{-# LANGUAGE CPP #-}
 module StateMonads where
-import Fudget(K,KEvent)
+import Control.Applicative
+import Control.Monad(ap)
+import Fudget(K) --,KEvent
 import FudgetIO
 import StreamProcIO
 import EitherUtils(Cont(..))
@@ -18,6 +21,10 @@ type Mkc a = Mk a () -- continuation monad with unit result
 instance Functor (Mk a) where
   fmap f (Mk m) = Mk (\k -> m (k.f))
 
+instance Applicative (Mk a) where
+  pure = return
+  (<*>) = ap
+  
 instance Monad (Mk a) where
   return r =  Mk ($ r)
   Mk m1 >>= xm2 = Mk (m1 . flip (unMk . xm2))

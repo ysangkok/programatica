@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module DRadioF(
   RadioGroupF,radioGroupF,radioGroupF',
   setPlacer
@@ -15,7 +16,7 @@ import Defaults(buttonFont)
 import Graphic
 import GCAttrs --(FontSpec,fontSpec)
 
-#include "defaults.h"
+#include "../defaults/defaults.h"
 
 newtype RadioGroupF = Pars [Pars]
 data Pars = LabelInside Bool | FontSpec FontSpec | Placer Placer

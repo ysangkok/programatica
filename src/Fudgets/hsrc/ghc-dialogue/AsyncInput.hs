@@ -1,4 +1,5 @@
-{-# OPTIONS -optc-I/usr/X11R6/include -optc-DNON_POSIX_SOURCE -fvia-C #-}
+{-# LANGUAGE CPP, ForeignFunctionInterface #-}
+{- Osbolete OPTIONS -optc-I/usr/X11R6/include -optc-DNON_POSIX_SOURCE -fvia-C -}
 --
 module AsyncInput
  --(doSocketRequest,doSelect,getAsyncInput',initXCall,XCallState)
@@ -6,7 +7,7 @@ module AsyncInput
 import P_IO_data({-Request(..),-}Response(..))
 import Xtypes
 import Sockets
-import ResourceIds
+--import ResourceIds
 import Utils(swap)
 
 import XCallTypes
@@ -17,7 +18,7 @@ import Marshall
 import MyForeign
 
 import Ap
-import Data.ListMap(lookupWithDefault)
+import ListMap(lookupWithDefault)
 import Data.Maybe(mapMaybe)
 import Control.Monad(when)
 
@@ -26,7 +27,9 @@ import PQueue
 import Data.IORef(newIORef,readIORef,writeIORef,IORef)
 --import GlaExts hiding (Word,(<#),Addr)
 
-import PackedString(unpackPS,lengthPS{-,packCBytesST,psToByteArray-})
+--import PackedString(toString,BS.length{-,packCBytesST,psToByteArray-})
+import Data.ByteString.UTF8 (toString)
+import qualified Data.ByteString as BS(length)
 
 -- #if __GLASGOW_HASKELL__>=600
 -- #define unpackCStringIO peekCString
@@ -47,7 +50,7 @@ H_STRUCTTYPE(fd_set)
 
 allocaInt = allocaElem (0::Int)
 
-type AiTable = [(Int,Descriptor)]
+type AiTable = [(Fd,Descriptor)]
 
 type IOVar a = IORef a
 
@@ -70,9 +73,11 @@ initXCall =
   <# newIOVar empty
   <# newIOVar 0
 
-foreign import ccall "unistd.h read" cread :: Int -> Addr -> Int -> IO Int
-foreign import ccall "unistd.h write" cwrite :: Int -> CString -> Int -> IO Int
-foreign import ccall "sys/socket.h" accept :: Int -> CsockAddr -> Addr -> IO Int
+type Fd = Int32
+
+foreign import ccall "unistd.h read" cread :: Fd -> Addr -> CSize -> IO CSize
+foreign import ccall "unistd.h write" cwrite :: Fd -> CString -> CSize -> IO CSize
+foreign import ccall "sys/socket.h" accept :: Fd -> CsockAddr -> Addr -> IO Fd
 
 getAsyncInput' (XCallState fds aitable tq tno) =
  AsyncInput # do
@@ -104,8 +109,8 @@ getAsyncInput' (XCallState fds aitable tq tno) =
 		       SocketDe _ ->
 		         let bufsize = 2000
 			 in alloca bufsize $ \ buf ->
-			 do got <- tryP "read" (>=0) $ cread fd buf bufsize
-			    str <- unmarshallString' (CString buf) got
+			 do got <- tryP "read" (>=0) $ cread fd buf (fromIntegral bufsize)
+			    str <- unmarshallString' (CString buf) (fromIntegral got)
 			    return (d,SocketRead str)
 		       LSocketDe _ ->
 		         allocaInt $ \ addrlen ->
@@ -166,13 +171,13 @@ foreign import ccall "asyncinput.h get_errno" errno :: IO Int
 --errno :: IO Int
 --errno = _casm_ ``%r=errno;''
 
-foreign import ccall "sys/socket.h" listen :: Int -> Int -> IO Int
-foreign import ccall "sys/socket.h" socket :: Int -> Int -> Int -> IO Int
+foreign import ccall "sys/socket.h" listen :: Fd -> Int32 -> IO Int
+foreign import ccall "sys/socket.h" socket :: Int32 -> Int32 -> Int32 -> IO Fd
 foreign import ccall "stdio.h" fopen :: CString -> CString -> IO Int -- hmm
 foreign import ccall "stdio.h" fclose :: Int -> IO Int
 
-foreign import ccall "asyncinput.h" in_connect :: CString -> Int -> Int -> IO Int
-foreign import ccall "asyncinput.h" in_bind :: Int -> Int -> IO Int
+foreign import ccall "asyncinput.h" in_connect :: CString -> Int32 -> Int32 -> IO Int32
+foreign import ccall "asyncinput.h" in_bind :: Int32 -> Int32 -> IO Fd
 foreign import ccall "asyncinput.h" get_stdin :: IO Int
 
 doSocketRequest (XCallState  fds  aitable tq tno) sr =
@@ -192,28 +197,28 @@ doSocketRequest (XCallState  fds  aitable tq tno) sr =
      chost <- marshallString host
      s <- tryP "in_connect" (>=0) $ 
 --           _casm_ ``%r=in_connect(%0,%1,SOCK_STREAM);'' chost port
-           in_connect chost port CCONST(SOCK_STREAM)
+           in_connect chost (fromIntegral port) (fromIntegral CCONST(SOCK_STREAM))
      sf <- getfilep s "r+"
      freePtr chost
      return (SocketResponse (Socket (So sf)))
    OpenLSocket port -> do
       s <- tryP "in_bind" (>=0) $ if port == 0 
 --         then _casm_ ``%r=socket(AF_INET,SOCK_STREAM,0);''
-           then socket CCONST(AF_INET) CCONST(SOCK_STREAM) 0
+           then socket (fromIntegral CCONST(AF_INET)) (fromIntegral CCONST(SOCK_STREAM)) 0
 --	   else _casm_ ``%r=in_bind(%0,SOCK_STREAM);'' port
-	   else in_bind port CCONST(SOCK_STREAM)
+	   else in_bind (fromIntegral port) (fromIntegral CCONST(SOCK_STREAM))
       tryP "listen" (==0) $ listen s 5
       SocketResponse . LSocket . LSo # getfilep s "r+"
    WriteSocket s str -> writeSocket s str
    WriteSocketPS s str ->
-      do writeSocket s (unpackPS str) -- grr!
-         return (SocketResponse (Wrote (lengthPS str))) -- grr!
+      do writeSocket s (toString str) -- grr!
+         return (SocketResponse (Wrote (BS.length str))) -- grr!
 {-
      do
       fd <- fileno s
       r <- tryP "WriteSocket[out]" (>=0) $ 
-        _casm_ ``%r=write(fileno((FILE*)%0),%1,%2);'' s (psToByteArray str) (lengthPS str)
---        bawrite fd (psToByteArray str) (lengthPS str)
+        _casm_ ``%r=write(fileno((FILE*)%0),%1,%2);'' s (psToByteArray str) (BS.length str)
+--        bawrite fd (psToByteArray str) (BS.length str)
       return (SocketResponse (Wrote r))
 -}
    CloseSocket (So s) -> close s
@@ -242,7 +247,7 @@ doSocketRequest (XCallState  fds  aitable tq tno) sr =
 	     tryP "GetLSocketName" (==0) $ getsockname s sa lenp
 	     len <- peek lenp
 	     strp <- GETC(sockAddr,char *,CString,sa,sa_data)
---	     Str . unpackPS # (stToIO $ packCBytesST len strp)
+--	     Str . toString # (stToIO $ packCBytesST len strp)
 	     Str # unmarshallString' strp len
 
 writeSocket (So s) str =
@@ -251,12 +256,12 @@ writeSocket (So s) str =
       cstr <- marshallString' str n
       tryP "WriteSocket[out]" (>=0) $ 
 --        _casm_ ``%r=write(fileno((FILE*)%0),%1,%2);'' s cstr n
-        cwrite fd cstr n
+        cwrite fd cstr (fromIntegral n)
       freePtr cstr
       return Success
 
 foreign import ccall "sys/socket.h" getsockname :: Int -> CsockAddr -> Addr -> IO Int
-foreign import ccall "stdio.h" fdopen :: Int -> CString -> IO Int
+foreign import ccall "stdio.h" fdopen :: Int32 -> CString -> IO Int
 
 getfilep s mode = tryP "fdopen" (/=0) $
   do cmode <- marshallString (mode::String)
@@ -267,7 +272,7 @@ foreign import ccall "string.h" strerror :: Int -> IO CString
 
 tryP e p io = do
     r <- io
-    if p (r::Int) then return r else do
+    if p (r{-::Int-}) then return r else do
 --      cstr <- _casm_ ``%r=strerror(errno);''
       cstr <- strerror =<< errno
       s <- unmarshallString cstr
@@ -299,8 +304,8 @@ mstime = do
 
 
 foreign import ccall "asyncinput.h" fdzero :: Cfd_set -> IO ()
-foreign import ccall "asyncinput.h fdset" fd_set :: Int -> Cfd_set -> IO ()
-foreign import ccall "asyncinput.h fdisset" fd_isset :: Int -> Cfd_set -> IO Int
+foreign import ccall "asyncinput.h fdset" fd_set :: Fd -> Cfd_set -> IO ()
+foreign import ccall "asyncinput.h fdisset" fd_isset :: Fd -> Cfd_set -> IO Int
 foreign import ccall "asyncinput.h" bcopy_fdset :: Cfd_set -> Cfd_set -> IO ()
 
 doSelect :: XCallState -> [Descriptor] -> IO Response
@@ -314,17 +319,19 @@ doSelect (XCallState fds aitable _ _) dl =
  where descriptor d = case d of
 	   LSocketDe (LSo s) -> withd $ get_fileno s
 	   SocketDe (So s) ->  withd $ get_fileno s
+	   OutputSocketDe (So s) ->  withd $ get_fileno s
 	   DisplayDe ({-Display-} d) -> withd $ 
 --	         _casm_ ``%r=((Display*)%0)->fd;'' d
 		 xConnectionNumber d -- hmm
 	   TimerDe _ -> return []
+           _ -> do putStr "Unexpected descriptor: ";print d;return []
           where withd m = m >>= \fd -> return [(fd,d)]
 
-       fdset :: Int -> IO ()
+       fdset :: Fd -> IO ()
        --fdset s =  _casm_ ``FD_SET(%0,(fd_set*)%1);'' s fds
        fdset s =  fd_set s fds
 
-foreign import ccall "asyncinput.h" get_fileno :: Int -> IO Int
+foreign import ccall "asyncinput.h" get_fileno :: Int -> IO Fd
 {-
 
 -- Register problems with FD_ZERO under Redhat 6.1 Linux-i386...
@@ -339,7 +346,7 @@ mutByteArr2Addr arr  = _casm_ `` %r=(void *)%0; '' arr
 foreign import ccall "unistd.h" fork :: IO Int
 foreign import ccall "unistd.h" execl :: CString -> CString -> CString -> CString -> Int -> IO Int
 foreign import ccall "unistd.h" pipe :: Addr -> IO Int
-foreign import ccall "unistd.h" dup :: Int -> IO Int
+foreign import ccall "unistd.h" dup :: Fd -> IO Fd
 foreign import ccall "asyncinput.h" disable_timers :: IO ()
 
 startProcess cmd doIn doOut doErr =
@@ -372,10 +379,10 @@ startProcess cmd doIn doOut doErr =
     optPipe False = return Nothing
     optPipe True = Just `fmap` newPipe
     newPipe = do pa <- newArray 2
-		 ok <- pipe (addrOf (pa::CInt))
+		 ok <- pipe (addrOf (pa::CInt32))
 		 [p0,p1] <- readArray pa 2
 		 freePtr pa
-		 when ((ok::Int)/=0) $ failu "pipe" -- use tryP instead
+		 when (ok/=0) $ failu "pipe" -- use tryP instead
 		 return (p0,p1)
 
     optDupIn d = optDupOut d . fmap swap
@@ -393,4 +400,4 @@ startProcess cmd doIn doOut doErr =
 			 fmap So (getfilep p0 m)
 			 
 
-foreign import ccall "unistd.h close" cclose :: Int -> IO Int
+foreign import ccall "unistd.h close" cclose :: Int32 -> IO Int32

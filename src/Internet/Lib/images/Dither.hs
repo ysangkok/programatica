@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# COMPILERFLAGS -O #-}
 module Dither where
 

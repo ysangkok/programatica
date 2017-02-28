@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module StringF(
   stringF'',StringF,
   {-HasBorderWidth(..),HasAllowedChar(..),HasShowString(..),-}
@@ -28,7 +29,7 @@ import Xtypes
 import Geometry(Point(..), pP, rR,pmax)
 import LayoutRequest(plainLayout,LayoutResponse(..))
 --import LoadFont
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 --import Spops
 import StringEdit
@@ -44,7 +45,7 @@ import FDefaults hiding (setInitSize,getInitSize,getInitSizeMaybe)
 --import FDefaults hiding (HasInitSize)
 import FDefaults(cust,getpar,getparMaybe,HasBorderWidth(..),HasSizing(..),HasBgColorSpec(..),HasFgColorSpec(..),HasFontSpec(..),Customiser(..),PF(..))
 #endif
-import Data.Char
+import Data.Char(isPrint,isDigit)
 import GCAttrs --(ColorSpec,colorSpec,convColorK) -- + instances
 
 default(Int)
@@ -54,7 +55,7 @@ chr' = toEnum . wordToInt :: (Word->Char)
 ord' = fromIntegral . fromEnum :: (Char->Word)
 
 
-#include "defaults.h"
+#include "../defaults/defaults.h"
 
 newtype StringF = Pars [Pars]
 

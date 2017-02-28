@@ -1,4 +1,3 @@
-{-# LANGUAGE ForeignFunctionInterface, CPP #-}
 module Message where
 
 data Message a b = Low a | High b  deriving (Eq, Ord, Show)

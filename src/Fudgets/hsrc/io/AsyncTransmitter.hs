@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module AsyncTransmitter(asyncTransmitterF,asyncTransmitterF',closerF) where
 import Sockets
 import Srequest
@@ -9,7 +10,9 @@ import FudgetIO
 import CompOps((>==<))
 import IoF(ioF)
 import DialogueIO hiding (IOError)
-import qualified PackedString as PS
+import Data.ByteString(ByteString)
+import Data.ByteString.UTF8(fromString)
+import qualified Data.ByteString as BS(null)
 import Queue(QUEUE,empty,enter,qremove)
 
 {- asyncTransmitterF has two states:
@@ -83,7 +86,7 @@ closerF socket =
 getMsg l h = getK $ message l h
 
 data Buffer = Buf String (QUEUE String)
-data GetBuf = More PS.PackedString Buffer | Empty | EoS
+data GetBuf = More ByteString Buffer | Empty | EoS
 
 --buf0 = Buf "" empty
 buf1 str = Buf str empty -- pre: str/=""
@@ -104,13 +107,13 @@ getbuf (Buf s q) n = getbuf' s q
 
     getbuf'' s q =
       case splitAt n s of
-        (s1,s2) -> More (PS.packString s1) (Buf s2 q)
+        (s1,s2) -> More (fromString s1) (Buf s2 q)
 
 
 initblocksize = 512 :: Int
 
 #ifdef __GLASGOW_HASKELL__
-nullPS = PS.nullPS
+nullPS = BS.null
 #else
 nullPS = PS.null
 #endif

@@ -6,7 +6,7 @@ import FRequest
 --import Event
 --imaport Command
 import Geometry(Rect(..))
-import Fudget
+--import Fudget
 import Sizing(newSize)
 --import Maptrace(ctrace) -- debugging
 

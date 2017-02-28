@@ -8,7 +8,7 @@ import Xcommand
 import Geometry(Point(..), pP)
 --import LayoutRequest(LayoutRequest)
 import Loops(loopCompThroughRightF)
-import Message(Message(..))
+--import Message(Message(..))
 --import Spops
 import MapstateK
 import Xtypes

@@ -2,14 +2,14 @@ module NewCache(allcacheF) where
 import Command
 --import Event
 import FRequest
-import Fudget
+--import Fudget
 --import Loopthrough
 import Spops
 import LoopLow
 import Cont
 import IsRequest
 --import DialogueIO hiding (IOError)
-import qualified Data.Map.Strict as OM
+import qualified OrdMap as OM
 
 --import Maptrace(ctrace) -- debug
 --import NonStdTrace(trace)

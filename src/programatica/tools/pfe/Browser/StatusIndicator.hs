@@ -1,5 +1,9 @@
 module StatusIndicator where
-import Fudget
+import Fudgets
+import NullF
+import FDefaults
+import CompOps
+import GCtx
 
 data Status = Unknown | InProgress | InError | Good deriving (Eq,Ord)
 

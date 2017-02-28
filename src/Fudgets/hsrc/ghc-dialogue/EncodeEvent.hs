@@ -1,9 +1,10 @@
-{-# OPTIONS -optc-I/usr/X11R6/include -#include <X11/Xlib.h> -#include <X11/Xutil.h> -fvia-C #-}
+{-# LANGUAGE CPP, ForeignFunctionInterface #-}
+{- Obsolete OPTIONS -optc-I/usr/X11R6/include -#include <X11/Xlib.h> -#include <X11/Xutil.h> -fvia-C -}
 module EncodeEvent(getNextEvent) where
 
 import Event
 import Xtypes
-import ResourceIds
+--import ResourceIds
 
 import XCallTypes
 import StructFuns

@@ -1,4 +1,5 @@
-module StreamProc (module CompSP,module Dynforkmerge,module Loop,module Loopthrough,module ParSP,module SP,module SPmonad,module SPstateMonad,module Spinterp,module Spops,module SpEither,module IdempotSP,module StreamProcIO) where
+module StreamProc (-- * Stream processors
+  module CompSP,module Dynforkmerge,module Loop,module Loopthrough,module ParSP,module SP,module SPmonad,module SPstateMonad,module Spinterp,module Spops,module SpEither,module IdempotSP,module StreamProcIO) where
 import CompSP
 import Dynforkmerge
 import Loop

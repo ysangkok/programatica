@@ -1,12 +1,13 @@
-module MyForeign where
+module MyForeign(module MyForeign,F.Int32,F.CSize(..)) where
 import qualified Foreign as F
-import CString(castCCharToChar,castCharToCChar)
+import qualified Foreign.C as F
+import Foreign.C.String(castCCharToChar,castCharToCChar)
 --import CCall
-import System.IO(bracket)
+import Control.Exception(bracket)
 import Ap
 -- Emulate GHC 4.08 libraries on top of GHC 5.00 libraries...
 
-newtype Addr = Addr (F.Ptr F.Word8) deriving (Eq)
+newtype Addr = Addr (F.Ptr F.Word8) deriving (Eq,Show)
 type AddrOff = Int
 
 --instance CCallable Addr
@@ -68,6 +69,14 @@ fpeek (Addr p) = F.peek (F.castPtr p)
 fpoke (Addr p) = F.poke (F.castPtr p)
 
 instance Storable Int where
+  sizeOf x = F.sizeOf x
+  alignment x = F.alignment x
+
+  peek = fpeek
+  poke = fpoke
+
+
+instance Storable F.Int32 where
   sizeOf x = F.sizeOf x
   alignment x = F.alignment x
 

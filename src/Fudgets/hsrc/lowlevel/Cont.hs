@@ -1,9 +1,9 @@
 module Cont(Cont(..),conts, tryM, cmdContF, cmdContK, cmdContK', waitForSP, waitForK, waitForF, waitForFu, cmdContSP,tryGet,getLeftSP,getRightSP,fContWrap,kContWrap,dropSP,contMap) where
-import Direction
+--import Direction
 import Fudget
-import Message(Message(..), stripHigh, stripLow, aLow)
+import Message(stripHigh, stripLow, aLow) --Message(..),
 import Path(here)
-import SP
+--import SP
 import Spops
 import StreamProcIO
 import EitherUtils(stripLeft,stripRight)

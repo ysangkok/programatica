@@ -3,8 +3,8 @@ module IxEnvMT (HasEnv(..), MT(..), at, Z, S, Top, Under, WithEnv, withEnv, mapE
 import MT
 import Control_Monad_Fix
 
-import Control.Monad(liftM,MonadPlus(..))
-
+import Control.Monad(liftM,MonadPlus(..),ap)
+import Control.Applicative -- Otherwise you can't do the Applicative instance.
 
 newtype WithEnv e m a = E { unE :: e -> m a }
 
@@ -20,6 +20,10 @@ mapEnv f (E m) = E (\e -> m (f e))
 instance Monad m => Functor (WithEnv e m) where
     fmap        = liftM
 
+instance Monad m => Applicative (WithEnv e m) where
+  pure  = return
+  (<*>) = ap
+
 instance Monad m => Monad (WithEnv e m) where
     return      = lift . return
     E m >>= f   = E (\e -> do x <- m e; unE (f x) e)
@@ -29,8 +33,12 @@ instance Monad m => Monad (WithEnv e m) where
 instance MT (WithEnv e) where
     lift        = E . const
 
+instance MonadPlus m => Alternative (WithEnv e m) where
+    (<|>) = mplus
+    empty = mzero
+
 instance MonadPlus m => MonadPlus (WithEnv e m) where
-    mzero           = lift mzero 
+    mzero           = lift mzero
     E a `mplus` E b = E (\e -> a e `mplus` b e)
 --------------------------------------------------------------------------------
 

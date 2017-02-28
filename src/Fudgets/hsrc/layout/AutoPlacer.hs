@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module AutoPlacer(autoP,autoP') where
 import LayoutRequest
 import Geometry
@@ -54,7 +55,7 @@ newGoodness (Layout {minsize=s@(Point w h)},placer2) reqs =
 	(True,False) -> (aw-rw)*ah
 	(False,True) -> (ah-rh)*aw
 #else
--- Röjemo's debug version
+-- RÃ¶jemo's debug version
 -- needs updating
 newGoodness (Layout {minsize=s@(Point w h)},placer2) reqs =
      trace ("w = " ++ show w ++ "\n"

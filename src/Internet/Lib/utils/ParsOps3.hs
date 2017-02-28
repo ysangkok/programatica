@@ -1,7 +1,7 @@
 {-# COMPILERFLAGS -fno-overload-restr #-}
 module ParsOps3 where
 import LLParsOps
-import Trace
+import Debug.Trace
 
 infixl 5 `ap`,`apCut`,`chk`
 infixr 4 `orelse`

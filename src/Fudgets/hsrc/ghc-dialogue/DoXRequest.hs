@@ -1,4 +1,5 @@
-{-# OPTIONS -#include <X11/Xlib.h> -#include <X11/Xutil.h> -#include <X11/extensions/Xdbe.h> -fvia-C #-}
+{-# LANGUAGE CPP #-}
+{- Obsolete OPTIONS -#include <X11/Xlib.h> -#include <X11/Xutil.h> -#include <X11/extensions/Xdbe.h> -fvia-C -}
 --  -optc-I/usr/X11R6/include
 module DoXRequest(doXRequest,getGCValues) where
 
@@ -8,11 +9,11 @@ import Command
 import Event
 import Xtypes
 import Font
-import ResourceIds
+--import ResourceIds
 import Visual
 import HbcWord(intToWord) -- for Visual
 import IOUtil(getEnvi)
-import CmdLineEnv(argFlag)
+--import CmdLineEnv(argFlag)
 
 import XCallTypes
 import StructFuns
@@ -27,10 +28,13 @@ import Ap
 #include "newstructfuns.h"
 -}
 
-newInt = newPtr :: IO CInt
-newInts n = sequence (replicate n newPtr)
-readInt = readCVar :: CInt -> IO Int
-freePtrs = mapM_ freePtr
+newLong = newPtr :: IO CLong
+newLongs n = sequence (replicate n newLong)
+readLong = readCVar :: CLong -> IO Int
+newInt32 = newPtr :: IO CInt32
+newInt32s n = sequence (replicate n newInt32)
+readInt32 = readCVar :: CInt32 -> IO Int32
+freePtrs xs = mapM_ freePtr xs
 
 --synchronize = argFlag "synchronize" False
 
@@ -92,33 +96,42 @@ doXRequest (d@display,wi,req) =
      WindowId wi' <- if wi == noWindow then xDefaultRootWindow display else return wi
      xCreatePixmap display (DrawableId wi') w h depth'
    ReadBitmapFile filename -> do
-      ints@[w,h,xhot,yhot,bm] <- newInts 5
+      bm <- newLong
+      ints@[w,h,xhot,yhot] <- newInt32s 4
       WindowId root <- xDefaultRootWindow display
       cfilename <- marshallString filename -- GHC gives faulty code for marshallM?
       --putStrLn "about to call xReadBitmapFile"
       --writeCVar xhot 0
       --putStrLn filename
       --putStrLn =<< unmarshall cfilename
-      --print =<< readInt xhot
+      --print =<< readLong xhot
       r <- xReadBitmapFile display (DrawableId root) cfilename w h bm xhot yhot
       --putStrLn "returned from call to xReadBitmapFile"
       freePtr cfilename -- crash?!!
       --putStrLn "about to read xhot"
-      x <- readInt xhot
+      x <- fromIntegral # readInt32 xhot
       --putStr "xhot =";print x
       ret <-
         if (r::Int) == CCONST(BitmapSuccess) then do
 	    hot <- if x == -1 then return Nothing 
-			      else Just . Point x # readInt yhot
+			      else Just . Point x . fromIntegral # readInt32 yhot
 	    BitmapReturn
-	      # (Point # readInt w <# readInt h)
+	      # (Point # (fromIntegral # readInt32 w) <# (fromIntegral # readInt32 h))
 	     <# return hot 
-	     <# (PixmapId # readInt bm)
+	     <# (PixmapId # readLong bm)
         else return BitmapBad
       --putStrLn "about to free int parameters"
       freePtrs ints
+      freePtr bm
       return (BitmapRead ret)
-   --CreateBitmapFromData bmd ->
+   CreateBitmapFromData (BitmapData size@(Point w h) hot bytes) ->
+     do cbytes <- marshallString' (map toEnum bytes) (w*h `div` 8) -- hmm!!
+        WindowId wi' <- if wi == noWindow then xDefaultRootWindow display else return wi
+        let cw = fromIntegral w
+            ch = fromIntegral h
+        pm <- xCreateBitmapFromData display (DrawableId wi') cbytes cw ch
+        freePtr cbytes
+        return (BitmapRead (BitmapReturn size hot pm))
    --RmGetStringDatabase str ->
    --RmGetResource rmd s1 s2 ->
    --TranslateCoordinates ->n
@@ -141,16 +154,16 @@ doXRequest (d@display,wi,req) =
      do let length = 1000 
 	actual_type <- newPtr
 	actual_format <- newPtr
-	nitems <- newInt
-	bytes_after <- newInt
+	nitems <- newLong
+	bytes_after <- newLong
 	prop_return <- newCString
 	xGetWindowProperty display wi property offset
 			   (length `div` (4::Int)) delete req_type
 	       actual_type actual_format nitems bytes_after prop_return
 	at <- readCVar actual_type
 	af <- readCVar actual_format
-	n <- readInt nitems
-	ba <- readInt bytes_after
+	n <- readLong nitems
+	ba <- readLong bytes_after
 	str <- if (af::Int) == CCONST(None) then return "" else
 	    do let got = af*n `div` 8
 	       cstr <- readCVar prop_return
@@ -164,12 +177,12 @@ doXRequest (d@display,wi,req) =
 	freePtr prop_return
 	return $ GotWindowProperty at af n ba str
    QueryPointer -> do
-     ints@[root,child,root_x,root_y,win_x,win_y,mask] <- newInts 7
+     ints@[root,child,root_x,root_y,win_x,win_y,mask] <- newLongs 7
      same <- xQueryPointer display wi root child root_x root_y win_x win_y mask
      ret <- PointerQueried same
-	      # mkPoint (readInt root_x) (readInt root_y)
-	     <# mkPoint (readInt win_x) (readInt win_y)
-	     <# (fromC # readInt mask)
+	      # mkPoint (readLong root_x) (readLong root_y)
+	     <# mkPoint (readLong win_x) (readLong win_y)
+	     <# (fromC # readLong mask)
      freePtrs ints
      return ret
 
@@ -186,9 +199,9 @@ doXRequest (d@display,wi,req) =
       return (ColorQueried r)
 
    ListFonts pattern maxnames ->
-     do cnt <- newInt
+     do cnt <- newLong
 	fnarr <- xListFonts display pattern maxnames cnt
-	fns <- unmarshallArray fnarr =<< readInt cnt
+	fns <- unmarshallArray fnarr =<< readLong cnt
 	xFreeFontNames fnarr
 	freePtr cnt
 	return (GotFontList fns)
@@ -202,10 +215,10 @@ doXRequest (d@display,wi,req) =
    QueryTextExtents16 fid s ->
      do let n = length s
 	cs <- marshallString16' s n
-        ints@[dir,ascent,descent,overall] <- newInts 4
+        ints@[dir,ascent,descent,overall] <- newLongs 4
         overall <- newPtr
 	xQueryTextExtents16 display fid cs n dir ascent descent overall
-        [asc,desc] <- mapM readInt [ascent,descent]
+        [asc,desc] <- mapM readLong [ascent,descent]
         ov <- mkCharStruct overall
         freePtrs ints
 	freePtr overall
@@ -213,10 +226,10 @@ doXRequest (d@display,wi,req) =
    ListFontsWithInfo pattern maxnames ->
      GotFontListWithInfo # listFontsWithInfo d pattern maxnames
    DbeQueryExtension ->
-     do ints@[major,minor] <- newInts 2
+     do ints@[major,minor] <- newLongs 2
         status <- xdbeQueryExtension display major minor
-	ma <- readInt major
-	mi <- readInt minor
+	ma <- readLong major
+	mi <- readLong minor
 	freePtrs ints
 	return (DbeExtensionQueried status ma mi)
    DbeAllocateBackBufferName swapAction ->
@@ -332,12 +345,12 @@ queryFont d fi = mkFontStructList =<< xQueryFont d fi
 
 listFontsWithInfo :: Display -> FontName -> Int -> IO [(FontName,FontStructList)]
 listFontsWithInfo d pattern maxnames =
-  do cnt <- newInt
+  do cnt <- newInt32
      fsarrp <- newCXFontStruct
      --putStrLn "About to call xListFontsWithInfo"
-     fnarr <- xListFontsWithInfo d pattern maxnames cnt fsarrp
+     fnarr <- xListFontsWithInfo d pattern (fromIntegral maxnames) cnt fsarrp
      --putStrLn "Returned from call xListFontsWithInfo"
-     n <- readInt cnt
+     n <- readInt32 cnt
      --putStr "Number of fonts: " ; print n
      freePtr cnt
      fsarr <- readCVar fsarrp
@@ -346,9 +359,9 @@ listFontsWithInfo d pattern maxnames =
      if fnarr==nullStr then return []
       else do
        --putStrLn "Non-null name array"
-       fns <- unmarshallArray fnarr n
-       --putStrLn "Got name list"
-       fss <- readArray fsarr n
+       fns <- unmarshallArray fnarr (fromIntegral n)
+       --putStrLn "Got name list";print fns
+       fss <- readArray fsarr (fromIntegral n)
        --putStrLn "Got fontstruct list"
        xFreeFontInfo fnarr fsarr n
        --putStrLn "Freed fontinfo, returning"
@@ -356,7 +369,8 @@ listFontsWithInfo d pattern maxnames =
 
 instance CVar CXFontStruct FontStructList
 instance Storable FontStructList where -- just for readArray...
-  sizeOf _ = sizeOf (undefined::CXFontStruct)
+--sizeOf _ = sizeOf (undefined::CXFontStruct) -- Wrong size!!!
+  sizeOf _ = SIZEOF(XFontStruct)
   alignment _ = alignment (undefined::CXFontStruct)
   peek = mkFontStructList' . CXFontStruct
 
@@ -390,8 +404,9 @@ mkFontStructList' fs =
          arrsize = (max_char_or_byte2 - min_char_or_byte2 + 1) *
 		   (max_byte1 - min_byte1 + 1)
          --arrsize = max - min  :: Int -- This is wrong!
-     --print ("min max",min,max)
+     --print ("min max arrsize",min,max,arrsize)
      per_char <- GET(XFontStruct,HT(XCharStruct),fs,per_char)
+     --putStrLn "after per_char"
      elem9 <- if per_char /= nullPtr -- CCONST(NULL) 
        then Just # mapM (\i -> INDEX(XCharStruct) per_char i >>= mkCharStruct) [0..arrsize-1] 
        else return Nothing
@@ -429,12 +444,12 @@ mkFontProp fp =
 
 mkCharStruct :: CXCharStruct -> IO CharStruct
 mkCharStruct cs = 
-  CharStruct
-   # GET(XCharStruct,Int,cs,lbearing)
-  <# GET(XCharStruct,Int,cs,rbearing)
-  <# GET(XCharStruct,Int,cs,width)
-  <# GET(XCharStruct,Int,cs,ascent)
-  <# GET(XCharStruct,Int,cs,descent)
+     CharStruct
+      # GET(XCharStruct,Int,cs,lbearing)
+     <# GET(XCharStruct,Int,cs,rbearing)
+     <# GET(XCharStruct,Int,cs,width)
+     <# GET(XCharStruct,Int,cs,ascent)
+     <# GET(XCharStruct,Int,cs,descent)
 
 mkVisual :: CVisual -> IO Visual
 mkVisual cv =

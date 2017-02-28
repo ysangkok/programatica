@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module GraphicsF(GraphicsF,setCursorSolid,setGfxEventMask,
                  setAdjustSize,setCursor,setDoubleBuffer,
                  graphicsF,graphicsF',
@@ -5,8 +6,8 @@ module GraphicsF(GraphicsF,setCursorSolid,setGfxEventMask,
 		 graphicsDispGroupF,graphicsDispGroupF',
 		 graphicsLabelF,graphicsLabelF',
 		 graphicsDispF,graphicsDispF',
-		 GfxEventMask(..),GfxCommand(..),GfxEvent(..),
-		 replaceGfx,replaceAllGfx) where
+		 GfxEventMask(..),GfxChange(..),GfxCommand(..),GfxEvent(..),
+		 replaceGfx,replaceAllGfx,showGfx,highlightGfx) where
 import Fudget
 import FudgetIO
 import Xcommand
@@ -46,27 +47,32 @@ import MeasuredGraphics(MeasuredGraphics(SpacedM,MarkM),compileMG,DPath(..))--,e
 import Graphic2Pixmap
 import GCtx(GCtx(..),wCreateGCtx,rootGCtx)
 import GCAttrs
-import MGOps(replaceMGPart,parentGctx)
+import MGOps(parentGctx,replaceMGPart,updateMGPart,groupMGParts,ungroupMGParts)
 import IdempotSP
 import DrawCompiledGraphics
 import Rects(intersectRects,overlaps)
 import EitherUtils(stripEither)--,mapEither
 import Sizing(newSize,Sizing(..))
 import ListUtil(mapFst,mapSnd)
-import HO(apSnd)
-import Data.Maybe(fromMaybe)
+--import HO(apSnd)
+--import Maybe(fromMaybe)
 import Xrequest(xrequestK)
 import StdIoUtil(appendChanK)
 import ContinuationIO(stderr)
 --import Maptrace(ctrace) -- debugging
 
 import FDefaults
-#include "defaults.h"
-#include "exists.h"
+#include "../defaults/defaults.h"
+#include "../exists.h"
 --  Commands for grapihcsF: ---------------------------------------------------
 
+data GfxChange gfx
+  = GfxReplace (Bool,Maybe gfx)
+  | GfxGroup Int Int -- position & length
+  | GfxUngroup Int -- position
+  
 data GfxCommand path gfx
-  = ChangeGfx [(path,(Bool,Maybe gfx))]
+  = ChangeGfx [(path,GfxChange gfx)]
   | ChangeGfxBg ColorSpec
   | ChangeGfxBgPixmap PixmapId Bool -- True = free pixmap
 #ifdef USE_EXIST_Q
@@ -79,18 +85,19 @@ data GfxCommand path gfx
   | GetGfxPlaces [path] -- ask for rectangles of listed paths
 
 replaceAllGfx = replaceGfx []
-replaceGfx path gfx = ChangeGfx [(path,(False,Just gfx))]
+replaceGfx path gfx = ChangeGfx [(path,GfxReplace (False,Just gfx))]
 showGfx path = ShowGfx path (Nothing,Nothing)
+highlightGfx path on = ChangeGfx [(path,GfxReplace (on,Nothing))]
 
--- Assume Haskell 98
-#if __HASKELL98__
-#define map fmap
-#endif
+instance Functor GfxChange where
+  fmap f (GfxReplace r) = GfxReplace (fmap (fmap f) r)
+  fmap f (GfxGroup from count) = GfxGroup from count
+  fmap f (GfxUngroup at) = GfxUngroup at
 
 instance Functor (GfxCommand path) where
-  map f cmd =
+  fmap f cmd =
     case cmd of
-      ChangeGfx changes -> ChangeGfx (mapSnd (apSnd (map f)) changes)
+      ChangeGfx changes -> ChangeGfx (mapSnd (fmap f) changes)
       -- _ -> cmd -- Operationally, the rest is the same as this line.
       ChangeGfxBg c -> ChangeGfxBg c
       ChangeGfxBgPixmap pm b -> ChangeGfxBgPixmap pm b
@@ -255,7 +262,7 @@ graphicsGroupF' customiser fud =
 		  ]
   in --compMsgSP layoutOptSP (idRightSP idempotSP) `serCompSP`
      idRightSP (stripEither `postMapSP` idRightSP idempotSP) >^^=<
-     groupF (map XCmd startcmds)
+     groupF (fmap XCmd startcmds)
         (initK doublebuffer font optcursor fgcol bgcol $
 	 graphicsK0 solid sizing adjsize optstretch optinitsize optx)
         fud
@@ -301,8 +308,8 @@ graphicsK0 solid sizing adjsize optstretch optinitsize optx optbackbuf gctx bg c
     graphicsK2 optcgsize optcgx =
         graphicsK init
       where
-	optSizeS    = map (minSizeS . minsize . snd . snd) optcgsize
-        optStretchS = map stretchS optstretch
+	optSizeS    = fmap (minSizeS . minsize . snd . snd) optcgsize
+        optStretchS = fmap stretchS optstretch
           where stretchS (sh,sv) = noStretchS (not sh) (not sv)
         spacerM =
 	  case (optStretchS,optSizeS) of
@@ -351,13 +358,27 @@ graphicsK0 solid sizing adjsize optstretch optinitsize optx optbackbuf gctx bg c
 		 	     -> --ctrace "updgfx" (show (req,req')) $
 				putLayoutReq req' $ c req' mg cg False
 	    _                -> c req mg cg True
-	updGraphicsK mg cg optreq ((path,(hi,optnew)):changes) c =
-	  optInsertNew mg cg (parentGctx gctx mg path) path optreq optnew $ \ mg' cg' optreq' ->
-	  let cg'' = case (hi,optnew) of
-		       (False,Nothing) -> cgupdate cg' path removecursor
-		       (True,_)        -> cgupdate cg' path addcursor
-		       _ -> cg'
-	  in updGraphicsK mg' cg'' optreq' changes c
+	updGraphicsK mg cg optreq ((path,change):changes) c =
+          case change of
+            GfxReplace r -> replace r
+            GfxGroup from count -> group from count
+            GfxUngroup pos -> ungroup pos
+          where
+            replace (hi,optnew) =
+              optInsertNew mg cg (parentGctx gctx mg path) path optreq optnew $ \ mg' cg' optreq' ->
+              let cg'' = case (hi,optnew) of
+                           (False,Nothing) -> cgupdate cg' path removecursor
+                           (True,_)        -> cgupdate cg' path addcursor
+                           _ -> cg'
+              in updGraphicsK mg' cg'' optreq' changes c
+
+            group from count = updGraphicsK mg' cg' optreq changes c
+              where mg' = updateMGPart mg path (groupMGParts from count)
+                    cg' = cgupdate cg path (cgGroup from count)
+
+            ungroup pos = updGraphicsK mg' cg' optreq changes c
+              where mg' = updateMGPart mg path (ungroupMGParts pos)
+                    cg' = cgupdate cg path (cgUngroup pos)
 
         bufDrawChangesK = maybe drawChangesK backBufDrawChangesK optbackbuf
 	bufDrawK = maybe drawK backBufDrawK optbackbuf
@@ -389,7 +410,7 @@ graphicsK0 solid sizing adjsize optstretch optinitsize optx optbackbuf gctx bg c
 	highK (BellGfx n) = xcommandK (Bell n) same
 
 	highK (GetGfxPlaces paths) =
-	  putHigh (Right $ GfxPlaces $ map (cgrect . cgpart cg . pathIn) paths) $
+	  putHigh (Right $ GfxPlaces $ fmap (cgrect . cgpart cg . pathIn) paths) $
 	  same
 	highK (ChangeGfxBg bgspec) =
 	  convColorK bgspec $ \ bgcol ->
@@ -420,7 +441,7 @@ graphicsK0 solid sizing adjsize optstretch optinitsize optx optbackbuf gctx bg c
 	  same
 	highK (ChangeGfx changes0) =
 	    updGraphicsK mg cg Nothing changes $ \ req' mg' cg' beQuick ->
-	    bufDrawChangesK beQuick (higc,curR) cg' cg (map fst changes) $
+	    bufDrawChangesK beQuick (higc,curR) cg' cg (fmap fst changes) $
 	    --mkChangeVisible cg' changes $
 	    idleK cleargc req' mg' cg' active []
 	  where changes = mapFst pathIn changes0
@@ -471,30 +492,30 @@ graphicsK0 solid sizing adjsize optstretch optinitsize optx optbackbuf gctx bg c
 prune rs (CGMark cg) = CGMark (prune rs cg)
 prune rs (CGraphics r cur cmds cgs) =
   if any (overlaps r) rs
-  then if null cmds -- || all (null.snd) cmds
-       then CGraphics r cur cmds (map (prune rs) cgs)
+  then if null cmds --  || all (null.snd) cmds
+       then CGraphics r cur cmds (fmap (prune rs) cgs)
        else CGraphics r cur cmds cgs
              -- cmds may overlap with cgs, so
 	     -- if cmds are redrawn then all cgs should be redrawn too.
   else CGraphics r cur [] [] -- subtree rectangles are inside parent rectangles.
 
 {-
-locatePoint' p cg = map addrect $ locatePoint p cg
+locatePoint' p cg = fmap addrect $ locatePoint p cg
   where
     addrect = pairwith (cgrect . cgpart cg)
 -}
 
 locatePoint p (CGMark cg) = [(0:path,geom)|(path,geom)<-locatePoint p cg]
-  -- ^^ the wrong geometry will be return if CGMark came from a SpacerM !!
+ --  ^^ the wrong geometry will be return if CGMark came from a SpacerM !!
 locatePoint p (CGraphics r _ _ gs) =
   if p `inRect` r
-  then let ps = map (locatePoint p) gs
+  then let ps = fmap (locatePoint p) gs
        in case [ (i:path,pr) | (i,paths)<-number 1 ps, (path,pr)<-paths] of
             [] -> [([],(p-rectpos r,r))]
 	    ps -> ps
   else []
 
-cursorPaths (CGMark cg) = map (0:) (cursorPaths cg)
+cursorPaths (CGMark cg) = fmap (0:) (cursorPaths cg)
 cursorPaths (CGraphics _ cur _ gs) =
   if cur
   then [[]]

@@ -5,7 +5,7 @@ module AlignP where
 import LayoutRequest
 import Utils(mapPair, number, swap)
 import HO(apSnd)
-import Data.List2(sort)
+import List2(sort)
 --import Spacers
 
 -- placer operations

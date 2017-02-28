@@ -4,9 +4,9 @@ module IxOutputMT (HasOutput(..), MT(..), at, Z, S, Top, Under, WithOutput,
 import MT
 import Control_Monad_Fix
 
-import Control.Monad(liftM,MonadPlus(..))
+import Control.Monad(liftM,MonadPlus(..),ap)
 import Tree
-
+import Control.Applicative -- Otherwise you can't do the Applicative instance.
 
 newtype WithOutput o m a = O { unO :: m (a, Tree o) } 
 
@@ -29,6 +29,10 @@ mapOutput f (O m) = O $ do (a,o) <- m; return (a, fmap f o)
 instance Monad m => Functor (WithOutput o m) where
   fmap = liftM
 
+instance Monad m => Applicative (WithOutput o m) where
+  pure  = return
+  (<*>) = ap
+
 instance Monad m => Monad (WithOutput o m) where
   return    = lift . return
   O m >>= f = O $ do (a,o) <- m
@@ -37,6 +41,11 @@ instance Monad m => Monad (WithOutput o m) where
 
 instance MT (WithOutput o) where
   lift m = O $ do x <- m; return (x, Tree.Empty)
+
+
+instance MonadPlus m => Alternative (WithOutput o m) where
+    (<|>) = mplus
+    empty = mzero
 
 instance MonadPlus m => MonadPlus (WithOutput o m) where
   mzero             = lift mzero

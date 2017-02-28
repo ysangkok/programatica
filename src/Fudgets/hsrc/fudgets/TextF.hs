@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module TextF(textF,textF',textF'',TextF,
 	     TextRequest(..)) where
 import Fudget
@@ -16,18 +17,18 @@ import BgF
 --import Color
 --import EitherUtils(mapfilter)
 import Data.Maybe(mapMaybe)
-import Message(Message(..),message)
+import Message(message) --Message(..),
 import Font
 --import LoadFont
 import Gc
 import InputMsg
 import LayoutRequest
-import Alignment(Alignment(..),aLeft)
+import Alignment(aLeft) --Alignment(..),
 import Defaults(defaultFont,bgColor,fgColor)
 import Sizing
 import FDefaults
 import GCAttrs --(ColorSpec,convColorK,colorSpec)
-import Data.ListRequest(ListRequest(..),listEnd)
+import ListRequest(ListRequest(..),listEnd)
 #include "../defaults/defaults.h"
 
 default(Int) -- mostly for Hugs

@@ -1,5 +1,5 @@
 module CompiledGraphics where
-import Geometry(Rect(rectsize))
+import Geometry(Rect(..))
 import Utils(number)
 import DrawTypes(DrawCommand)
 import ResourceIds(GCId,rootGC)
@@ -84,7 +84,7 @@ hascursor (CGraphics _ cur _ _) = cur
 cgpart cg [] = cg
 cgpart (CGMark cg) (0:ps) = cgpart cg ps
 cgpart (CGraphics _ _ _ parts) (p:ps) =
-  if p>length parts then error "bad path in CompiledGraphics.cgpart " else
+  if p<1||p>length parts then error "bad path in CompiledGraphics.cgpart " else
   cgpart (parts !! ((p::Int)-1)) ps
 
 cgreplace cg path new = cgupdate cg path (const new)
@@ -118,3 +118,28 @@ cgcursors (CGraphics _ cur _ parts) =
   where
     partcursors =
       concatMap (\(n,ps) -> map (n:) (cgcursors ps)) (number 1 parts)
+
+cgGroup pos len (CGMark cg) = CGMark (cgGroup pos len cg) -- hmm!!
+cgGroup pos len (CGraphics r cur dcmds parts) =
+    CGraphics r cur dcmds (ds1++cgCompose r2 ds2:ds3)
+  where
+    (ds1,ds2a) = splitAt (pos-1) parts
+    (ds2,ds3) = splitAt len ds2a
+    r2 = foldr (boundingRect.cgrect) (Rect 0 0) ds2
+
+cgUngroup pos (CGMark cg) = CGMark (cgUngroup pos cg) -- hmm!!
+cgUngroup pos cg@(CGraphics r cur dcmds parts) =
+    case splitAt (pos-1) parts of
+      (ds1,d2:ds3) ->
+        case unmark 0 d2 of
+          (m,CGraphics r2 cur2 dcmds2 ds2) ->
+            CGraphics r cur (dcmds++dcmds2) (ds1++map (mark m) ds2++ds3)
+          _ -> cg -- hmm!!
+
+      _ -> cg -- hmm!!
+  where
+    unmark n (CGMark cg) = unmark (n+1) cg
+    unmark n cg = (n,cg)
+
+    mark 0 cg = cg
+    mark n cg = mark (n-1) (CGMark cg)

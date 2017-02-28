@@ -24,7 +24,7 @@ import TiDecorate(TiPat,DeclsUseType,no_use,specType,mapTiDeclsNames)
 import TiProp()
 import TiPropStruct
 import TiBaseStruct(tcE,tcD)
-import Data.Lists((\\\))
+import Lists((\\\))
 import MUtils(( # ),mapSnd)
 --import Maybe(mapMaybe)
 --import IOExts(trace)

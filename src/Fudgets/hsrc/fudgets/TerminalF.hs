@@ -19,7 +19,7 @@ import LayoutRequest
 --import Placer(spacerF)
 --import Spacers
 import LoadFont
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import StateMonads
 --import EitherUtils(mapMaybe, stripMaybeDef)

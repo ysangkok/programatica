@@ -4,7 +4,7 @@ import FreeNames
 import DefinedNames(DefinedNames)
 
 import BaseSyntax
-import Data.Lists((\\\))
+import Lists((\\\))
 import Data.List(nub)
 import TypedIds
 --import AccList(accList)

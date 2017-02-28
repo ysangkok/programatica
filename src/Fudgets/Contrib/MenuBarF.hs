@@ -12,7 +12,7 @@ module MenuBarF(
   ) where
 import AllFudgets hiding (menuF)
 import ListUtil(mapFst)
-import Control.MonadUtil((@@))
+import MonadUtil((@@))
 import DynRadioGroupF
 import KeyGfx
 

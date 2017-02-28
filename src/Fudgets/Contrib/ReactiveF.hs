@@ -1,6 +1,8 @@
 module ReactiveF where
 import qualified Fudgets as F
-import Maybe(isJust)
+import Data.Maybe(isJust)
+import Control.Applicative
+import Control.Monad(ap)
 
 reactiveF rM = F.mapstateF (\ s m ->react (rM m) s)
 
@@ -9,6 +11,10 @@ newtype ReactionM s o a = M (s -> [o] -> Maybe (s,[o],a))
 
 instance Functor (ReactionM s o) where
   fmap f m = do x <- m; return (f x)
+
+instance Applicative (ReactionM s o) where
+  pure = return
+  (<*>) = ap
 
 instance Monad (ReactionM s o) where
   return x = M (\s o->Just (s,o,x))

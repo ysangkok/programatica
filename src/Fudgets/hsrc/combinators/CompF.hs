@@ -1,6 +1,6 @@
 module CompF(compF) where
 import Fudget
-import Message(Message(..))
+--import Message(Message(..))
 import Route
 import SP
 import Direction

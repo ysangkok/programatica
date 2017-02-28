@@ -12,7 +12,7 @@ import FRequest
 import Geometry(Point(..), Rect(..), origin, padd, pmax, rR)
 import LayoutRequest
 import LoopLow
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import Path
 --import SerCompF(idRightF)

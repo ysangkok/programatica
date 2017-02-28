@@ -1,6 +1,6 @@
 module KeyGfx(keyGfx) where
 import Fudgets
-import Char(toUpper)
+import Data.Char(toUpper)
 
 keyGfx gfx k = hboxD' 12 [g gfx,keyD (keyCap k)]
   where

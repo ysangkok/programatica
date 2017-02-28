@@ -1,10 +1,11 @@
+{-# LANGUAGE CPP #-}
 module TagEvents(tagEventsSP) where
 import Command
 import CompSP(preMapSP,serCompSP)
 import SpEither(mapFilterSP)
 import Cont(cmdContSP)
 import CmdLineEnv(argFlag)
-import Direction
+--import Direction
 import Event
 --import Font(FontStruct)
 import Fudget
@@ -13,7 +14,7 @@ import FRequest
 import IOUtil(getEnvi)
 --import LayoutRequest(LayoutRequest)
 import Loopthrough
-import Message(Message(..),stripLow)
+import Message(stripLow) --Message(..),
 import Path
 import WindowF(autumnize)
 import ShowCommandF

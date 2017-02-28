@@ -9,8 +9,9 @@ module OrigTiMonad(
    errorContext,errorContext',posContext,posContext',declContext,moduleContext,
    (>:),freshInt
   ) where
+import qualified TiNames
 import Prelude hiding (lookup) -- for Hugs
-import Control.Monad(MonadPlus(..))
+import Control.Monad(MonadPlus(..),ap)
 import HsIdent(HsIdentI)
 import HsName(ModuleName,Id,noModule)
 import TiTypes
@@ -27,6 +28,7 @@ import MUtils
 import Control.Monad.Error()
 import Lift
 import PrettyPrint(Printable,pp,(<+>),(<>),ppi,vcat)
+import qualified Control.Applicative -- Otherwise you can't do the Applicative instance.
 
 --type TEnv i = TiEnv.Env (HsIdentI i) (Scheme i) -- type of value identifiers
 --type KEnv i = TiEnv.Env (HsIdentI i) (Kind,TypeInfo i) -- kind of type identifiers
@@ -61,6 +63,10 @@ instance Functor (Out i) where
 instance Functor (IM i c) where
   fmap f (IM m) = IM $ \ env ids -> fmap (fmap f) (m env ids)
 
+instance Applicative (IM i c) where
+  pure  = return
+  (<*>) = ap
+
 instance Monad (IM i c) where
   return ans = IM $ \ env ids -> Right (Out ans (ids,empty))
  
@@ -74,6 +80,10 @@ instance Monad (IM i c) where
 	   Right (Out y (ids2,out2)) -> Right (Out y (ids2,merge out1 out2))
 
   fail = typeError . Other . vcat . lines
+
+instance Control.Applicative.Alternative (IM i c) where
+    (<|>) = mplus
+    empty = mzero
 
 instance MonadPlus (IM i c) where
   mzero = fail "No error message provided (PFE programmer used mzero or msum)"
@@ -134,9 +144,19 @@ extend bs = modTEnv (TiTEnv.extenv bs)
 extendts ts = extend [(x,t)|x:>:t<-ts]
 
 extendk1 x t = modKEnv (extenv1 x t)
+extendk :: (Ord Kind, Foldable t0, Ord (TypeInfo i), Ord i) =>
+                            t0 (HsIdentI i, (Kind, TypeInfo i)) -> IM i c ans -> IM i c ans
 extendk bs = modKEnv (extenv bs)
+extendkts :: (Ord Kind, Ord (TypeInfo i), Ord i) =>
+                              [Typing (HsIdentI i) (Kind, TypeInfo i)]
+                              -> IM i c ans -> IM i c ans
 extendkts ts = extendk [(x,t)|x:>:t<-ts]
 
+extendEnv :: (Ord Kind, TiNames.TypeVar i, Ord (Scheme i),
+                               Ord (TypeInfo i)) =>
+                              ([Typing (HsIdentI i) (Kind, TypeInfo i)],
+                               [Typing (HsIdentI i) (Scheme i)])
+                              -> IM i c ans -> IM i c ans
 extendEnv (ks, ts) = extendkts ks . extendts ts
 --extendEnv' (ks, ts) = extendk ks . extend ts
 
@@ -162,6 +182,8 @@ stdName ns o = do f <- getStdNames
 stdSch ns = sch @@ stdName ns
 
 sch x = env' (TiTEnv.lookup . tenv) x
+kindOf :: (Ord Kind, Printable i, Ord (TypeInfo i), Ord i) =>
+                           HsIdentI i -> IM i c Kind
 kindOf x = fst # env kenv x
 
 freshInt = IM $ \ env (id:ids) -> Right (Out id (ids,empty))

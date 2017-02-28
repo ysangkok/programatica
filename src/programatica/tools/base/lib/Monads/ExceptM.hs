@@ -23,28 +23,10 @@ unLeft _              = error "unLeft"
 unRight (Right x)     = x
 unRight _             = error "unRight"
 
-instance Functor (Either x) where
-  fmap                = liftM
-
-instance Monad (Either x) where
-  return              = Right
-  Right x >>= f       = f x
-  Left x >>= f        = Left x
-
-  Right _ >> m        = m
-  Left x >> m         = Left x
-    
-
 instance HasExcept (Either x) x where
   raise               = Left
   handle h (Left x)   = h x
   handle h (Right x)  = Right x
-  
-
-instance MonadFix (Either x) where
-  mfix f              = let a = f (unRight a) in a
 
 instance HasBaseMonad (Either x) (Either x) where
-  inBase              = id    
-
-
+  inBase              = id

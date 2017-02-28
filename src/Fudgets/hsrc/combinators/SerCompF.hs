@@ -10,7 +10,7 @@ import CompSP
 --import Event(Event(..))
 import Fudget
 import Loop
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 --import Path(Path(..))
 import Route

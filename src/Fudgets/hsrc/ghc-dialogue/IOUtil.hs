@@ -1,15 +1,31 @@
-module IOUtil(getEnvi, progName, progArgs) where
+module IOUtil(getEnvi, progName, progArgs, IOUtil.catch, try, getModificationTime) where
 -- Some utilities that are a little dirty, but not very.
 
-import System.IO.Error(tryIOError)
+import qualified System.IO.Error as S
+import qualified Control.Exception as E
+import qualified System.Directory as D(getModificationTime)
 import System.Environment(getEnv,getProgName,getArgs)
+import Data.Time(UTCTime)
+import Data.Time.Clock.POSIX(utcTimeToPOSIXSeconds)
+import System.Time(ClockTime(..))
 import UnsafePerformIO(unsafePerformIO)
 
 getEnvi :: String -> Maybe String
-getEnvi s = either (const Nothing) Just $ unsafePerformIO $ tryIOError (getEnv s)
+getEnvi s = either (const Nothing) Just $ unsafePerformIO $ try (getEnv s)
 
 progName :: String
 progName = unsafePerformIO getProgName
 
 progArgs :: [String]
 progArgs = unsafePerformIO getArgs
+
+-- * GHC 6.12-7.6 compatibility
+catch = E.catch :: IO a -> (IOError -> IO a) -> IO a
+try   = E.try   :: IO a -> IO (Either IOError a)
+
+getModificationTime path = toClockTime `fmap` D.getModificationTime path
+
+class    ToClockTime a         where toClockTime :: a -> ClockTime
+instance ToClockTime ClockTime where toClockTime = id
+instance ToClockTime UTCTime   where 
+    toClockTime = flip TOD 0 . floor . realToFrac . utcTimeToPOSIXSeconds

@@ -152,7 +152,7 @@ data FontStructList = FontStructList
 			     Int -- logical extent below baseline for spacing 
                   deriving (Eq, Ord, Show)
 
-fontl_prop    (FontStructList fid fd fc lc all' dc fps minb maxb ca asc de) = fps
+fontl_prop (FontStructList fid fd fc lc all' dc fps minb maxb ca asc de) = fps
 
 fsl2fs (FontStructList fid fd fc lc all' dc fps minb maxb optclist asc de) =
     FontStruct fid fd fc lc all' dc fps minb maxb optca asc de

@@ -3,7 +3,7 @@ module LoadFont(loadQueryFont, queryFont, loadFont, loadQueryFontF,
                 listFonts,listFontsF,listFontsWithInfo,tryLoadFont) where
 import Command(XRequest(..))
 import Event
-import Font(FontStruct,FontStructList,fsl2fs)
+import Font(fsl2fs) --FontStruct,FontStructList,
 --import Fudget
 --import Geometry(Line, Point, Rect, Size(..))
 --import EitherUtils(stripMaybe,mapMaybe)
@@ -59,11 +59,8 @@ listFontsF = lif xrequestF
 
 listFontsWithInfo pattern maxnames =
     let cmd = ListFontsWithInfo pattern maxnames
-#if 1
         expected (GotFontListWithInfo fis) = Just (mapSnd fsl2fs fis)
-#else
-        expected (GotFontListWithInfo fis) = Just (map ((,) pattern . fsl2fs) fis)
-#endif
+--      expected (GotFontListWithInfo fis) = Just (map ((,) pattern . fsl2fs) fis)
 	expected _ = Nothing
     in xrequest cmd expected
 

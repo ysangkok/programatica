@@ -2,7 +2,7 @@ module SPmonad where
 import SP(SP)
 import ParSP(seqSP)
 import Spops
-import StateMonads(Mk(..),toMkc,bmk,toMs)
+import StateMonads(Mk(..),toMkc) --,bmk,toMs
 
 type SPm i o ans = Mk (SP i o) ans
 

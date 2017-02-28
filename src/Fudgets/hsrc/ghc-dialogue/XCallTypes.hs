@@ -97,11 +97,14 @@ mkRect x y w h = Rect # mkPoint x y <# mkPoint w h
 --mkSelection s t p = Selection # s <# t <# p
 
 instance FromC ModState where 
- fromC ni = concatMap toModifier [12,11..0]
+ fromC ni = [toEnum i|i<-[15,14..0],testBit ni i]
+{-
+     concatMap toModifier [15,14..0]
    where
-     toModifier i = if testBit n i then [toe i] else []
-     toe = toEnum' Shift . fromIntegral
-     n = fromIntegral ni :: Word32
+     toModifier i = [toEnum i|testBit ni i]
+--   toe = toEnum' Shift -- . fromIntegral
+--   n = fromIntegral ni :: Word32
+-}
 
 notImplemented x = take 79 ("Not implemented: "++show x)++"\n"
 

@@ -4,7 +4,7 @@ import Geometry(Point(..), Size(..),Rect(..){-,padd,psub,pmax,pP-})
 --import HO(apFst)
 --import Maptrace(ctrace) -- debugging
 import Alignment
-import ShowFun
+import ShowFun()
 
 data LayoutRequest
   = Layout { minsize :: Size,

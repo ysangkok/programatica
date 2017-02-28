@@ -6,7 +6,7 @@ import CompOps((>^=<),(>=^^<))
 import CompSP
 import Dynforkmerge
 import Fudget
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import Spops
 import Direction

@@ -7,7 +7,7 @@ import FRequest
 import Xcommand
 import HaskellIO(haskellIO)
 import InternAtom
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import Spops(nullSP)
 import CompFfun(postProcessHighK,preProcessHighK)

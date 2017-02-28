@@ -1,16 +1,7 @@
-{-# LANGUAGE CPP #-}
 module DrawTypes where
 import Geometry(Point,Rect,Line)
-import PackedString(ByteString)
+import Data.ByteString
 import Xtypes(Pixel,PixmapId,ImageFormat,DbeBackBufferId)
-
-#ifdef __GLASGOW_HASKELL__
-import Data.Ix
--- fromEnum bug workaround
-#define IX , Ix
-#else
-#define IX
-#endif
 
 data DrawCommand
 -- Don't forget to change ../types/Drawcmd.hs too, if you change things here!!
@@ -44,10 +35,10 @@ data Drawable
 data CoordMode
   = CoordModeOrigin
   | CoordModePrevious 
-  deriving (Eq, Ord, Show, Enum IX)
+  deriving (Eq, Ord, Show, Enum)
 
 data Shape
   = Complex
   | Nonconvex
   | Convex
-  deriving (Eq, Ord, Show, Enum IX)
+  deriving (Eq, Ord, Show, Enum)

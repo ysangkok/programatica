@@ -7,7 +7,7 @@ import Geometry
 import Xtypes
 import DrawTypes
 --import DialogueIO(Request)
-import ShowFun
+import ShowFun()
 
 -- Same order as in .../lml/src/lib/xlib/xlib.h
 data XCommand -- X commands

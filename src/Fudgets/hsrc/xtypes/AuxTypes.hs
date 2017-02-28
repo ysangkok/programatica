@@ -1,13 +1,5 @@
-{-# LANGUAGE ForeignFunctionInterface, CPP #-}
+-- | Auxiliary Xlib types
 module AuxTypes where
-
-#ifdef __GLASGOW_HASKELL__
-import Data.Ix
--- fromEnum bug workaround
-#define IX , Ix
-#else
-#define IX
-#endif
 
 data Gravity = ForgetGravity |
                NorthWestGravity |
@@ -20,20 +12,20 @@ data Gravity = ForgetGravity |
                SouthGravity |
                SouthEastGravity |
                StaticGravity 
-               deriving (Eq, Ord, Show, Enum IX)
+               deriving (Eq, Ord, Show, Enum)
 
-data ShapeKind = ShapeBounding | ShapeClip  deriving (Eq, Ord, Show, Enum IX)
+data ShapeKind = ShapeBounding | ShapeClip  deriving (Eq, Ord, Show, Enum)
 
 data ShapeOperation = ShapeSet |
                       ShapeUnion |
                       ShapeIntersect |
                       ShapeSubtract |
                       ShapeInvert 
-                      deriving (Eq, Ord, Show, Enum IX)
+                      deriving (Eq, Ord, Show, Enum)
 
 -- There already is an Ordering in the 1.3 Prelude
 data Ordering' = Unsorted | YSorted | YXSorted | YXBanded
-     deriving (Eq, Ord, Show, Enum IX)
+     deriving (Eq, Ord, Show, Enum)
 
 type RmClass = String
 type RmName = String
@@ -44,21 +36,12 @@ type RmDatabase = Int
 
 rmNothing = 0::Int
 
-data Modifiers = Shift |
-                 Lock |
-                 Control |
-                 Mod1 |
-                 Mod2 |
-                 Mod3 |
-                 Mod4 |
-                 Mod5 |
-                 Button1 |
-                 Button2 |
-                 Button3 |
-                 Button4 |
-                 Button5 |
-                 Any 
-                 deriving (Eq, Ord, Show, Read, Enum IX)
+data Modifiers = Shift | Lock | Control
+               | Mod1 | Mod2 | Mod3 | Mod4 | Mod5
+               | Button1 | Button2 | Button3 | Button4 | Button5
+               | Mod13 | Mod14 -- non-standard, but used in XQuartz
+               | Any 
+               deriving (Eq, Ord, Show, Read, Enum)
 
 clModifiers =
     [Shift, Lock, Control, Mod1, Mod2, Mod3, Mod4, Mod5,

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module AutoLayout(autoLayoutF,autoLayoutF',nowait) where
 --import Prelude hiding (IO)
 import LayoutRequest(LayoutMessage(..),LayoutResponse(..),LayoutRequest(minsize),LayoutHint,Spacer,Placer(..),Placer2,unS)
@@ -7,7 +8,7 @@ import Geometry(Rect)
 import Fudget
 --import Spops
 --import FudgetIO
-import NullF(getK,putK,putsK,F,K)
+import NullF(getK,putK,putsK) --,F,K
 import Loops(loopThroughRightF)
 import UserLayoutF
 --import Xtypes

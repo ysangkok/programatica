@@ -1,5 +1,6 @@
+-- | This module exposes everything
 module AllFudgets 
- (module Combinators,module Containers,module Debug,module DrawingModules,
+ (module Combinators, module Containers,module Debug,module DrawingModules,
   module Filters,module GuiElems,module InfixOps,module KernelUtils,
   module Layout,module LowLevel,module Types,module XTypesModules,
   module FudUtilities,module StreamProc,module InOut,module DefaultParams) where

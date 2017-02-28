@@ -1,12 +1,8 @@
 module P_IO_data {-(module XStuff, module P_IO_data)-} where
 import XStuff
-import ShowFun
+import ShowFun()
 import Prelude hiding (IOError)
-import Data.Time.Calendar (Day)
-import Data.Time (TimeOfDay)
-
-data CalendarTime = Day deriving (Show)
-data ClockTime = TimeOfDay deriving (Show)
+import System.Time(ClockTime,CalendarTime)
 
 data Request =	-- file system requests:
 			  ReadFile      String         
@@ -17,6 +13,9 @@ data Request =	-- file system requests:
 			| AppendBinFile String Bin
 			| DeleteFile    String
 			| StatusFile    String
+                 -- useful for IO with GHC >=6.12
+ 			| ReadBinaryFile  String         
+ 			| WriteBinaryFile String String
 		-- channel system requests:
 			| ReadChan	String 
 			| AppendChan    String String

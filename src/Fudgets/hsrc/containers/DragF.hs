@@ -21,7 +21,7 @@ import DynSpacerF(dynSpacerF)
 import Spacer(noStretchF)
 import Alignment
 import Loops(loopCompThroughRightF,loopLeftF)
-import Message(Message(..))
+--import Message(Message(..))
 import EitherUtils(stripEither)
 import Data.Maybe(fromMaybe)
 import CmdLineEnv(argReadKey)

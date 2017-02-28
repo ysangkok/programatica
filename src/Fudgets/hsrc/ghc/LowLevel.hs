@@ -1,4 +1,5 @@
-module LowLevel (module Cont,module Display,module SpIO,module TagEvents,module WindowF,module Xrequest,module Xcommand,module Srequest,module DFudIO, module FudgetIO) where
+module LowLevel (-- * Low level
+  module Cont,module Display,module SpIO,module TagEvents,module WindowF,module Xrequest,module Xcommand,module Srequest,module DFudIO, module FudgetIO) where
 import Cont
 import Display
 import SpIO

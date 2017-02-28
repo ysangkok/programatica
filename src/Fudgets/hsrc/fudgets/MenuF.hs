@@ -2,7 +2,7 @@ module MenuF(simpleMenuF, menuAltsF, menuF, oldMenuF, buttonMenuF, buttonMenuF',
 import Command
 import Event
 import Geometry(pP,Point(..),Size,inRect,Rect(..))
-import Message(Message(..),message)
+import Message(message )--Message(..),
 import Fudget
 import FRequest
 import FudgetIO
@@ -203,8 +203,8 @@ buttonMenuF' delayed dir fname name alts menuAltsF =
 		    ])
 		LeaveNotify {mode=NotifyUngrab,detail=NotifyInferior}
 		    | stickyMenus && not mpopup -> stickyMode
-		LeaveNotify {mode=NotifyUngrab} {-| not sticky-} -> popdownlast
-		-- ^^ these events get lost in focusMgr it seems
+		LeaveNotify {mode=NotifyUngrab} {-  | not sticky-} -> popdownlast
+		--  ^^ these events get lost in focusMgr it seems
 		ButtonEvent {pos=pos,button=Button 1,type'=Released}
 		    | not (stickyMenus && pos `inRect` (Rect 0 size)) -> popdownlast
 			     --workaround

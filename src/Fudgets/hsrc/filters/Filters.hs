@@ -1,4 +1,5 @@
 module Filters (
+  -- * Filters
   --module Cache,
   module NewCache,
   module ShapeGroupMgr,module DoubleClickF) where

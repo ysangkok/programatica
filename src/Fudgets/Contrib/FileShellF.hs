@@ -15,8 +15,8 @@ import MenuBarF
 #endif
 import DialogueIO
 import Prelude hiding (IOError)
-import Maybe(isJust,fromJust,fromMaybe)
-import Char(isSpace)
+import Data.Maybe(isJust,fromJust,fromMaybe)
+import Data.Char(isSpace)
 
 #ifndef __NHC__
 

@@ -11,7 +11,7 @@ import Gc
 import Geometry(Rect(..), lL, pP)
 --import LayoutRequest(LayoutRequest)
 --import Message(Message(..))
-import NullF
+--import NullF
 import Pixmap
 import Cont(tryM)
 import Xtypes

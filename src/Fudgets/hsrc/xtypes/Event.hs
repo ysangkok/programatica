@@ -1,18 +1,9 @@
-{-# LANGUAGE CPP #-}
 module Event(module Event,FontStructList,FontStruct) where
 import Font(FontStruct,FontStructList,CharStruct)
 import Visual(Visual)
 import Geometry
 import Xtypes
 --import DialogueIO hiding (IOError)
-
--- #ifdef __GLASGOW_HASKELL__
---import Ix
--- fromEnum bug workaround
--- #define IX , Ix
--- #else
-#define IX
--- #endif
 
 newtype KeyCode = KeyCode Int deriving (Eq, Ord, Show)
 
@@ -27,18 +18,18 @@ data Detail = NotifyAncestor |
               NotifyPointer |
               NotifyPointerRoot |
               NotifyDetailNothing 
-              deriving (Eq, Ord, Show, Enum IX)
+              deriving (Eq, Ord, Show, Enum)
 
 data Mode = NotifyNormal |
             NotifyGrab |
             NotifyUngrab |
             NotifyWhileGrabbed 
-            deriving (Eq, Ord, Show, Enum IX)
+            deriving (Eq, Ord, Show, Enum)
 
 data Visibility = VisibilityUnobscured |
                   VisibilityPartiallyObscured |
                   VisibilityFullyObscured 
-                  deriving (Eq, Ord, Show, Enum IX)
+                  deriving (Eq, Ord, Show, Enum)
 
 data ClientData = Byte String |
                   Short [Int] |
@@ -117,11 +108,8 @@ data XResponse
   | Synced
   | TextExtents16Queried Int Int CharStruct -- ascent descent overall
   | GotFontList [FontName]
-#if 1
   | GotFontListWithInfo [(FontName,FontStructList)]
-#else
-  | GotFontListWithInfo [(FontStructList)]
-#endif
+--  | GotFontListWithInfo [(FontStructList)]
   | DbeExtensionQueried Int Int Int -- status (/=0 means ok), major, minor
   | DbeBuffersSwapped Int -- status (useless?)
   | DbeBackBufferNameAllocated DbeBackBufferId

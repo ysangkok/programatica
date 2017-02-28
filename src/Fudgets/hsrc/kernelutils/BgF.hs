@@ -5,7 +5,7 @@ import Command
 --import FudgetIO
 --import Message(Message(..))
 import Xcommand
-import NullF
+--import NullF
 import Xtypes
 --import HaskellIO
 import GCAttrs

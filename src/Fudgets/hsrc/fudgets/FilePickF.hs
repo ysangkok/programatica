@@ -1,7 +1,7 @@
 module FilePickF(oldFilePickF,smallPickListF) where
-import Data.List2(sort)
+import List2(sort)
 import MoreF(pickListF)--,PickListRequest(..)
-import Data.ListRequest(replaceAll)
+import ListRequest(replaceAll)
 import CompOps
 --import Defaults(menuFont)
 import FilePaths
@@ -21,7 +21,7 @@ import InputMsg(stripInputMsg)--InputMsg(..),
 import InputF(inputLeaveDoneSP,inputThroughF)--,inputDoneSP,InF(..)
 import DStringF(stringF)
 import EitherUtils(stripEither)
-import Message(Message(..))
+--import Message(Message(..))
 import DialogueIO hiding (IOError)
 
 dirF = aFilePath >^=< bypassF (inputLeaveDoneSP >^^=< stringF) -- startpath ?!!!

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module DShellF(ShellF,shellF, shellF', shellKF, shellKF',
        setDeleteWindowAction,
        getDeleteWindowActionMaybe', -- for use in titleShellF
@@ -27,7 +28,7 @@ import Sizing(Sizing(..))
 import NullF
 import ParK
 --import Maptrace(ctrace) -- debugging
-#include "defaults.h"
+#include "../defaults/defaults.h"
 
 newtype ShellF = Pars [Pars]
 data Pars

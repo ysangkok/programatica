@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module DButtonF(
   ButtonF,buttonF,buttonF',buttonF'',setLabel
   ) where
@@ -15,11 +16,11 @@ import SpEither(mapFilterSP)--filterRightSP
 import EitherUtils(stripEither)
 import SerCompF(idRightF)
 import Spacers(Distance(..))
-import Alignment(aCenter,Alignment(..))
+import Alignment(aCenter) --,Alignment(..)
 import Graphic
 import GCAttrs --(ColorSpec,colorSpec) -- + instances
 
-#include "defaults.h"
+#include "../defaults/defaults.h"
 
 newtype ButtonF lbl = Pars [Pars lbl]
 data Pars lbl

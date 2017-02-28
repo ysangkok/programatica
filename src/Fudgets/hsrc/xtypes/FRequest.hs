@@ -23,7 +23,7 @@ data FRequest
 data FResponse
   = XEvt  XEvent
   | LEvt  LayoutResponse
--- | SEvt  AsyncInput -- still represented as DResp (AsyncInput ...)
+--  | SEvt  AsyncInput -- still represented as DResp (AsyncInput ...)
   -- asynchronous above, synchronous below, but see ../internal/IsRequest.hs
   | XResp XResponse
   | SResp SocketResponse

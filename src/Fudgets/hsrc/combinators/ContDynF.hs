@@ -6,7 +6,7 @@ import Command
 import FRequest
 --import LayoutRequest(LayoutRequest)
 --import Geometry
-import Message
+--import Message
 import Spops(getSP,putSP,walkSP,pullSP)
 import Path(here)
 --import Direction

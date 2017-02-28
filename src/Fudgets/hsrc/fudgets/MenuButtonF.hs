@@ -40,5 +40,5 @@ menuLabelF fname label =
 	     setFgColor inputFg . setFont fname
     lblD label = boxD [spacedD (sepS (pP 3 1)) $ g label]
 
-    pre (Left highligt) = ChangeGfx [([],(highligt,Nothing))]
+    pre (Left highlight) = highlightGfx [] highlight
     pre (Right label')  = replaceAllGfx (lblD label')

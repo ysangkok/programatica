@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 {-+
 Functions to support the implementation of functional dependencies, as described
 by Mark P. Jones in "Type Classes with Functional Dependencies",
@@ -5,6 +6,11 @@ http://www.cse.ogi.edu/~mpj/pubs/fundeps.html
 -}
 module TiFunDeps where
 import TiTypes
+import qualified SpecialNames
+import qualified TiNames
+import qualified HsDeclStruct
+import qualified TiFresh
+import qualified HasBaseStruct
 import HsTypeStruct
 --import TiFreeNames(freeTyvars)
 import TiInstanceDB(classInstances,InstEntry(..))
@@ -32,12 +38,18 @@ implied by the predicates to the left of the arrow into account, to allow
 instances like C a b => C [a] [b], where F_C = 1->2.
 -}
 
+checkInstances :: (Ord Kind, Ord (TypeInfo var), TiNames.TypeId var) =>
+                                   [(HsTypeI var, InstEntry var)] -> IM var c ()
 checkInstances insts0 =
   do insts <- mapM flatInst insts0
      mapM_ checkInstanceConsistency insts
      mapM_ checkPairwiseConsistency (collectByFst insts)
 
 -- Check that instances are pairwise consistent
+checkPairwiseConsistency :: (Ord Kind, TiNames.TypeId var,
+                                              Ord (TypeInfo var)) =>
+                                             (HsIdentI var, [([HsTypeI var], [Pred var])])
+                                             -> IM var c ()
 checkPairwiseConsistency (cl@(HsCon c),heads) =
   do (fdeps,_) <- getDeps cl
      iheads <- instanceHeads c
@@ -59,6 +71,11 @@ checkPairwiseConsistency (cl@(HsCon c),heads) =
                       nest 4 (vcat [appc cl head1,appc cl head2])
 
 -- Check that an instance is consistent with the functional dependencies:
+checkInstanceConsistency :: (Ord Kind, HasBaseStruct.HasBaseStruct
+                                                a (TI a1 a),
+                                              Types a1 a, SpecialNames.IsSpecialName a1,
+                                              Printable a, Ord (TypeInfo a1)) =>
+                                             (HsIdentI a1, ([a], [HsTypeI a1])) -> IM a1 c ()
 checkInstanceConsistency (cl,(ts,ps)) =
   do (fdeps,arity) <- getDeps cl
      unless (length ts==arity) $ badInstanceHead p
@@ -79,6 +96,9 @@ checkInstanceConsistency (cl,(ts,ps)) =
 badInstanceHead hd = fail $ pp $ "Malformed instance head:"<+>hd
 
 {-+ Iterated improvement: -}
+improvements :: (Ord Kind, Ord (TypeInfo v), TiNames.TypeId v,
+                                  TiFresh.Fresh v) =>
+                                 [HsTypeI v] -> IM v c (Subst v)
 improvements ps =
   do is <- improvement ps
      if apply is ps==ps
@@ -88,6 +108,9 @@ improvements ps =
 {-+ Compute an improving subsitution using functional dependencies
     (section 6.2): -}
 
+improvement :: (Ord Kind, Ord (TypeInfo i), TiFresh.Fresh i,
+                                 TiNames.TypeId i) =>
+                                [HsTypeI i] -> IM i c (Subst i)
 improvement ps =
     S . tr #. unify @@ expand @@
     concatMapM improve . collectByFst . mapMaybe flatPred $ ps
@@ -139,7 +162,12 @@ closure fdeps = fix step . usort
 {-+ Computing the functional dependencies applied by a set of predicates
     (section 6.3)
 -}
+predDeps :: (Ord Kind, SpecialNames.IsSpecialName v, TiNames.TypeVar v,
+                              Ord (TypeInfo v)) =>
+                             [HsTypeI v] -> IM v c [(Set v, Set v)]
 predDeps ps = concatMapM pred1Deps (mapMaybe flatPred ps)
+pred1Deps :: (Ord Kind, Printable i, Ord (TypeInfo i), Ord i, Types v t) =>
+                              (HsIdentI i, [t]) -> IM i c [(Set v, Set v)]
 pred1Deps (cl,ts) = 
   do (fdeps,_) <- getDeps cl
      let vars ix = tv [ts!!i|i<-ix]
@@ -149,6 +177,8 @@ pred1Deps (cl,ts) =
 	               not (null rvs)]
 
 {-+ Looking up the functional dependencies (and the arity) for a class: -}
+getDeps :: (Ord Kind, Printable i, Ord (TypeInfo i), Ord i) =>
+                            HsIdentI i -> IM i c (HsDeclStruct.HsFunDeps Int, Int)
 getDeps cl =
   do (k,Class _ ps fdeps _) <- env kenv cl
      return (fdeps,length ps)

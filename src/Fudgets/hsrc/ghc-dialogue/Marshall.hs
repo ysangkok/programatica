@@ -53,11 +53,13 @@ class PrimArg ha pa r | ha->pa where
 -- marshallM x = marshall return x -- GHC generates buggy code, it seems
 
 instance PrimArg Int Int c where marshall = id
+instance PrimArg Int32 Int32 c where marshall = id
 --instance PrimArg Char Char c where marshall = id
 instance PrimArg Bool Bool c where marshall = id
 --instance PrimArg () Int c where marshall f () = f 0
 instance PrimArg Addr Addr c where marshall = id
-instance PrimArg CInt CInt c where marshall = id
+instance PrimArg CLong CLong c where marshall = id
+instance PrimArg CInt32 CInt32 c where marshall = id
 instance PrimArg CString CString c where marshall = id
 
 class    Bind f                where bind :: IO o->(o->f)->f
@@ -80,11 +82,13 @@ instance PrimResult () () where unmarshall = id
 instance PrimResult Bool Bool where unmarshall = id
 instance PrimResult Char Char where unmarshall = id
 instance PrimResult Int Int where unmarshall = id
+instance PrimResult Int32 Int32 where unmarshall = id
 
 --instance PrimResult Int (IO Int) where unmarshall = return
 
 instance PrimResult (IO ()) (IO ()) where unmarshall = id
 instance PrimResult (IO Int) (IO Int) where unmarshall = id
+instance PrimResult (IO Int32) (IO Int32) where unmarshall = id
 instance PrimResult (IO Bool) (IO Bool) where unmarshall = id
 instance PrimResult (IO CString) (IO CString) where unmarshall = id
 
@@ -126,7 +130,7 @@ marshallString s = marshallString' s (length s)
 marshallString' :: String -> Int -> IO CString
 marshallString' s n = 
   do a <- mallocElems (head s) (n+1)
-     zipWithM_ (pokeElemOff a) [0..] s
+     zipWithM_ (pokeElemOff a) [0..n-1] s
      pokeElemOff a n '\0'
      return (CString a)
 
@@ -150,13 +154,27 @@ unmarshallString' (CString addr) n = get 0
      
 
 ---
-newtype CInt = CInt Addr
 
-instance HasAddr CInt where addrOf (CInt a) = a --;atAddr = CInt
+-- | Pointer to long int (same size as pointers, 64 bits on 64-bit systems)
+newtype CLong = CLong Addr
 
-instance IsPtr CInt where
-  nullPtr = CInt nullAddr
-  newPtr = CInt # mallocElem (0::Int)
-  newArray n = CInt # mallocElems (0::Int) n
+instance HasAddr CLong where addrOf (CLong a) = a --;atAddr = CLong
 
-instance CVar CInt Int
+instance IsPtr CLong where
+  nullPtr = CLong nullAddr
+  newPtr = CLong # mallocElem (0::Int)
+  newArray n = CLong # mallocElems (0::Int) n
+
+instance CVar CLong Int
+
+-- | Pointer to C int (32 bits even on 64-bit system)
+newtype CInt32 = CInt32 Addr
+
+instance HasAddr CInt32 where addrOf (CInt32 a) = a --;atAddr = CInt
+
+instance IsPtr CInt32 where
+  nullPtr = CInt32 nullAddr
+  newPtr = CInt32 # mallocElem (0::Int32)
+  newArray n = CInt32 # mallocElems (0::Int32) n
+
+instance CVar CInt32 Int32

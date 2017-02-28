@@ -195,3 +195,32 @@ deletePart drawing path =
 		SpacedD   spacer  d  -> SpacedD spacer  (di d)
 		PlacedD   placer  d  -> PlacedD placer  (di d)
 -}
+
+groupParts pos0 len0 drawing =
+  case drawing of
+    ComposedD n ds -> ComposedD n1 (ds1++ComposedD n2 ds2:ds3)
+      where
+        (ds1,ds2a) = splitAt (pos0-1) ds
+        (ds2,ds3) = splitAt len0 ds2a
+        pos = length ds1
+        len = length ds2
+        -- keep the same parts visible
+        (n1,n2) = if n<=pos then (n,0)
+                  else if n<=pos+len
+                       then (pos+1,n-pos)
+                       else (n-len+1,len)
+
+ungroupParts pos drawing =
+  case drawing of
+    ComposedD n1 ds ->
+      case splitAt (pos-1) ds of
+        (ds1,ComposedD n2 ds2:ds3) -> ComposedD n (ds1++ds2++ds3)
+          where
+            -- Can't preserve visibility when some of ds3 was visible
+            -- but some of ds2 was hidden
+            n = if n1<=pos then n1
+                else if n1==pos+1
+                     then pos+n2
+                     else n1-1+length ds2 -- all of ds2 becomes visible!!
+        _ -> drawing -- hmm!!
+    _ -> drawing -- hmm!!

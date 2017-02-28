@@ -19,7 +19,8 @@ overlaps (Rect (Point x1 y1) (Point w1 h1))
 --x1<=x2+w2 && x2<=x1+w1 && y1<=y2+h2 && y2<=y1+h1
 -- rR 0 0 10 10 doesn't overlap with rR 0 10 10 10
 
-boundingRect (Rect p1 s1) (Rect p2 s2) = Rect p s
+boundingRect r1@(Rect p1 s1) r2@(Rect p2 s2) =
+    if s1==0 then r2 else if s2==0 then r1 else Rect p s
   where p = pmin p1 p2
         s = pmax (p1+s1) (p2+s2) - p
 

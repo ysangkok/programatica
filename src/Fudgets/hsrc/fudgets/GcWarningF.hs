@@ -10,10 +10,10 @@ import FudgetIO
 import FRequest(layoutRequestCmd)
 import Xcommand
 import NullF(nullK)
-import ResourceIds
+--import ResourceIds
 import Pixmap(createPixmap)
 import GCtx(GCtx(..),pmCreateGCtx,rootGCtx)
-import GCAttrs
+--import GCAttrs
 import Defaults(bgColor)
 
 -- Garbage Collection Warning Fudget

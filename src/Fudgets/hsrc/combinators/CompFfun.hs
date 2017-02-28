@@ -3,7 +3,7 @@ import CompSP
 import Fudget
 import Message
 --import Path(Path(..))
-import SP
+--import SP
 
 postProcessHigh postsp (F sp) = F{-ff-} (postProcessHigh' postsp sp)
 postProcessLow postsp (F sp) = F{-ff-} (postProcessLow' postsp sp)

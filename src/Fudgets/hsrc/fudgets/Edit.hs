@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module Edit(EditStop(..),editF, EditEvt(..), EditCmd(..)) where
 import BgF
 import Color
@@ -16,7 +17,7 @@ import FRequest
 import Gc
 import Geometry
 import LayoutRequest(plainLayout,LayoutResponse(..))
-import Message(Message(..),message)
+import Message(message) --Message(..),
 import NullF
 import StateMonads
 import Control.Monad(when)
@@ -38,15 +39,17 @@ data EditStop =
 
 data EditCmd = 
      EditShowCursor Bool
-   | EditMove EditStop IsSelect 
+   | EditMove EditStop IsSelect
    | EditReplace String
-   | EditGetText 
+   | EditGetText
+   | EditGetField
    | EditGetSelection
    | EditUndo
    | EditRedo 
      
 data EditEvt
     = EditText String
+    | EditField (String,String,String)
     | EditCursor Rect
     | EditChange (InputMsg String)
     deriving (Eq, Ord)
@@ -279,8 +282,10 @@ editK fontspec =
 	do storeField field'
 	   putHighMs (EditChange $ InputChange $ getField field')
 
-      puttext f = do field <- loadField
-		     putHighMs (EditText $ f field)
+      puttext' f = do field <- loadField
+		      putHighMs (f field)
+
+      puttext f = puttext' (EditText . f)
 
       putCursor =
         do field <- loadField
@@ -301,6 +306,7 @@ editK fontspec =
 	     EditMove estop issel -> move issel estop
 	     EditReplace s -> replace' s
 	     EditGetText -> puttext getField
+	     EditGetField -> puttext' (EditField . getField')
 	     EditGetSelection -> puttext getSelection
 	     EditUndo -> undoredo undo
 	     EditRedo -> undoredo redo

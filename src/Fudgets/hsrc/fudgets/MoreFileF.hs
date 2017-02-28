@@ -10,7 +10,7 @@ import Shells(unmappedShellF, unmappedSimpleShellF)
 import Fudget
 import FRequest
 import ReadFileF(readFileF)
-import Message(Message(..))
+--import Message(Message(..))
 import SpEither(toBothSP)
 import Spops(concmapSP)
 --import Xtypes

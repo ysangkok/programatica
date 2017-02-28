@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module Placers(linearP, verticalP, horizontalP, horizontalP', verticalP') where
 import Geometry
 import LayoutDir

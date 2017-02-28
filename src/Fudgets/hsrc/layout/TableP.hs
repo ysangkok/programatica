@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module TableP(tableP,tableP') where
 import Geometry(Point(..), Rect(..), rR, xcoord, ycoord)
 import LayoutDir(LayoutDir(..), vswap)

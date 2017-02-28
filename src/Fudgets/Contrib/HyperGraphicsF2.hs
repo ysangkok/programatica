@@ -1,11 +1,12 @@
+{-# LANGUAGE CPP #-}
 module HyperGraphicsF2(
   module HyperGraphicsF2,
-  GfxCommand(..),GfxEvent(..),replaceGfx
+  GfxCommand(..),GfxEvent(..),replaceGfx,highlightGfx
  ) where
 import AllFudgets
-import Maybe(fromJust,mapMaybe)
+import Data.Maybe(fromJust,mapMaybe)
 import ListUtil(mapFst)
-import qualified Data.Map.Strict as Map
+import qualified OrdMap as Map
 --import Fudget
 --import Defaults(paperColor)
 --import InputMsg(inputDone)
@@ -27,8 +28,6 @@ import qualified Data.Map.Strict as Map
 --import CompOps((>==<)) -- debugging
 
 #include "../hsrc/exists.h"
-
-highlightGfx path on = ChangeGfx [(path,(on,Nothing))]
 
 hyperGraphicsF2 x = hyperGraphicsF2' standard x
 
@@ -55,9 +54,15 @@ hyperGraphicsF2' custom init =
 	  where
 	    changeState changes = (paths',drawing')
 	      where
-	        drawing' = foldr replace drawing
-		                 [(path,d)|(path,(_,Just d))<-changes]
-		replace (path,d) drawing = replacePart drawing path d
+	        drawing' = foldr replace drawing changes
+
+		replace (path,GfxReplace (_,Just d)) drawing =
+                    replacePart drawing path d
+                replace (path,GfxReplace _) drawing = drawing
+                replace (path,GfxGroup from count) drawing =
+                    updatePart drawing path (groupParts from count)
+                replace (path,GfxUngroup pos) drawing =
+                    updatePart drawing path (ungroupParts pos)
 
 		paths' = annotPaths drawing'
 			-- Space leak: drawing' isn't used until user clicks

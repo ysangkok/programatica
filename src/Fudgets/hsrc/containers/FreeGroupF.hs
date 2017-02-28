@@ -48,7 +48,7 @@ freeGroupF f =
 	  let place' = sizerect place newtotsize
 	  in ifSP (not placed || place'/=place)
                   (putSP (Left (path,place'))) $
-	     -- ^^ dangerous optimization?
+	    --  ^^ dangerous optimization?
 	     placeSP True path place'
 
 ifSP b th = if b then th else id

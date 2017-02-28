@@ -10,7 +10,15 @@ type Size = Point
 data Line = Line Point Point  deriving (Eq, Ord, Show, Read)
 data Rect = Rect {rectpos::Point, rectsize::Size}
  deriving (Eq, Ord, Show, Read)
+{-
+instance Show Point where showsPrec d (Point x y) = showsPrec d (x,y)
+instance Read Point where readsPrec d s = [(pP x y,r)|((x,y),r)<-readsPrec d s]
 
+instance Show Rect where
+  showsPrec d (Rect p s) =
+    showParen (d>=10) $
+    showString "R " . showsPrec 10 p . showChar ' ' . showsPrec 10 s
+-}
 -- convenient abbreviations:
 origin = Point 0 0
 pP x y = Point x y

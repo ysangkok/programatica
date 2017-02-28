@@ -1,5 +1,5 @@
 module BitStream where
-import Trace(trace)
+import Debug.Trace(trace)
 
 type Byte = Int
 data BitStream = End | Zero BitStream | One BitStream

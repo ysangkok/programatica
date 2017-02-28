@@ -16,7 +16,7 @@ import Gc
 import Geometry(Point(..), origin, pP)
 import GreyBgF(changeBg)
 import LayoutRequest
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import Spacer(marginF)
 import EitherUtils(stripEither)

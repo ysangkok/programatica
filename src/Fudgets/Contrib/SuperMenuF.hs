@@ -1,7 +1,7 @@
 module SuperMenuF (superMenuF, MenuItem (..)) where
 --module SuperMenuF where
 import AllFudgets
-import Maybe(fromJust,fromMaybe)
+import Data.Maybe(fromJust) --,fromMaybe
 import ListUtil(breakAt)
 
 data MenuItem a =

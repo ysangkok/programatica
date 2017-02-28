@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module DToggleButtonF(
   HasLabelInside(..),ToggleButtonF,
   toggleButtonF,toggleButtonF' --,toggleButtonF''
@@ -10,7 +11,7 @@ import Defaults(buttonFont)
 import Graphic
 import GCAttrs --(FontSpec,fontSpec) -- + instances
 
-#include "defaults.h"
+#include "../defaults/defaults.h"
 
 newtype ToggleButtonF = Pars [Pars]
 data Pars = LabelInside Bool | FontSpec FontSpec | Keys [(ModState, KeySym)]

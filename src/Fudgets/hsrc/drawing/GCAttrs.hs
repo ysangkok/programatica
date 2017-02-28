@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module GCAttrs(module GCAttrs,Cont(..)) where
 --import Fudget
 --import NullF(F,K)
@@ -6,13 +7,13 @@ import Xtypes
 import EitherUtils(Cont(..))
 import Font(FontStruct,font_id,font_range, font_prop, update_font_id)
 import Color(tryAllocNamedColor,tryAllocColor)
-import LoadFont(listFontsWithInfo,loadFont,tryLoadFont,queryFont,loadQueryFont)
+import LoadFont(listFontsWithInfo,loadFont,loadQueryFont)
 import FontProperty(fontProperty)
 import CmdLineEnv(argKey)
 import Utils(aboth)
 import ListUtil(chopList,breakAt)
 
-#include "exists.h"
+#include "../exists.h"
 
 data FontData
    = FID FontStruct

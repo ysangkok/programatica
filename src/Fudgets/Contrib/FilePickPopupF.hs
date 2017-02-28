@@ -2,12 +2,12 @@ module FilePickPopupF(filePickF,filePickF',filePickPopupF,filePickPopupF',filePi
 import AllFudgets
 import EndButtonsF
 --import Files
-import List(sort,partition)
+import Data.List(sort,partition)
 import HO(uncurry3)
 import DialogueIO hiding (IOError)
 import CompletionStringF
 import UnsafePerformIO(unsafePerformIO)
-import Directory(getCurrentDirectory)
+import System.Directory(getCurrentDirectory)
 
 popup = ("OK",Nothing)
 
@@ -227,8 +227,8 @@ startDir = unsafePerformIO getCurrentDirectory
 {-
  - reloadknapp?
  - alltid absolut path
- - meddelande för att
-     välja kataloger
+ - meddelande fÃ¶r att
+     vÃ¤lja kataloger
      spara
 
  - completion och uppnerpilar

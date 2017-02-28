@@ -9,7 +9,7 @@ import Fudget
 import FRequest
 import Geometry(Point)
 import Loops(loopCompThroughRightF,loopThroughRightF)
-import Message(Message(..))
+--import Message(Message(..))
 import CompSP(prepostMapSP)
 import SerCompF(mapstateF)
 import NullF

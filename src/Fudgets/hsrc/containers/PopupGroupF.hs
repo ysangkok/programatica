@@ -1,7 +1,7 @@
 module PopupGroupF(popupGroupF,rootPopupF) where
 import Command
 import CompOps((>=^^<), (>^^=<))
-import Direction
+--import Direction
 import Dlayout(unmappedGroupF)
 import Sizing(Sizing(..))
 import Shells(unmappedShellF)
@@ -11,7 +11,7 @@ import FRequest
 import Geometry(psub,pP)
 import LayoutRequest
 import LoopLow
-import Message(Message(..))
+--import Message(Message(..))
 import ParK
 --import Path(Path(..))
 import Popupmsg
@@ -20,7 +20,7 @@ import MapstateK
 import SpEither(filterRightSP)
 --import SerCompF(concatMapF)
 import Spops
-import Xtypes
+--import Xtypes
 
 popupGroupF = popupF (unmappedGroupF Dynamic)
 rootPopupF  = popupF unmappedShellF

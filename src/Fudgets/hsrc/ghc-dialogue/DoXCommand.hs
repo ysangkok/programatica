@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP, ForeignFunctionInterface #-}
 {- unused options -optc-I/usr/X11R6/include -#include <X11/Xlib.h> -#include <X11/Xutil.h> -fvia-C -}
 -- -O
 module DoXCommand(doXCommand) where
@@ -7,7 +8,7 @@ import Event
 import Geometry
 import Xtypes
 --import Font
-import ResourceIds
+--import ResourceIds
 import DrawTypes
 import ListUtil(chopList)
 
@@ -20,9 +21,11 @@ import MyForeign
 --import CCall
 import CString16
 
-import System.IO(hPutStr,stderr) -- for error reporting
+import System.IO(hPutStr,hPutStrLn,stderr) -- for error reporting
 
-import PackedString(lengthPS,unpackPS)
+--import PackedString(lengthPS,unpackPS)
+import qualified Data.ByteString as BS(length)
+import Data.ByteString.UTF8 (toString)
 --import Word(Word32)
 import Data.Bits
 
@@ -37,7 +40,7 @@ default (Int)
 {-
 doXCommand req@(d,_,_) =
   do r <- doXCommand' req
-     hFlush stdout
+   --hFlush stdout
      xSync d False
      return r
 --}
@@ -171,21 +174,23 @@ doXCommand (d,w,req) =
 	  CopyPlane src (Rect (Point srcx srcy) (Point wi he)) 
 			(Point dstx dsty) plane ->
 	    xCopyPlane d (getdr src)
-		       drw gc srcx srcy wi he dstx dsty (shiftL 1 plane :: Bitmask)
+		       drw gc (f srcx) (f srcy) (f wi) (f he)
+                       (f dstx) (f dsty) (shiftL 1 plane)
+            where f = fromIntegral
 	  DrawPoint (Point x y) -> xDrawPoint d drw gc x y
 	  CreatePutImage rect format pixels -> createPutImage drw gc rect format pixels
 	  DrawImageStringPS (Point x y) s ->
-	    xDrawImageString d drw gc x y (unpackPS s) (lengthPS s) -- !!
+	    xDrawImageString d drw gc x y (toString s) (BS.length s) -- !!
 	  DrawStringPS (Point x y) s ->
-	    xDrawString d drw gc x y (unpackPS s) (lengthPS s) -- !!
+	    xDrawString d drw gc x y (toString s) (BS.length s) -- !!
           _ -> hPutStr stderr (notImplemented cmd)
 
        createPutImage drw gc rect@(Rect (Point x y) (Point w h)) (ImageFormat format) pixels =
-        do --hPutStr stderr "Entering from createPutImage\n"
+        do --hPutStrLn stderr $ "Entering createPutImage "++show rect
 	   screen <- xDefaultScreen d
 	   depth <- xDefaultDepth d screen
 	   bpp <- default_bpp d depth
-	   --hPutStr stderr ("bpp="++show bpp++"\n")
+	   --hPutStrLn stderr ("bpp="++show bpp)
 	   let byte_depth = (depth+7) `div` 8
 	       bytes_pp = (bpp+7) `div` 8
 	       bitmap_pad = 32
@@ -206,8 +211,8 @@ doXCommand (d,w,req) =
 	       byteLine pxls = concatMap pxlToBytes pxls ++ linePad
 	       bytes = concatMap byteLine pxlines
 	       --imgdata = psToByteArray (packString bytes)
-           --hPutStr stderr "Checkpoint 1 in createPutImage\n"
-           --hPutStr stderr $ "nullCount="++show nullCount
+           --hPutStrLn stderr "Checkpoint 1 in createPutImage"
+           --hPutStrLn stderr $ "nullCount="++show nullCount
 #else
 	   -- Low level solution, faster, but still not fast enough:
 	   imgdata <- stToIO $ newCharArray (1,bytes_per_line*h)
@@ -246,16 +251,22 @@ doXCommand (d,w,req) =
 	    in convImage
 #endif
 	   dv <- xDefaultVisual d screen
-           --hPutStr stderr "Checkpoint 2 in createPutImage\n"
+           --hPutStrLn stderr "Checkpoint 2 in createPutImage"
            --if bytes==bytes then return () else undefined
-           --hPutStr stderr "Checkpoint 3 in createPutImage\n"
-	   image <- xCreateImage d dv depth format 0 bytes w h bitmap_pad bytes_per_line
+           --hPutStrLn stderr "Checkpoint 3 in createPutImage"
+	   cbytes <- marshallString' bytes (h*bytes_per_line)
+	   image <- xCreateImage d dv depth format 0 cbytes w h bitmap_pad bytes_per_line
+           --hPutStrLn stderr $ "Checkpoint 4 in createPutImage "++show image
 	   xPutImage d drw gc image 0 0 x y w h
 --	   ioCmd $ _casm_ ``((XImage *)(%0))->data=NULL;XDestroyImage((XImage *)%0);'' image
 	   --_casm_ ``((XImage *)(%0))->data=NULL;'' image
+           --hPutStrLn stderr "Checkpoint 5 in createPutImage"
 	   setXImage_data image nullAddr
+           --hPutStrLn stderr "Checkpoint 6 in createPutImage"
 	   xDestroyImage image
-           --hPutStr stderr "Returning from createPutImage\n"
+           --hPutStrLn stderr "Checkpoint 7 in createPutImage"
+	   freePtr cbytes
+           --hPutStrLn stderr "Returning from createPutImage"
 {-
        default_bpp :: Display -> Int -> IO Int
        default_bpp (Display display) depth =

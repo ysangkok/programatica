@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 module DerivingUtils(
     TypeInfo(..),DefTy(..),ConInfo(..),HsIdentI(..),IdTy(..),
     idTy,idName,

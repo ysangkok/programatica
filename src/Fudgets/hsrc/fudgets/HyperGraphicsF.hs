@@ -6,7 +6,7 @@ import Utils(swap)
 --import Xtypes(ColorName)
 import Loops(loopThroughRightF)
 import SerCompF(mapstateF)
-import Graphic
+--import Graphic
 import Drawing
 import DrawingOps
 import GraphicsF

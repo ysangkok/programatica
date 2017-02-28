@@ -7,12 +7,12 @@ import FRequest
 import Geometry(origin, pP, psub)
 --import LayoutRequest(LayoutRequest)
 import Loops(loopCompThroughRightF)
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 --import Path(Path(..))
 import QueryPointer
 --import SP
-import Xtypes
+--import Xtypes
 
 posPopupShellF title wattrs f =
     loopCompThroughRightF (unmappedShellF startcmds popupK f)

@@ -4,7 +4,7 @@ import EitherUtils(Cont(..))
 import Cont(conts)
 import MeasuredGraphics(MeasuredGraphics(..),measureString,measurePackedString,emptyMG,emptyMG')
 import GCtx(GCtx)
-import PackedString(PackedString)
+import Data.ByteString(ByteString)
 import Geometry() -- instance Num Point
 
 class Graphic a where
@@ -39,7 +39,7 @@ instance Graphic Integer      where measureGraphicK = measureText
 instance Graphic Bool         where measureGraphicK = measureText
 instance Graphic Float        where measureGraphicK = measureText
 instance Graphic Double       where measureGraphicK = measureText
-instance Graphic PackedString where measureGraphicK = measurePackedString
+instance Graphic ByteString   where measureGraphicK = measurePackedString
 
 instance (Graphic a,Graphic b) => Graphic (Either a b) where
   measureGraphicK = either measureGraphicK measureGraphicK

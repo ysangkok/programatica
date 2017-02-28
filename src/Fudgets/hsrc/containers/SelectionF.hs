@@ -10,7 +10,7 @@ import FRequest
 import Xcommand
 import GetWindowProperty
 import InternAtom
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import LayoutF(nullLF)
 import Spops(putSP,getSP)

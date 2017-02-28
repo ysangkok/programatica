@@ -1,7 +1,7 @@
 module NullF(module NullF, Cont(..),K,F,StreamProcIO(..),FudgetIO(..)) where
 import Utils(pair)
 import Fudget
-import Message(Message(..), aLow,stripHigh)
+import Message(aLow,stripHigh) --Message(..),
 import Path(here)
 import Spops
 import Cont(dropSP,kContWrap,fContWrap,waitForK,waitForFu)

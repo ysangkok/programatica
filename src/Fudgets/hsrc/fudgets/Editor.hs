@@ -17,7 +17,7 @@ import FRequest
 import Geometry() -- instances, for hbc
 import LayoutRequest
 import Loops(loopCompThroughRightF)
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 --import Path(Path(..))
 import PopupMenuF
@@ -26,7 +26,7 @@ import SelectionF
 --import Utils(mapList)--loop,
 import Xtypes
 import Data.Char(isAlpha,toLower,isPrint)
-import Graphic
+--import Graphic
 import InputMsg(InputMsg(..))
 
 default(Int) -- mostly for Hugs

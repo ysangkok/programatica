@@ -11,7 +11,7 @@ import FudgetIO
 import NullF() -- instances, for hbc
 import LayoutRequest(plainLayout)
 import Gc
-import EitherUtils(Cont(..))
+--import EitherUtils(Cont(..))
 --import Io(appendChanK)
 --import Pixmap(readBitmapFile)
 --import Maybe(maybeToList)

@@ -1,4 +1,3 @@
-{-# LANGUAGE GADTs #-}
 module CmdLineParser3(
   P((:--),Token),cmd,(!),(<@),( #@ ),chk,nil,many,arg,kw,opt,flag,named,
   run,usage,parseAll

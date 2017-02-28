@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module DialogF(inputPopupOptF, inputPopupF, passwdPopupOptF,
                passwdPopupF, stringPopupOptF, stringPopupF,
 	       confirmPopupF, ConfirmMsg(..),

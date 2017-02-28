@@ -4,10 +4,10 @@ import Alignment
 import DButtonF
 import FDefaults
 import CompOps((>==<))
-import Defaults(buttonFont)
-import Event(Event(..))
-import Fudget
-import PushButtonF
+--import Defaults(buttonFont)
+--import Event(Event(..))
+--import Fudget
+--import PushButtonF
 import QuitF
 import AuxTypes(Modifiers(..))
 import Graphic( )

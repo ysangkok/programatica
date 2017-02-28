@@ -3,7 +3,7 @@ module TypedSockets(TPort,tPort,tSocketServerF,TServerAddress,tServerAddress,tTr
 import Fudgets
 import SocketServer
 import NonStdTrace
-import DialogueIO hiding (IOError)
+--import DialogueIO hiding (IOError)
 
 newtype TPort a b = TPort Port
 

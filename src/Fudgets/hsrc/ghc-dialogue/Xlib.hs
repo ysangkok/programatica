@@ -1,4 +1,5 @@
-{-# OPTIONS -optc-I/usr/X11R6/include -#include <X11/Xlib.h> -#include <X11/Xutil.h> -#include <X11/extensions/shape.h> -#include <X11/extensions/Xdbe.h> -fvia-C #-}
+{-# LANGUAGE CPP, ForeignFunctionInterface #-}
+{- Obsolete OPTIONS -optc-I/usr/X11R6/include -#include <X11/Xlib.h> -#include <X11/Xutil.h> -#include <X11/extensions/shape.h> -#include <X11/extensions/Xdbe.h> -fvia-C -}
 module Xlib where
 import Marshall
 import MyForeign
@@ -12,7 +13,7 @@ import DrawTypes
 
 import Control.Monad(zipWithM_)
 import Ap
-import Data.Word(Word32)
+import Data.Word(Word,Word32)
 --import CCall
 default(Int)
 
@@ -20,12 +21,13 @@ default(Int)
 
 type XID = Int
 type Unsigned = Int -- hmm
+type Unsigned32 = Int32 -- hmm
 type Status = Int
 type Screen = Int
 type Bitmask = Word32
 type XlibKeySym = XID -- KeySym in Xlib, defined as String in Fudgets
 type ClipOrdering = Ordering'
-type CPixelArray = CInt
+type CPixelArray = CLong
 type CStringArray = CString
 type CXFontStructArray = CXFontStruct
 type CDisplay = Addr
@@ -38,7 +40,7 @@ newtype Region = Region Addr
 
 #define PReq0(f,pr,r) PXlib(f,CDisplay -> IO pr, Display -> IO r)
 #define Req0(f,r) PReq0(f,r,r)
-#define Req(f,t,r) PXlib(f,CDisplay -> t -> IO r, Display-> t ->IO r)
+#define Req(f,t,r) PReq(f,t,r,t,r)
 #define PReq(f,p,pr,t,r) PXlib(f,CDisplay -> p -> IO pr, Display-> t ->IO r)
 #define WindowReq(f,t,r) Req(f,Window->t,r)
 #define PWindowReq(f,pt,pr,t,r) PReq(f,Window->pt,pr,Window->t,r)
@@ -58,7 +60,7 @@ newtype Region = Region Addr
 --- Calls ---------------------------------------------------------------------
 PXlib(OpenDisplay,  CString -> IO CDisplay, String -> IO Display)
 Cmd0(CloseDisplay)
-Req0(ConnectionNumber,Int)
+Req0(ConnectionNumber,Int32)
 Cmd0(Flush)
 Cmd(NextEvent,CXEvent)
 Req0(Pending,Int)
@@ -87,11 +89,11 @@ Req(DefaultVisual,Screen,CVisual)
 PReq(LoadFont,CString,FontId,String,FontId)
 Req(QueryFont,FontId,CXFontStruct)
 PReq(LoadQueryFont,CString,CXFontStruct,String,CXFontStruct)
-PReq(ListFonts,CString->Int->CInt,CStringArray,String->Int->CInt,CStringArray)
+PReq(ListFonts,CString->Int->CLong,CStringArray,String->Int->CLong,CStringArray)
 Xlib(FreeFontNames,CStringArray->IO())
-PReq(ListFontsWithInfo,CString->Int->CInt->CCXFontStruct,CStringArray,String->Int->CInt->CCXFontStruct,CStringArray)
-Xlib(FreeFontInfo,CStringArray->CXFontStructArray->Int->IO ())
-Cmd(QueryTextExtents16,FontId->CString16->Int->CInt->CInt->CInt->CXCharStruct)
+PReq(ListFontsWithInfo,CString->Int->CInt32->CCXFontStruct,CStringArray,String->Int->CInt32->CCXFontStruct,CStringArray)
+Xlib(FreeFontInfo,CStringArray->CXFontStructArray->Int32->IO ())
+Cmd(QueryTextExtents16,FontId->CString16->Int->CLong->CLong->CLong->CXCharStruct)
 
 Req(CreateFontCursor,Int,CursorId)
 Req(CreatePixmap,DrawableId->Unsigned->Unsigned->Unsigned,PixmapId)
@@ -101,8 +103,12 @@ Req(AllocColor,ColormapId->CXColor,Status)
 PReq(AllocNamedColor,ColormapId->CString->CXColor->CXColor,Status,ColormapId->String->CXColor->CXColor,Status)
 Cmd(QueryColor,ColormapId->CXColor)
 Cmd(FreeColors,ColormapId->CPixelArray->Int->Pixel)
+{- -- This creates a dangling reference to the image data!
+PReq(CreateImage,CVisual->Int->Int->Int->CString->Int->Int->Int->Int,CXImage,
+                 CVisual->Int->Int->Int->String->Int->Int->Int->Int,CXImage)
+-}
+Req(CreateImage,CVisual->Int->Int->Int->CString->Int->Int->Int->Int,CXImage)
 
-PReq(CreateImage,CVisual->Int->Int->Int->CString->Int->Int->Int->Int,CXImage,CVisual->Int->Int->Int->String->Int->Int->Int->Int,CXImage)
 DrawCmd(PutImage,CXImage->Int->Int->Int->Int->Int->Int)
 
 -- Xlib(DestroyImage,CXImage->IO ()) -- XDestroyImage is a macro in X11/Xutil.h
@@ -125,8 +131,8 @@ WindowCmd(SetNormalHints,CXSizeHints)
 WindowCmd(SetWMHints,CXWMHints)
 WindowReq(SendEvent,Bool->Bitmask->CXEvent,Status)
 PWindowCmd(ChangeProperty,Atom->Atom->Int->PropertyMode->CString->Int,Atom->Atom->Int->PropertyMode->String->Int)
-WindowReq(GetWindowProperty,Atom->Int->Int->Bool->Atom->CAtom->CInt->CInt->CInt->CCString,Int)
-WindowReq(QueryPointer,CInt->CInt->CInt->CInt->CInt->CInt->CInt,Bool)
+WindowReq(GetWindowProperty,Atom->Int->Int->Bool->Atom->CAtom->CLong->CLong->CLong->CCString,Int)
+WindowReq(QueryPointer,CLong->CLong->CLong->CLong->CLong->CLong->CLong,Bool)
 PWindowCmd(ShapeCombineMask,Int->Int->Int->PixmapId->Int,ShapeKind->Int->Int->PixmapId->ShapeOperation)
 PWindowCmd(ShapeCombineRectangles,Int->Int->Int->CXRectangleArray->Int->Int->Int,ShapeKind->Int->Int->CXRectangleArray->Int->ShapeOperation->ClipOrdering)
 PWindowCmd(ShapeCombineShape,Int->Int->Int->PixmapId->Int->Int,ShapeKind->Int->Int->PixmapId->ShapeKind->ShapeOperation)
@@ -151,7 +157,7 @@ DrawCmd(DrawArc,Int->Int->Unsigned->Unsigned->Int->Int)
 DrawCmd(FillArc,Int->Int->Unsigned->Unsigned->Int->Int)
 DrawPCmd(FillPolygon,CXPointArray->Int->Int->Int,CXPointArray->Int->Shape->CoordMode)
 PCmd(CopyArea,DrawableId->DrawableId->CGCId->Int->Int->Unsigned->Unsigned->Int->Int,DrawableId->DrawableId->GCId->Int->Int->Unsigned->Unsigned->Int->Int)
-PCmd(CopyPlane,DrawableId->DrawableId->CGCId->Int->Int->Unsigned->Unsigned->Int->Int->Word32,DrawableId->DrawableId->GCId->Int->Int->Unsigned->Unsigned->Int->Int->Word32)
+PCmd(CopyPlane,DrawableId->DrawableId->CGCId->Int32->Int32->Unsigned32->Unsigned32->Int32->Int32->Word,DrawableId->DrawableId->GCId->Int32->Int32->Unsigned32->Unsigned32->Int32->Int32->Word)
 
 #define GCCmd(f,t) PCmd(f,CGCId->t,GCId->t)
 
@@ -168,8 +174,8 @@ PCmd(SetState,CGCId->Unsigned->Unsigned->Int->Unsigned,GCId->Unsigned->Unsigned-
 
 PXlib(KeysymToString,XlibKeySym->IO CString,XlibKeySym->IO (Maybe String))
 
-Req(ReadBitmapFile,DrawableId->CString->CInt->CInt->CInt->CInt->CInt,Int)
-
+Req(ReadBitmapFile,DrawableId->CString->CInt32->CInt32->CLong->CInt32->CInt32,Int)
+Req(CreateBitmapFromData,DrawableId->CString->Int32->Int32,PixmapId)
 
 --- Regions -------------------------------------------------------------------
 Xlib(CreateRegion,IO Region)
@@ -179,7 +185,7 @@ Xlib(UnionRectWithRegion,CXRectangle->Region->Region->IO ())
 IDAR(Region)
 
 --- Double buffer extension ---------------------------------------------------
-Req(dbeQueryExtension,CInt->CInt,Int)
+Req(dbeQueryExtension,CLong->CLong,Int)
 PWindowReq(dbeAllocateBackBufferName,Int,DbeBackBufferId,SwapAction,DbeBackBufferId)
 Req(dbeSwapBuffers,CXdbeSwapInfoArray->Int,Status)
 
@@ -205,6 +211,7 @@ IDAR(PropertyMode)
 IDAR(VisualID)
 IDAR(Window)
 IDAR0(Word32)
+IDAR0(Word)
 ENUMAR(ByteOrder)
 ENUMAR(CoordMode)
 ENUMAR(DisplayClass)

@@ -4,7 +4,7 @@ import UserLayoutF
 import ParseURL(parseURL)
 import URL(URL(..),url2str,joinURL)
 import Html
-import Data.ListMap(lookupWithDefault)
+import ListMap(lookupWithDefault)
 
 insetsF extract fetchF showF =
     loopThroughRightF (swapEither>^=<dynF nullF >=^< pre) fetchF

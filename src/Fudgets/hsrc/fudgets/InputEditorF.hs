@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module InputEditorF(
     EditorF,
     inputEditorF,inputEditorF',
@@ -14,7 +15,7 @@ import GCAttrs --(FontSpec,fontSpec)
 import Defaults(defaultFont)
 import FDefaults
 
-#include "defaults.h"
+#include "../defaults/defaults.h"
 
 inputEditorF = inputEditorF' standard
 

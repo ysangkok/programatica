@@ -1,7 +1,7 @@
  module Sockets(DLValue,module Sockets) where
 import Event(XEvent)
 import Xtypes(WindowId,Display)
-import PackedString(ByteString)
+import Data.ByteString
 import DLValue
 
 -- NOTE: Matching definitions for the C world appear in xlib/sockets.h --------

@@ -1,16 +1,21 @@
 module DoRequest(initXCall,doRequest,getAsyncInput) where
 import DialogueIO
 import ContinuationIO(stdin,stdout,stderr)
-import qualified IO
-import Directory
-import Time(getClockTime,toCalendarTime)
+import qualified System.IO as IO
+import System.Environment as IO(getEnv)
+import System.Process as IO(system)
+import System.Exit as IO
+import qualified IOUtil as IO
+import System.IO(openBinaryFile,withBinaryFile,IOMode(..),hPutStr,hGetContents)
+import System.Directory
+import System.Time(getClockTime,toCalendarTime)
 
 import DoXCommand
 import DoXRequest
 import AsyncInput(XCallState,initXCall,getAsyncInput',doSelect,doSocketRequest)
 import CmdLineEnv(argFlag)
 
-import System
+--import System
 import Prelude hiding (IOError)
 
 import Ap
@@ -33,6 +38,9 @@ doRequest' state req =
   case req of
     ReadFile   filename          -> rdCatch (readFile filename)
     WriteFile  filename contents -> wrCatch (writeFile filename contents)
+    ReadBinaryFile filename      -> rdCatch (readBinaryFile filename)
+    WriteBinaryFile filename contents ->
+                                    wrCatch (writeBinaryFile filename contents)
     AppendFile filename contents -> wrCatch (appendFile filename contents)
     StatusFile filename          -> catchIo SearchError (statusFile filename)
       where
@@ -47,7 +55,7 @@ doRequest' state req =
 	     let r = if readable p then 'r' else '-'
 		 w = if writable p then 'w' else '-'
 	     return (Str [t,r,w])
-    GetModificationTime path   -> catchIo SearchError (ClockTime # getModificationTime path)
+    GetModificationTime path   -> catchIo SearchError (ClockTime # IO.getModificationTime path)
     ReadDirectory dir          -> rdCatch' StrList (getDirectoryContents dir)
     DeleteFile filename        -> otCatch (removeFile filename>>return Success)
     CreateDirectory path mask  -> otCatch (createDirectory path>>return Success)
@@ -89,9 +97,13 @@ rdCatch = rdCatch' Str
 rdCatch' c io = catchIo ReadError (c # io)
 wrCatch io = catchIo WriteError (io >> return Success)
 otCatch = catchIo OtherError
-catchIo e io = catch io (return . Failure . e . show)
+catchIo e io = IO.catch io (return . Failure . e . show)
 
--- Should be put elsewhere:
-#ifndef __GLASGOW_HASKELL__
-instance Functor IO where map f io = io >>= (return . f)
-#endif
+---- Should be put elsewhere:
+-- #ifndef __GLASGOW_HASKELL__
+-- instance Functor IO where map f io = io >>= (return . f)
+-- #endif
+
+--
+readBinaryFile path = hGetContents =<< openBinaryFile path ReadMode
+writeBinaryFile path s = withBinaryFile path WriteMode (flip hPutStr s)

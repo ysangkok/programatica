@@ -14,7 +14,7 @@ import Spops
 --import Xtypes
 import Fudget
 --import FudgetIO
-import NullF(getK,F{-,K-})
+import NullF(getK{-,F,K-})
 import ContinuationIO(stdout,stderr)
 import DialogueIO hiding (IOError)
 

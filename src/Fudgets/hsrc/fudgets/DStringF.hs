@@ -11,7 +11,6 @@ import StringF
 import CompOps
 --import Geometry(Rect)
 --import Xtypes
-import CompOps((>=^^<))
 --import SpEither(filterRightSP)
 import InputMsg(InputMsg,mapInp)
 import InputF(inputDoneSP)--InF(..),

@@ -1,5 +1,5 @@
 module ShowFun where
-import Text.Show.Functions
+import Text.Show.Functions()
 
 {-
 In Haskell 98, the function type is no longer an instance of the Show class.

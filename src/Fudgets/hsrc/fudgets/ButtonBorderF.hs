@@ -16,7 +16,7 @@ import Xcommand
 import Gc
 import Geometry(Line(..), Point(..), Rect(..), origin, pP, padd, psub)
 import LayoutRequest
-import Message(Message(..))
+--import Message(Message(..))
 import NullF
 import Spacer(marginF)
 import EitherUtils(stripEither)

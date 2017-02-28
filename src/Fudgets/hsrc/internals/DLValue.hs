@@ -1,4 +1,4 @@
-{-# LANGUAGE ForeignFunctionInterface, CPP #-}
+{-# LANGUAGE CPP #-}
 module DLValue where
 
 #if defined(__GLASGOW_HASKELL__) || defined(__HUGS__)

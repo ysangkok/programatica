@@ -3,7 +3,7 @@ module ParK(parK,compK) where
 import CompSP
 --import Event(Event(..))
 import Fudget
-import Message(Message(..))
+--import Message(Message(..))
 --import Path(Path(..))
 --import SP
 import Spops

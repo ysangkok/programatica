@@ -1,4 +1,5 @@
-module DefaultParams(module FDefaults) where
+module DefaultParams(-- * Default parameters
+  module FDefaults) where
 import FDefaults
 
 {-

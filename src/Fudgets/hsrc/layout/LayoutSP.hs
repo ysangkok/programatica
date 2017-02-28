@@ -1,14 +1,14 @@
 module LayoutSP(layoutMgrF,dynLayoutMgrF) where
 --import Command
 import Sort(sortLe)
-import Direction
+--import Direction
 --import Event
 import FRequest
 import Fudget
 import CompOps((>=^<))
 import Geometry(Rect,rR)
 import LayoutRequest
-import Path(Path(..), here,showPath{-,subPath-})
+import Path(here,showPath{-,Path(..),subPath-})
 import Spops
 --import EitherUtils(mapMaybe)
 --import Utils(number, replace)
@@ -21,11 +21,7 @@ import Maptrace(ctrace)
 
 default (Int)
 
-#ifdef __HUGS__
 mytrace x = ctrace "layoutftrace" x
-#else
-mytrace = ctrace "layoutftrace"
-#endif
 
 layoutMgrF :: Int -> LayoutDirection -> Placer -> F (Path, LayoutMessage) (Path, Rect)
 layoutMgrF fudgetCnt dir lter1 = dynLayoutMgrF fudgetCnt dir lter1 >=^< Left

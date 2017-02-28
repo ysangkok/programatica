@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module DrawingUtils where
 import Xtypes
 import Drawing
@@ -18,7 +19,7 @@ import LayoutDir(LayoutDir(..))
 --import EitherUtils(Cont(..))
 --import Fudget(K)
 
-#include "exists.h"
+#include "../exists.h"
 
 boxVisibleD = ComposedD
 boxD ds = ComposedD (length ds) ds

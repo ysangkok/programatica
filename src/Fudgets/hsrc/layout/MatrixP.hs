@@ -1,15 +1,15 @@
+{-# LANGUAGE CPP #-}
 module MatrixP(matrixP,matrixP') where
 import Geometry
 import LayoutRequest
 import LayoutDir(LayoutDir(..),xc,yc,mkp)
 import Spacers(Distance)
 import Defaults(defaultSep)
+import Data.List(mapAccumL)
 
 #ifndef __HBC__
 #define fromInt fromIntegral
 #endif
-
-import Data.List(mapAccumL)
 
 matrixP n = matrixP' n Horizontal defaultSep
 

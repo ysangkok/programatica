@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module GIF2PPM(gif2ppm) where
 import GIF
 import PNM
@@ -6,9 +7,7 @@ import qualified Fudgets as F
 import Data.List(sortBy)
 import ListUtil(chopList)
 
-#ifdef __HASKELL98__
 #define map fmap
-#endif
 
 gif2ppm gif = PNM (F.pP w h) (PPM 255 rgbs)
   where
