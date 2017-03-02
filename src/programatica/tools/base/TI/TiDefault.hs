@@ -2,11 +2,7 @@ module TiDefault where
 import TiTypes
 import TiMonad
 import TiContextReduction
-import TiSolve(expandSynonyms,TypeConstraint)
-import TiClasses
-import TiNames
-import TiFresh
-import TiContextReduction
+import TiSolve(expandSynonyms)
 import TiFunDeps(closure)
 import SrcLoc
 import Lists(partition,(\\\),nubBy)
@@ -15,30 +11,8 @@ import MUtils
 import PrettyPrint
 import Control.Monad(msum,unless)
 
-resolveToplevelAmbiguities :: (Ord Kind, Ord (TypeInfo syntax),
-                                                TypeId syntax, ValueId syntax, Fresh syntax,
-                                                HasSrcLoc syntax, HasTypeApp syntax e,
-                                                HasLocalDef syntax e b) =>
-                                               [TiContextReduction.Dict syntax]
-                                               -> IM
-                                                    syntax
-                                                    (TypeConstraint syntax)
-                                                    (Subst syntax, b -> b)
 resolveToplevelAmbiguities ps = resolveAmbiguities' (tv ps) ps
  
-resolveAmbiguities :: (Ord Kind, Foldable t1, Types syntax t,
-                                        Ord (TypeInfo syntax), TypeId syntax, ValueId syntax,
-                                        Fresh syntax, HasSrcLoc syntax, HasTypeApp syntax e,
-                                        HasLocalDef syntax e b) =>
-                                       [(t1 syntax, [syntax])]
-                                       -> [syntax]
-                                       -> [TiContextReduction.Dict syntax]
-                                       -> t
-                                       -> IM
-                                            syntax
-                                            (TypeConstraint syntax)
-                                            ([TiContextReduction.Dict syntax],
-                                             (Subst syntax, b -> b))
 resolveAmbiguities fdeps ngvs ps ts =
     (,) unambigps # resolveAmbiguities' avs ambigps
   where (avs,(ambigps,unambigps)) = ambiguities fdeps ngvs ps ts
@@ -61,17 +35,6 @@ ambiguities fdeps ngvs ps ts = (avs,partition (any (`elem` avs).tv) ps)
     -- (and later get the set back with tv):
     tyvarsAsType = tupleT . map tyvar
 
-resolveAmbiguities' :: (Ord Kind, Ord (TypeInfo syntax),
-                                         TiClasses.HasLocalDef syntax e b,
-                                         TiClasses.HasTypeApp syntax e, HasSrcLoc syntax,
-                                         TiFresh.Fresh syntax, TiNames.ValueId syntax,
-                                         TiNames.TypeId syntax) =>
-                                        [syntax]
-                                        -> TiContextReduction.Ctx syntax
-                                        -> IM
-                                             syntax
-                                             (TiSolve.TypeConstraint syntax)
-                                             (Subst syntax, b -> b)
 resolveAmbiguities' avs ps =
     do let ambigs = [(av,[ p | p<-ps,av `elem` tv p])|av<-avs]
        dss <- getDefaults

@@ -13,7 +13,7 @@ delFromFM m x = Map.delete x m
 listToFM :: Ord k => [(k, a)] -> Map.Map k a
 listToFM = Map.fromList
 addListToFM :: (Foldable t0) => (Ord k, Ord v) => Ord (Map.Map k v) => Map.Map k v -> t0 (k, v) -> Map.Map k v
-addListToFM = foldl (uncurry . addToFM) 
+addListToFM = foldl (uncurry . addToFM)
 addListToFM_C f = foldl (uncurry . addToFM_C f)
 keysFM = Map.keys
 eltsFM = Map.elems

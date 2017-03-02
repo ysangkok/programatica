@@ -5,4 +5,4 @@ data K x
     | Kfun !x !x -- higher kinds -- be strict to avoid a space leak
     | Kpred    -- classes
     | Kprop    -- P-logic assertions  & predicates
-      deriving (Eq, Show, Read)
+      deriving (Eq, Show, Read, Ord)

@@ -1,4 +1,4 @@
-module TiContextReduction(entails,contextReduction,contextReduction'',Ctx,Dict) where
+module TiContextReduction(entails,contextReduction,contextReduction'') where
 import TiInstanceDB
 import TiClasses
 import TiMonad
@@ -9,7 +9,7 @@ import TiFunDeps(improvements)
 import TiNames(TypeId,ValueId,dictName)
 import TiSCC(sccD')
 import TiFreeNames(freeVars)
-import TiSolve(expandSynonyms, TypeConstraint)
+import TiSolve(expandSynonyms)
 import TiUtil(freshen',freshvars)
 import SrcLoc
 import PrettyPrint hiding (var)
@@ -18,7 +18,6 @@ import Control.Monad(msum,mplus)
 import MUtils
 import Debug.Trace(trace) -- debug
 import TiPretty() -- debug
-import qualified TiEnvFM
 
 --type Ctx = [Typing QId Pred]
 
@@ -31,25 +30,12 @@ type Ctx v = [Dict v]
 type DDefs v = [(Dict v,DExp v)] -- dictionary definitions
 type DictsF v = DDefs v->DDefs v
 
-contextReduction :: (Ord Kind, Ord (TypeInfo i), HasTypeApp i e,
-                                      HasLocalDef i e b, Fresh i, HasSrcLoc i, ValueId i,
-                                      TypeId i) =>
-                                     Ctx i -> IM i (TypeConstraint i) (Ctx i, b -> b)
 contextReduction ds = contextReduction' True ds
-contextReduction' :: (Ord Kind, Ord (TypeInfo i), TypeId i, ValueId i,
-                                       HasSrcLoc i, Fresh i, HasLocalDef i e b, HasTypeApp i e) =>
-                                      Bool -> Ctx i -> IM i (TypeConstraint i) (Ctx i, b -> b)
 contextReduction' delayIfOverlap ds =
     apSnd returnLets # contextReduction1' delayIfOverlap ds
 
-contextReduction1 :: (Ord Kind, Ord (TypeInfo v), TypeId v, ValueId v,
-                                       HasSrcLoc v, Fresh v) =>
-                                      Ctx v -> IM v (TypeConstraint v) (Ctx v, DictsF v)
 contextReduction1 ds = contextReduction1' True ds
 
-contextReduction1' :: (Ord Kind, Ord (TypeInfo v), Fresh v, HasSrcLoc v,
-                                        ValueId v, TypeId v) =>
-                                       Bool -> Ctx v -> IM v (TypeConstraint v) (Ctx v, DictsF v)
 contextReduction1' delayIfOverlap ds =
  do idb <- getIEnv
     tenv <- getKEnv
@@ -57,7 +43,7 @@ contextReduction1' delayIfOverlap ds =
     contextReduction2 delayIfOverlap idb tenv ds
 
 contextReduction2
-  :: (Ord Kind, Ord (TypeInfo v), TypeId v,ValueId v,HasSrcLoc v,Fresh v)
+  :: (TypeId v,ValueId v,HasSrcLoc v,Fresh v)
   => Bool -> IDB v -> KEnv v -> Ctx v -> TI v (Ctx v, DictsF v)
 contextReduction2 delayIfOverlap idb env =
     rmDupCtx & rmBySuper & rmDupCtx & rmByInst delayIfOverlap env idb & rmDupCtx
@@ -93,12 +79,6 @@ contextReduction2 delayIfOverlap idb env =
 
 superClosure eds env = concatMapM (bySuper env) (map (emap var) eds)
 
-entails :: (Ord Kind, Ord (TypeInfo t1), Ord t, HasLocalDef t1 e b,
-                             HasTypeApp t1 e, Fresh t1, TypeId t1, ValueId t1) =>
-                            [Typing t1 (HsTypeI t1)]
-                            -> [Typing t1 (HsTypeI t1)]
-                            -> TiEnvFM.Env (HsIdentI t1) (t, TypeInfo t1)
-                            -> IM t1 (TiSolve.TypeConstraint t1) (Subst t1, b -> b)
 entails eds ids env = 
     do availds <- superClosure eds env
        is <- let _:>:ectx = unzipTyped availds
@@ -200,9 +180,6 @@ returnLets r = \s -> foldr (uncurry letvar . apSnd dconv) s (order (r []))
 -- To avoid an ambiguity when you only want the resulting predicates and
 -- not the dictionary rewriting function:
 
-contextReduction'' :: (Ord Kind, Ord (TypeInfo v), Fresh v, HasSrcLoc v,
-                                        ValueId v, TypeId v) =>
-                                       Ctx v -> IM v (TypeConstraint v) (Ctx v)
 contextReduction'' ds = fst # contextReduction1 ds
 
 data DExp i

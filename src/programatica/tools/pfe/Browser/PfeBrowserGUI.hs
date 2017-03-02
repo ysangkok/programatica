@@ -168,7 +168,7 @@ sourceDispF' colgc =
 	       _ -> Nothing
 
 highlightGfxs off on = ChangeGfx $ change off False++change on True
-  where change paths on = [(path,(on,Nothing))|path<-paths]
+  where change paths on = [(path,GfxReplace (on,Nothing))|path<-paths]
 
 hilite off on = Right (highlightGfxs off on)
 mkvis lbl = Right (ShowGfx lbl (Nothing,Nothing))

@@ -5,7 +5,7 @@ import HtmlPrinter(printTag)
 import HtmlEntities(decode)
 import RichTextLex
 import AnchorParser(parseTag)
-import qualified Data.Map.Strict as OM
+import qualified OrdMap as OM
 import Utils2(isSpace')
 --import LexSymbol
 

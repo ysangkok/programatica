@@ -52,6 +52,12 @@ newtype IM i c ans = IM { unIM::TiEnv i->Unique->Err i (Out c ans) }
 --type TI i = IM i (TypeConstraint i)
 --type KI i = IM i KindConstraint
 
+instance Eq (IM i c ans) where
+  (IM a) == (IM d) = False
+
+instance Ord (IM i c ans) where
+  compare (IM a) (IM b) = LT
+
 type Err i ans = Either (Error (HsIdentI i)) ans
 
 data Out c ans = Out ans (Unique,Constraints c)
@@ -112,7 +118,7 @@ run (IM m) =
     Left err -> Left err
     Right (Out ans (_,cs)) -> Right ans
 
-instance (Printable i,Monad m) => Lift (IM i c) m where
+instance (Ord i, Printable i,Monad m) => Lift (IM i c) m where
   lift = lift . run
 
 getConstraints (IM m) =

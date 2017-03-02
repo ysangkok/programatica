@@ -7,6 +7,8 @@ import AbstractIO as A
 import DialogueIO as D
 import MUtils
 --import MT
+import Control.Applicative((<*>), pure)
+import Control.Monad(ap)
 
 import PfePlumbing
 
@@ -23,6 +25,10 @@ runFIOM (M m) = m (const end) (error.show)
 
 instance Functor FIOM where
   fmap f (M m) = M $ \ c h -> m (c.f) h
+
+instance Applicative FIOM where
+  pure = return
+  (<*>) = ap
 
 instance Monad FIOM where
   return x = M $ \ c h -> c x

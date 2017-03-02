@@ -1,6 +1,6 @@
 module TiKEnv(KEnv,extenv1,extenv,empty,lookup,domain,range) where
 import Prelude hiding (lookup)
-import TiEnvFM
+import TiEnvFM(Env,extenv1,extenv,empty,lookup,domain,range)
 import HsIdent(HsIdentI)
 import TiTypes(Kind,TypeInfo)
 

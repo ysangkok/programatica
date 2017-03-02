@@ -25,7 +25,7 @@ type BaseTypeI i = TI i (HsTypeI i)
 newtype HsDeclI i = Dec (BaseDeclI i)   deriving (Eq, Show)
 newtype HsExpI i  = Exp (BaseExpI  i)   deriving (Eq, Show)
 newtype HsPatI i  = Pat (BasePatI  i)   deriving (Eq, Show)
-newtype HsTypeI i = Typ (BaseTypeI i)   deriving Eq
+newtype HsTypeI i = Typ (BaseTypeI i)   deriving (Eq, Ord)
 newtype HsKind    = Knd (K HsKind)      deriving (Eq, Show)
 
 instance Rec (HsDeclI i) (BaseDeclI i)      where rec = Dec; struct (Dec d) = d

@@ -17,18 +17,25 @@ By the way, it *is* annoying that #Functor# isn't a superclass of
  #Monad#, isn't it!
 -}
 module AbstractIO(module AbstractIO,
-		  IOError,ClockTime,S.ExitCode(..)) where
+		  IOError,ClockTime,ExitCode(..)) where
 import Prelude hiding (readFile,writeFile,
 		       putStr,putStrLn,print,
 		       getLine,readLn,getContents,
-		       catch,ioError,userError)
+		       ioError,userError)
 import qualified Prelude
-import qualified Directory as D
-import qualified System as S
-import qualified IO
-import qualified Time
-import Time(ClockTime,CalendarTime)
+import qualified System.Directory as D
+import qualified System.Environment as S
+import qualified System.IO as IO
+import System.Exit
+import qualified System.Cmd as Cmd
+import qualified System.Time as Time
+import System.Time(ClockTime,CalendarTime)
 import MT(MT(..))
+import qualified System.IO.Error as IOE
+import qualified Control.Exception as Exp(ioError,catch)
+import Data.Time.Clock (diffUTCTime, UTCTime(..))
+import Data.Time.Calendar (fromGregorianValid)
+import Data.Maybe(fromMaybe)
 
 {-+
 Reading and writing files
@@ -92,14 +99,14 @@ Operations corresponding to the standard library module #System#.
 
 
 class (Functor io,Monad io) => SystemIO io where
-  system :: String -> io S.ExitCode
+  system :: String -> io ExitCode
   getEnv :: String -> io String
   getProgName :: io String
   getArgs :: io [String]
   -- ... exitWith
 
 instance SystemIO IO where
-  system = S.system
+  system = Cmd.system
   getEnv = S.getEnv
   getProgName = S.getProgName
   getArgs = S.getArgs
@@ -122,10 +129,22 @@ class (Functor io,Monad io) => DirectoryIO io where
   doesFileExist, doesDirectoryExist :: FilePath -> io Bool
   getDirectoryContents :: FilePath -> io [FilePath]
 
+newTimeToOldTime :: UTCTime -> Time.ClockTime
+newTimeToOldTime newTime = Time.TOD secondsSince1970 0 where
+  epoch :: UTCTime
+  epoch = UTCTime{utctDay=fromMaybe (error "unix epoch invalid") (fromGregorianValid 1970 1 1) , utctDayTime=0}
+  secondsSince1970 :: Integer
+  secondsSince1970 = floor $ diffUTCTime epoch newTime
+
+fun :: DirectoryIO IO => FilePath -> IO ClockTime
+fun fp = do
+  x <- D.getModificationTime fp
+  return $ newTimeToOldTime x
+
 -- Base case:
 instance DirectoryIO IO where
   createDirectory = D.createDirectory
-  getModificationTime = D.getModificationTime
+  getModificationTime = fun
   doesFileExist = D.doesFileExist
   doesDirectoryExist = D.doesDirectoryExist . dropFinalSlash
   getDirectoryContents = D.getDirectoryContents
@@ -202,8 +221,8 @@ tryThen m after =
 returnTry r = either ioError return r
 
 instance CatchIO IOError IO where
-  catch = Prelude.catch
-  ioError = Prelude.ioError
+  catch = IOE.catchIOError
+  ioError = Exp.ioError
 
 --instance (MT t,Functor (t m),Monad (t m),CatchIO m) => CatchIO (t m) where
   -- !! How do you lift operations with negative occurences of m?
@@ -215,7 +234,7 @@ class IOErr ioerror where
   -- ..., ioeGetFileName, ...
 
 instance IOErr IOError where
-  userError = IO.userError
-  isDoesNotExistError = IO.isDoesNotExistError
-  isUserError = IO.isUserError
-  ioeGetErrorString = IO.ioeGetErrorString
+  userError = IOE.userError
+  isDoesNotExistError = IOE.isDoesNotExistError
+  isUserError = IOE.isUserError
+  ioeGetErrorString = IOE.ioeGetErrorString

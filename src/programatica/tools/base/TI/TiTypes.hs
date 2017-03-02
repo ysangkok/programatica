@@ -16,11 +16,11 @@ import Debug.Trace(trace) -- for debugging
 
 type Type i = HsTypeI i
 type Pred i = Type i
-data Qual i t = [Pred i] :=> t deriving (Eq,Show,Read)
+data Qual i t = [Pred i] :=> t deriving (Eq,Show,Read,Ord)
 type QType i = Qual i (Type i)
 
 data Scheme v = Forall [Kinded v] [Kinded v] (QType v)
-              deriving (Eq,Show,Read) -- Eq??
+              deriving (Eq,Show,Read,Ord) -- Eq??
 
 unQual t = []:=>t
 forall' = Forall []
@@ -60,7 +60,7 @@ flatConAppT ty =
 --vvar = unqual :: String->VarId
 
 infix 1 :>:
-data Typing x t = x :>: t deriving (Eq,Show,Read)
+data Typing x t = x :>: t deriving (Eq,Ord,Show,Read)
 type Assump i = Typing (HsIdentI i) (Scheme i)
 type Typed i x = Typing x (Type i)
 
@@ -95,7 +95,7 @@ data TypeInfo i
           [Assump i]      -- methods
   | Synonym [i] (Type i)
   | Tyvar
-  deriving ({-Eq,-}Show,Read)
+  deriving (Eq,Ord,Show,Read)
 
 newtype Subst i = S [(i,Type i)] deriving (Show)
 

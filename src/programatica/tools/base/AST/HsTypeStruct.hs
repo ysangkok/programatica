@@ -9,4 +9,4 @@ data TI i t
     | HsTyVar i
     | HsTyCon i
     | HsTyForall [i] [t] t -- forall is . Ps => t
-      deriving (Eq,Show,Read)
+      deriving (Eq,Show,Read,Ord)

@@ -11,8 +11,8 @@ import Unification(Unifiable(..),unify)
 import PrettyPrint
 
 -- Be strict to avoid a space leak
-data Kind = K !(K Kind) | Kvar KVar deriving (Eq,Show,Read)
-newtype KVar = KVar Int deriving (Eq,Show,Read)
+data Kind = K !(K Kind) | Kvar KVar deriving (Eq,Show,Read,Ord)
+newtype KVar = KVar Int deriving (Eq,Show,Read,Ord)
 
 instance HasBaseStruct Kind (K Kind) where base = K
 

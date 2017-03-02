@@ -3,7 +3,7 @@ import ListUtil(chopList)
 import GIF
 import GIFops(compressRasterData)
 import BitStream(bput,bytestream,end)
-import qualified Data.Map.Strict as Map
+import qualified OrdMap as Map
 
 --import Trace(trace)
 --trace x y = y
