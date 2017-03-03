@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, ForeignFunctionInterface #-}
+{-# LANGUAGE CPP #-}
 {- Obsolete OPTIONS -optc-I/usr/X11R6/include -#include <X11/Xlib.h> -#include <X11/Xutil.h> -#include <X11/extensions/shape.h> -#include <X11/extensions/Xdbe.h> -fvia-C -}
 module Xlib where
 import Marshall
@@ -34,8 +34,8 @@ type CDisplay = Addr
 type CGCId = Addr
 newtype Region = Region Addr
 
-#define FI(f) foreign import ccall unsafe "f" prim/**/f
-#define PXlib(f,p,h) FI(X/**/f) :: p ; x/**/f :: h ; x/**/f = call primX/**/f
+#define FI(f) prim/**/f = error "f called"; prim/**/f
+#define PXlib(f,p,h) x/**/f :: h ; x/**/f = error "primX/**/f called"
 #define Xlib(f,h) PXlib(f,h,h)
 
 #define PReq0(f,pr,r) PXlib(f,CDisplay -> IO pr, Display -> IO r)
@@ -112,7 +112,7 @@ Req(CreateImage,CVisual->Int->Int->Int->CString->Int->Int->Int->Int,CXImage)
 DrawCmd(PutImage,CXImage->Int->Int->Int->Int->Int->Int)
 
 -- Xlib(DestroyImage,CXImage->IO ()) -- XDestroyImage is a macro in X11/Xutil.h
-foreign import ccall "asyncinput.h" xDestroyImage :: CXImage -> IO ()
+xDestroyImage = error "xDestroyImage called"
 
 
 WindowCmd0(DestroyWindow)

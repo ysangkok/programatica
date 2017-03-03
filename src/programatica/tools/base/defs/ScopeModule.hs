@@ -94,7 +94,7 @@ checkRefs = concatMap checkRef
       case os of
 	[_] -> []
         [] -> [(srcLoc x,"not in scope:"<+>x)]
-	_ -> [(srcLoc x,"ambiguous:"<+>x<+>ppiFTuple (map origname os))]
+	_ -> [(srcLoc x,"ambiguous:"<+>x<+>ppiFTuple (fmap origname os))]
     origname (x,_) = origModule x<>"."<>getQualified x
 
 --type Filter x y = FiniteMap x y->[y]
@@ -261,5 +261,5 @@ origName qn m n = PN (getBaseName qn) (unique m n)
 
 subordinates (Class _ ms) = {-map HsVar-} ms
 subordinates (Type TypeInfo {constructors=cs,fields=fs}) =
-  {-map HsVar-} fs++map ({-HsCon .-} conName) cs
+  {-map HsVar-} fs++fmap ({-HsCon .-} conName) cs
 subordinates _ = []

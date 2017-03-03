@@ -105,10 +105,10 @@ expToPat l@(Exp lhexp)  =
 			     Pat (HsPLit s l) -> return (hsPNeg s l)
 			     _ -> fail "only literals can be negated in patterns"
       HsLambda _ _   -> fail "lambdas not allowed in patterns."
-      HsList es      -> do { ps <- sequence (map expToPat es) ;
+      HsList es      -> do { ps <- sequence (fmap expToPat es) ;
 			     return $ hsPList loc0 ps -- !! loc0
 			   }
-      HsTuple es     -> do { ps <- sequence (map expToPat es) ;
+      HsTuple es     -> do { ps <- sequence (fmap expToPat es) ;
 			     return $ hsPTuple loc0 ps -- !! loc0
 			   }
       HsWildCard     -> return hsPWildCard

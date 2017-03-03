@@ -1,6 +1,6 @@
-{-# LANGUAGE CPP, ForeignFunctionInterface #-}
+{-# LANGUAGE CPP #-}
 module CSizes where
 
-#define CSIZE(ctype) foreign import ccall "cfuns.h" fudsizeof_/**/ctype :: Int
+#define CSIZE(ctype) fudsizeof_/**/ctype :: Int; fudsizeof_/**/ctype = error "fudsizeof_/**/ctype called"
 
 #include "csizes.h"

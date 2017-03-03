@@ -31,7 +31,7 @@ whenM m1 m2 = do b <- m1
 ifM bM tM eM = do b <- bM; if b then tM else eM
 aM &&& bM = ifM aM bM (return False)
 andM ms = foldr (&&&) (return True) ms
-allM p = andM . map p
+allM p = andM . fmap p
 
 seqMaybe m = maybe (return Nothing) (Just # ) m
 
@@ -46,12 +46,12 @@ apSndM f (x,y) = (,) x # f y
 
 concatMapM f xs = concat # mapM f xs
 
-mapFst f = map (apFst f)
-mapSnd f = map (apSnd f)
+mapFst f = fmap (apFst f)
+mapSnd f = fmap (apSnd f)
 apSnd f (x,y) = (x,f y)
 apFst f (x,y) = (f x,y)
 
-mapBoth f = map (apBoth f)
+mapBoth f = fmap (apBoth f)
 apBoth f (x,y) = (f x,f y)
 dup x = (x,x)
 pairWith f x = (x,f x)
@@ -62,13 +62,13 @@ mapPartition f (x:xs) = either (apFst.(:)) (apSnd.(:)) (f x) (mapPartition f xs)
 
 
 collectBySnd x =
-    map pick .
+    fmap pick .
     groupBy eqSnd .
     sortBy cmpSnd $ x
   where
-    pick xys@((_,y):_) = ({-sort $-} map fst xys,y)
+    pick xys@((_,y):_) = ({-sort $-} fmap fst xys,y)
 
-collectByFst x = map swap . collectBySnd . map swap $ x
+collectByFst x = fmap swap . collectBySnd . fmap swap $ x
 
 onFst f (x1,_) (x2,_) = f x1 x2
 onSnd f (_,y1) (_,y2) = f y1 y2

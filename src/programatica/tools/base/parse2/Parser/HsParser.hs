@@ -7635,7 +7635,7 @@ happyReduce_128 = happySpecReduce_2 59 happyReduction_128
 happyReduction_128 (HappyAbsSyn42  happy_var_2)
 	(HappyAbsSyn36  happy_var_1)
 	 =  HappyAbsSyn51
-		 (foldl1 hsTyApp (hsTyCon happy_var_1:map hsTyVar happy_var_2)
+		 (foldl1 hsTyApp (hsTyCon happy_var_1:fmap hsTyVar happy_var_2)
 	)
 happyReduction_128 _ _  = notHappyAtAll 
 
@@ -7725,7 +7725,7 @@ happyReduce_139 = happyMonadReduce 1 65 happyReduction_139
 happyReduction_139 ((HappyAbsSyn51  happy_var_1) `HappyStk`
 	happyRest)
 	 = happyThen ( do { (c, ts) <- splitTyConApp happy_var_1 ;
-					    return (c, map HsUnBangedType ts)
+					    return (c, fmap HsUnBangedType ts)
 					  }
 	) (\r -> happyReturn (HappyAbsSyn65 r))
 
@@ -7753,7 +7753,7 @@ happyReduction_142 ((HappyAbsSyn51  happy_var_3) `HappyStk`
 	(HappyAbsSyn51  happy_var_1) `HappyStk`
 	happyRest)
 	 = happyThen ( do { (c, ts) <- splitTyConApp happy_var_1 ;
-		      return (c, map HsUnBangedType ts ++ [HsBangedType happy_var_3])
+		      return (c, fmap HsUnBangedType ts ++ [HsBangedType happy_var_3])
 		    }
 	) (\r -> happyReturn (HappyAbsSyn65 r))
 

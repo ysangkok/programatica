@@ -8,6 +8,7 @@ data Flags
     }
     deriving (Eq,Show,Read)
 
+flags0 :: Flags
 flags0 = Flags True True Nothing
 cpp1= "/lib/cpp -traditional -P -D__HASKELL98__ -D__PFE__"
 
