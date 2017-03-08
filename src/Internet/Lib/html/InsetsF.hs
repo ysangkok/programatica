@@ -1,6 +1,6 @@
 module InsetsF(insetsF) where
 import Fudgets
-import UserLayoutF
+import UserLayoutF2
 import ParseURL(parseURL)
 import URL(URL(..),url2str,joinURL)
 import Html

@@ -13,7 +13,7 @@ obsolete...
 
 --data SP = T | V deriving (Read)
 data T = V | Co Name {-Ref-} | Me Name {-Ref-} | Fi Name {-Ref-} | T | Cl deriving (Eq,Show,Read)
-data R = DT | DL | DC | DI | DP | U | Ex | Im deriving ({-Show,Read,-}Eq)
+data R = DT | DL | DC | DI | DP | U | Ex | Im deriving (Show,{-Read,-}Eq)
 type Module = ModuleName
 type Name = String
 --type Pos = (Int,Int) -- (line,column)

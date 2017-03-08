@@ -1,6 +1,6 @@
 module HtmlFormF(htmlFormF,FormReq(..),FormResp(..)) where
 import AllFudgets hiding (untaggedListF{-,loopThroughRightF-})
-import UserLayoutF
+import UserLayoutF2
 import Html(Html(..),HtmlItem)
 import HtmlFormSubmit
 import HtmlForms
