@@ -1,3 +1,4 @@
+{-# LANGUAGE ScopedTypeVariables #-}
 import TypedIds
 import qualified HsModule as Hs(EntSpec(Abs,ListSubs),HsExportSpecI(EntE))
 import WorkModule(WorkModuleI(..))
@@ -37,6 +38,8 @@ import qualified PropPosSyntax (HsModuleR(..))
 import qualified ParseMonad
 import qualified HasBaseName(getBaseName,HasBaseName)
 import qualified DefinedNames(DefinedNames)
+import Control.Monad(liftM)
+import Relations
 
 import TiModule()
 
@@ -73,14 +76,24 @@ tstModules (o,prog,args) = test flags0 args
           "defined"  :fs -> tstDefinedNames      =<< parseSrc   =<< expand fs
           "infixes"  :fs -> tstInfixes           =<< parseSrc   =<< expand fs
 --          "scope"    :fs -> tstScope             =<< scopePrg   =<< expand fs
---          "xrefs"    :fs -> createCrossRefs      =<< scopePrg   =<< expand fs
+          "xrefs"    :fs -> do
+             x <- expand fs
+             let old = parseProgram' flags (extractLol parse) x
+             let upg old = (let o1 = fst old
+                                o2 = snd old
+                                li = fmap (\(modName, wrkMod) -> (modName, (wrkMod, []))) o2
+                                in (o1, li))
+             let thisParse = liftM upg old
+             let scopePrg = liftM scopeProgram' thisParse
+             y <- scopePrg
+             z <- createCrossRefs y
+             return z
         --"update":[] -> ...
           _ -> fail "Usage: tstModules [+utf8] [+debug] [cpp[=<cmd>]] [noprelude] (test|create|parse|preparse|lex|unlit|defined|infixes|scope|xrefs) <files>"
       where
         analyzePrg = analyzeFiles' flags parse
         parseSrc = parseSourceFiles (cpp flags) parse
         parsePrg = parseProgram' flags (extractLol parse)
---        scopePrg files = scopeProgram' # parsePrg files
 
         tstModules = pput . ppAssoc . snd
 
@@ -89,7 +102,7 @@ tstModules (o,prog,args) = test flags0 args
         tstParse' = pput . vcat
 
         tstDefinedNames = pput . definedNames
-        tstInfixes = putStr . unlines . map (showl.getInfixes)
+        tstInfixes = putStr . unlines . fmap (showl.getInfixes)
 
         tstScope (mss,_) = pput mss
 
@@ -157,24 +170,24 @@ writeModuleGraphInfo mss =
        writeFile "hi/ModuleGraphRev.hv" (pp revg)
        writeFile "hi/ModuleGraphRev.txt" (txtn revg)
   where
-    mfs = map modfile (concat mss)
+    mfs = fmap modfile (concat mss)
     g = moduleGraph mss
     revg = collectByFst [(i,m)|(m,is)<-g,i<-is]
 
     modfile m = (srcFile m,pp (hsModName m))
 
-    txt2 = unlines . map (\(f,m)->m++" "++f)
-    txtn = unlines . map (\(m,is)->pp m++" "++unwords (map pp is))
+    txt2 = unlines . fmap (\(f,m)->m++" "++f)
+    txtn = unlines . fmap (\(m,is)->pp m++" "++unwords (fmap pp is))
 
     -- One strongly connected component per line:
-    showModuleNames = unlines . map (unwords . map (pp . hsModName))
+    showModuleNames = unlines . fmap (unwords . fmap (pp . hsModName))
 
-    moduleGraph = map moduleImports . concat 
-    moduleImports m = (hsModName m,nub . map hsImpFrom . hsModImports $ m)
+    moduleGraph = fmap moduleImports . concat 
+    moduleImports m = (hsModName m,nub . fmap hsImpFrom . hsModImports $ m)
 
 --- Pretty printing ------------------------------------------------------------
 
-ppAssoc x = vcat . map cbn $ x
+ppAssoc x = vcat . fmap cbn $ x
     where   
     cbn (k,v) = k <> ":" <+> v
 
@@ -182,4 +195,4 @@ ppAssoc x = vcat . map cbn $ x
 
 --- Utils ----------------------------------------------------------------------
 
-showl x = unlines . map show $ x
+showl x = unlines . fmap show $ x
