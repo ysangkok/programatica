@@ -7,4 +7,4 @@ data HsAssoc
     = HsAssocNone
     | HsAssocLeft
     | HsAssocRight
-      deriving (Eq, Show, Read)
+      deriving (Eq, Show, Read, Ord)

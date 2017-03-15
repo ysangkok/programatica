@@ -26,13 +26,14 @@ import ScopeProgram
 import TiPNT()
 import ScopeNamesBase()
 import NameMapsBase()
-import NameMaps(Role(..),Context(..))
+import NameMaps(Role(..),Context(..), MapNames(..),SeqNames)
+import qualified PNT
 import UnlitJanus(readHaskellFile)
 import ParsedSyntax
 import DirUtils(expand,optCreateDirectory)
 import ConvRefsTypes
 import Relations() -- for show instances
-import HsName(ModuleName(..),HsName)
+import HsName(ModuleName(..),HsName(..),Id)
 import SourceNames (SN(..))
 import qualified PropPosSyntax (HsModuleR(..))
 import qualified ParseMonad
@@ -40,6 +41,12 @@ import qualified HasBaseName(getBaseName,HasBaseName)
 import qualified DefinedNames(DefinedNames)
 import Control.Monad(liftM)
 import Relations
+import qualified Data.Map.Lazy as Map
+import qualified ScopeModule
+import qualified IxOutputM
+import qualified ScopeNames
+import qualified RefsTypes
+
 
 import TiModule()
 
@@ -66,7 +73,7 @@ tstModules (o,prog,args) = test flags0 args
 --                               createInterfaceFiles fs' =<< analyzePrg fs'
           "parse"    :fs -> do
             x <- expand fs
-            y <- parsePrg x :: IO ([[HsModuleI HsName.ModuleName QName (HsDeclI (SN HsName.HsName))]], [(HsName.ModuleName, WorkModuleI QName Id)])
+            y <- parsePrg x :: IO ([[HsModuleI HsName.ModuleName QName (HsDeclI (SN HsName.HsName))]], [(HsName.ModuleName, WorkModuleI QName ParsedSyntax.Id)])
             z <- tstParse y
             return z
           "preparse" :fs -> tstParse'            =<< parseSrc   =<< expand fs
@@ -79,13 +86,11 @@ tstModules (o,prog,args) = test flags0 args
           "xrefs"    :fs -> do
              x <- expand fs
              let old = parseProgram' flags (extractLol parse) x
-             let upg old = (let o1 = fst old
-                                o2 = snd old
-                                li = fmap (\(modName, wrkMod) -> (modName, (wrkMod, []))) o2
-                                in (o1, li))
+             let upg old = (let li = fmap (\(modName, wrkMod) -> (modName, (wrkMod, []))) (snd old)
+                                in (fst old, li))
              let thisParse = liftM upg old
              let scopePrg = liftM scopeProgram' thisParse
-             y <- scopePrg
+             y <- scopePrg :: IO ([[HsModuleI HsAssoc i0 ds0]], [(HsAssoc, [((Role (), NameSpace), HsIdentI (PN HsAssoc), [(HsIdentI (PN t0), IdTy (PN RefsTypes.Name))])])])
              z <- createCrossRefs y
              return z
         --"update":[] -> ...
@@ -125,7 +130,7 @@ tstModules (o,prog,args) = test flags0 args
 --
 ----    ent2Pair (m,n,s)         = (m,(n,s))
 --    ent2Pair (Ent m n s)         = (m,(n,s))
---    
+--
 --
 --    interface = map iface . collectByFst . map (ent2Pair.snd)
 --      where
@@ -182,13 +187,13 @@ writeModuleGraphInfo mss =
     -- One strongly connected component per line:
     showModuleNames = unlines . fmap (unwords . fmap (pp . hsModName))
 
-    moduleGraph = fmap moduleImports . concat 
+    moduleGraph = fmap moduleImports . concat
     moduleImports m = (hsModName m,nub . fmap hsImpFrom . hsModImports $ m)
 
 --- Pretty printing ------------------------------------------------------------
 
 ppAssoc x = vcat . fmap cbn $ x
-    where   
+    where
     cbn (k,v) = k <> ":" <+> v
 
 --ppResult = ppAssoc . snd

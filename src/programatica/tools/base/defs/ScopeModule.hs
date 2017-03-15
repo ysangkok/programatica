@@ -23,7 +23,7 @@ making names unique. It currently uses source positions, but it could
 generate unique numbers instead, in which case the parser wouldn't have to
 provide any position information.)
 -}
-module ScopeModule(scopeModule,XRefInfo,checkRefs,origName) where
+module ScopeModule(Scope,ScopeFM,scopeModule,XRefInfo,checkRefs,origName) where
 
 import HsModule(hsModName)
 import HsIdent(HsIdentI(..),getHSName,mapHsIdent)
