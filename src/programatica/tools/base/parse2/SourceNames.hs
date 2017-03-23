@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module SourceNames where
 import HsName(Id,HsName(..),hsUnQual,ModuleName(..),moduleName)
 import SrcLoc(SrcLoc,loc0,srcFile)

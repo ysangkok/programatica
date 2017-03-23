@@ -1,3 +1,4 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-+
 An IO wrapper monad for redirecting Stdio.
 -}
@@ -9,7 +10,7 @@ import MT(HasBaseMonad(..),HasEnv(..),Z)
 import MUtils
 
 newtype SIO a = SIO (WithEnv StdIOops IO a)
-              deriving (Functor,Monad,FileIO,SystemIO,DirectoryIO,TimeIO)
+              deriving (Functor,Applicative,Monad,FileIO,SystemIO,DirectoryIO,TimeIO)
 
 data StdIOops = StdIO {put,eput::String->IO (){-, get::IO String-}}
 

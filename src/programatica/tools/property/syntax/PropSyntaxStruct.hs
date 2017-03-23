@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module PropSyntaxStruct (module PropSyntaxStruct,module P) where
 
 import BaseSyntax as P

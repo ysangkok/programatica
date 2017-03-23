@@ -1,4 +1,4 @@
-module HsModule(module HsModule,ModuleName(..)) where
+module HsModule(module HsModule,ModuleName(..),EntSpec(..),ImpSpec) where
 import Data.List(sort,nub)
 import SrcLoc
 import HsName(ModuleName(..))

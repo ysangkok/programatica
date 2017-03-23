@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 {-+
 Instances for extracting defined names from the nonrecursive 
 base language structures.

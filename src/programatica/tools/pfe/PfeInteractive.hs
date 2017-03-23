@@ -6,7 +6,7 @@ import PFE0(projectStatus,checkProject,setBatchMode,withProjectDir',newProjectHe
 import Pfe0Cmds(addHelpCmd)
 import PfeSocket(listenOnPFE,acceptPFE,removePFE,serverOps,sResult,errorString)
 
-import qualified IO
+import qualified System.IO as IO
 import SIO
 
 pfeiAllCmds pfeCmds prg = addHelpCmd prg (pfeCmds++pfeiCmd pfeCmds prg)

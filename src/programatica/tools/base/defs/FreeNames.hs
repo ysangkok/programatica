@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module FreeNames(module FreeNames,NameSpace(..)) where
 
 import HsIdent

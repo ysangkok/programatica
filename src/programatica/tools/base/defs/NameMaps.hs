@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module NameMaps(module NameMaps,NameSpace(..)) where
 --import StateM
 import MUtils

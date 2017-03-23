@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module ScopeNamesBaseStruct where
 import ScopeNames
 import DefinedNames

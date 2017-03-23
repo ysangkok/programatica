@@ -3,7 +3,6 @@ module ParseProgram where
 import HsModule
 --import HsConstants(prelude_mod)
 import SrcLoc(loc0)
---import HsName
 import NamesEntities
 import ParseMonad(parseFile,PM)
 import UnlitJanus(readHaskellFile)
@@ -36,25 +35,7 @@ import qualified PosName
 -- applications in accordance with operator precedences:
 --parseProgram :: PM (HsModuleI a b c) -> [FilePath] ->
 --                       ([[HsModuleI d e f]],[(Module,WorkModuleI g h)])
-parseProgram :: HasBaseName.HasBaseName ModuleName ModName => (ReAssoc.HasInfixDecls QName ds,
-                                  ReAssoc.ReAssoc (SourceNames.SN HsName.HsName) ds,
-                                  DefinedNames.DefinedNames (SourceNames.SN HsName.HsName) ds) =>
-                                 PM (HsModuleI ModuleName QName ds)
-                                 -> [[Char]]
-                                 -> IO
-                                      ([[HsModuleI ModuleName QName ds]],
-                                       [(ModuleName, WorkModuleI QName PosName.Id)])
 parseProgram files = parseProgram' flags0 files
-parseProgram' :: HasBaseName.HasBaseName ModuleName ModName => (DefinedNames.DefinedNames
-                                     (SourceNames.SN HsName.HsName) ds,
-                                   ReAssoc.ReAssoc (SourceNames.SN HsName.HsName) ds,
-                                   ReAssoc.HasInfixDecls QName ds) =>
-                                  Flags
-                                  -> PM (HsModuleI ModuleName QName ds)
-                                  -> [[Char]]
-                                  -> IO
-                                       ([[HsModuleI ModuleName QName ds]],
-                                        [(ModuleName, WorkModuleI QName PosName.Id)])
 parseProgram' flags parseMod files =
   rewriteProgram # analyzeFiles' flags parseMod files
 

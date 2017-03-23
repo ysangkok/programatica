@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 {-+
 This module defined various classes and auxiliary types that are used
 throughout the type checker.

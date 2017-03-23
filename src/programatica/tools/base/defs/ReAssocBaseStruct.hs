@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module ReAssocBaseStruct where
 import BaseSyntax
 import ReAssoc

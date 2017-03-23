@@ -28,7 +28,7 @@ listenOnPFE dir = ifM (doesFileExist (pfePath dir)) tryConnect listen
     cleanUp = removePFE dir
 
 acceptPFE s = do a@(h,_,_) <- accept s
-		 hSetBuffering h IO.LineBuffering
+		 hSetBuffering h System.IO.LineBuffering
 		 return a
 
 connectToPFE dir =

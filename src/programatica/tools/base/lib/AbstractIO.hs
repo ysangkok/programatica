@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 {-+
 This module defines a number of classes that captures various forms of IO.
 This allows code to specify IO operations without being tied directly to

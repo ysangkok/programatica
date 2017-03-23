@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module NameMapsBaseStruct where
 import NameMaps
 import BaseSyntax

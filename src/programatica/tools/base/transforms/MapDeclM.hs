@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module MapDeclM where
 
 import Recursive

@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 {-+
 This module defines the represenation of types, qualified types, type schemes,
 substitution and various auxiliary types.

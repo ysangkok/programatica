@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module ReAssocBase(module ReAssocBase,module ReAssoc) where
 import Syntax(HsExpI,HsPatI,HsDeclI,HsIdentI(..))
 import ReAssoc

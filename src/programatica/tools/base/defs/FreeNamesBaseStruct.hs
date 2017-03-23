@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module FreeNamesBaseStruct where
 
 import FreeNames

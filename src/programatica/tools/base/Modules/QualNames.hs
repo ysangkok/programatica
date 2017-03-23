@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module QualNames where
 
 import HsName

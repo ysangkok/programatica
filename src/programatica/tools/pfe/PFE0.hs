@@ -47,7 +47,7 @@ import PPU
 import ParserOptions
 import ParseMonad(PM)
 
-import UnlitJanus(readHaskellFile)
+import Unlit(readHaskellFile)
 import ParseMonad(parseTokens)
 import HsLexerPass1(Lexer)
 import HsLexMerge(mergeLex)

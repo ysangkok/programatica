@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module DefinedNamesBase(module DefinedNames) where
 			-- all instances are exported anyway...
 import Syntax(HsDeclI,HsTypeI,HsPatI)

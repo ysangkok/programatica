@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module DefinedNames(module DefinedNames,module TypedIds) where
 import TypedIds
 import HsIdent

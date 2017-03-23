@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module ReAssocModule where
 import ReAssoc(reAssoc')
 import WorkModule

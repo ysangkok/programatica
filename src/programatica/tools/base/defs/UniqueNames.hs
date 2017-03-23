@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module UniqueNames where
 import SrcLoc(SrcLoc(..),loc0,HasSrcLoc)
 import SrcLocPretty()

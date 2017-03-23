@@ -1,6 +1,6 @@
-{-# LANGUAGE ScopedTypeVariables #-}
 import TypedIds
-import qualified HsModule as Hs(EntSpec(Abs,ListSubs),HsExportSpecI(EntE))
+import qualified SrcLoc
+import qualified HsModule
 import WorkModule(WorkModuleI(..))
 import HsParser(parse)
 import ReAssocBase
@@ -13,6 +13,7 @@ import ParserOptions
 import DefinedNames(definedNames)
 import ReAssoc(getInfixes)
 import HsIdent(getHSName)
+import qualified HsIdent
 import NamesEntities
 import Ents
 
@@ -22,7 +23,6 @@ import NoEq
 --import PrettyPrint
 import PPU
 import MUtils
-import ScopeProgram
 import TiPNT()
 import ScopeNamesBase()
 import NameMapsBase()
@@ -30,35 +30,71 @@ import NameMaps(Role(..),Context(..), MapNames(..),SeqNames)
 import qualified PNT
 import UnlitJanus(readHaskellFile)
 import ParsedSyntax
+import qualified ParsedSyntax
 import DirUtils(expand,optCreateDirectory)
 import ConvRefsTypes
 import Relations() -- for show instances
 import HsName(ModuleName(..),HsName(..),Id)
+import qualified HsName(ModuleName(..), moduleName, plainModule,isMainModule ,isHierarchical ,sameModuleName ,fakeModule ,noModule ,Id(..) ,HsName(..) ,hsUnQual ,mapHsName ,accHsName ,parseModuleName ,isSymbolOp ,isAlphaOp ,isConOp ,ppInfixOp ,ppInfixName ,isSymbol ,splitQualName ,splitQualName')
 import SourceNames (SN(..))
 import qualified PropPosSyntax (HsModuleR(..))
 import qualified ParseMonad
 import qualified HasBaseName(getBaseName,HasBaseName)
 import qualified DefinedNames(DefinedNames)
-import Control.Monad(liftM)
 import Relations
 import qualified Data.Map.Lazy as Map
 import qualified ScopeModule
 import qualified IxOutputM
 import qualified ScopeNames
 import qualified RefsTypes
-
+import qualified MT
+import qualified QualNames
+import qualified ScopeModule
 
 import TiModule()
 
-instance HasBaseName.HasBaseName HsName.ModuleName ModName where
-  getBaseName = id
-
---expand fs = concat # mapM expand1 (nub fs)
+import ScopeModule
+import PNT(PNT(..))
+import PrettyPrint
+import OutputM
+import HsModule(EntSpec(..),hsModName,ImpSpec)
+import qualified ScopeProgram
 
 main = tstModules =<< getPPopts
 
-extractLol :: ParseMonad.PM HsModuleR -> ParseMonad.PM (HsModuleI HsName.ModuleName QName ds)
-extractLol = error "lol"
+extractLol :: ParseMonad.PM HsModuleR -> ParseMonad.PM (HsModuleI HsName.ModuleName QName [HsDecl])
+extractLol x = fmap extractLol2 x
+
+extractLol2 :: HsModuleI (SN HsName.ModuleName) (SN HsName.HsName) ds -> HsModuleI HsName.ModuleName QName ds
+extractLol2 (HsModule a b c d e) = HsModule srcLoc name exportDecl importDecl modDecl
+  where
+    srcLoc = a :: SrcLoc
+    name = HasBaseName.getBaseName b :: HsName.ModuleName
+    exportDecl = (case c of
+                    Nothing -> Nothing
+                    Just a -> Just [newExport (head a)]) :: Maybe [HsExportSpecI HsName.ModuleName QName]
+    importDecl = map newImport d :: [HsImportDeclI HsName.ModuleName QName]
+    modDecl = e
+    newExport :: (HsExportSpecI (SN HsName.ModuleName) (SN HsName.HsName)) -> HsExportSpecI HsName.ModuleName QName
+    newExport (ModuleE m) = ModuleE (HasBaseName.getBaseName m)
+    newExport (EntE i) = EntE (trans i)
+    trans :: EntSpec (SN HsName.HsName) -> EntSpec QName
+    trans i = case i of
+      Var x -> Var x
+      Abs x -> Abs x
+      AllSubs x -> AllSubs x
+      ListSubs y z -> ListSubs y z
+    newImport :: HsImportDeclI (SN HsName.ModuleName) (SN HsName.HsName) -> HsImportDeclI HsName.ModuleName QName
+    newImport (HsImportDecl o p q r s) = HsImportDecl t u v x y
+      where
+        t = o :: SrcLoc
+        u = HasBaseName.getBaseName p :: HsName.ModuleName
+        v = q :: Bool
+        x = fmap HasBaseName.getBaseName r :: Maybe (HsName.ModuleName)
+        y = fmap transform s :: Maybe (ImpSpec QName)
+        transform :: ImpSpec (SN HsName.HsName) -> ImpSpec QName
+        transform (True, x) = (True, fmap trans x)
+        transform (False, x) = (False, fmap trans x)
 
 tstModules (o,prog,args) = test flags0 args
   where
@@ -73,7 +109,7 @@ tstModules (o,prog,args) = test flags0 args
 --                               createInterfaceFiles fs' =<< analyzePrg fs'
           "parse"    :fs -> do
             x <- expand fs
-            y <- parsePrg x :: IO ([[HsModuleI HsName.ModuleName QName (HsDeclI (SN HsName.HsName))]], [(HsName.ModuleName, WorkModuleI QName ParsedSyntax.Id)])
+            y <- parsePrg x :: IO ([[HsModuleI HsName.ModuleName QName [HsDecl]]], [(HsName.ModuleName, WorkModuleI QName ParsedSyntax.Id)])
             z <- tstParse y
             return z
           "preparse" :fs -> tstParse'            =<< parseSrc   =<< expand fs
@@ -85,13 +121,11 @@ tstModules (o,prog,args) = test flags0 args
 --          "scope"    :fs -> tstScope             =<< scopePrg   =<< expand fs
           "xrefs"    :fs -> do
              x <- expand fs
-             let old = parseProgram' flags (extractLol parse) x
              let upg old = (let li = fmap (\(modName, wrkMod) -> (modName, (wrkMod, []))) (snd old)
                                 in (fst old, li))
-             let thisParse = liftM upg old
-             let scopePrg = liftM scopeProgram' thisParse
-             y <- scopePrg :: IO ([[HsModuleI HsAssoc i0 ds0]], [(HsAssoc, [((Role (), NameSpace), HsIdentI (PN HsAssoc), [(HsIdentI (PN t0), IdTy (PN RefsTypes.Name))])])])
-             z <- createCrossRefs y
+             y <- (fmap (upg) (parseProgram' flags (extractLol parse) x))
+             let w = (ScopeProgram.scopeProgram' y)
+             z <- createCrossRefs w
              return z
         --"update":[] -> ...
           _ -> fail "Usage: tstModules [+utf8] [+debug] [cpp[=<cmd>]] [noprelude] (test|create|parse|preparse|lex|unlit|defined|infixes|scope|xrefs) <files>"
@@ -140,8 +174,8 @@ tstModules (o,prog,args) = test flags0 args
 --            exports     = toExp `map` oth
 --            (subs,oth)  = partition (isSubordinate.snd) allns
 --            toExp (n,ty)
---                | isClassOrType ty  = Hs.EntE (Hs.ListSubs n elems)
---                | otherwise         = Hs.EntE (Hs.Abs n)
+--                | isClassOrType ty  = HsModule.EntE (HsModule.ListSubs n elems)
+--                | otherwise         = HsModule.EntE (HsModule.Abs n)
 --                where
 --                elems = [x | (x,idty) <- subs, idty `belongsTo` getHSName n]
 --

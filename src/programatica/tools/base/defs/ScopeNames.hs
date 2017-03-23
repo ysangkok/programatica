@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module ScopeNames where
 import EnvM
 import DefinedNames(TypedIdent)

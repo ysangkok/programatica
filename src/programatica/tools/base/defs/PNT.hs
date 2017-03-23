@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module PNT where
 import HsName
 import HsIdent

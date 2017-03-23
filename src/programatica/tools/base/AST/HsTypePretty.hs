@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 --- Pretty printing for the T functor ------------------------------------------
 
 module HsTypePretty where

@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 {-+
 This module provides the function #scopeModule# which takes abstract
 syntax trees returned by the parser, where idientifers are annotated with
@@ -23,7 +24,7 @@ making names unique. It currently uses source positions, but it could
 generate unique numbers instead, in which case the parser wouldn't have to
 provide any position information.)
 -}
-module ScopeModule(Scope,ScopeFM,scopeModule,XRefInfo,checkRefs,origName) where
+module ScopeModule(Scope,ScopeFM,scopeModule,XRefInfo,checkRefs,origName,SPName) where
 
 import HsModule(hsModName)
 import HsIdent(HsIdentI(..),getHSName,mapHsIdent)

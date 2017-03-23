@@ -11,7 +11,8 @@ import qualified Prelude -- Haskell report change workaround
 import FiniteMap
 --import PrettyPrint(Printable(..),fsep) -- for debugging
 
-data (Ord key) => Env key info = Env (FiniteMap key info)
+data Env key info = Env (FiniteMap key info)
+--data (Ord key) => Env key info = Env (FiniteMap key info)
 
 extenv1 x t (Env bs) = Env (addToFM bs x t)
 extenv bs1 (Env bs2) = Env (addListToFM bs2 bs1)

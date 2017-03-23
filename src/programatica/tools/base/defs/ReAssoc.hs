@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module ReAssoc where
 import HsAssoc
 import HsIdent

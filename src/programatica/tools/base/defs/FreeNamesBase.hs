@@ -1,3 +1,4 @@
+{-# LANGUAGE UndecidableInstances #-}
 module FreeNamesBase where
 
 import Syntax(HsDeclI,HsTypeI,HsPatI,HsExpI) 
